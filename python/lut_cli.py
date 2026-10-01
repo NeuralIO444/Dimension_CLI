@@ -30,10 +30,15 @@ Horizon Color Planner) is added here for the exact same reason —
 a script that only ever gets exercised via a dev venv is a script that
 has never actually been proven to work for a customer.
 
-This CLI never touches AE; the actual LUT/color-match inject is a
-separate evalScript call into cep/jsx/host.jsx's injectColorLut() /
-injectParametricColorMatch(), which only receive a filesystem path or
-computed numbers, never the parsed table.
+This CLI never touches AE for *injection*; the actual LUT/color-match
+inject used to be a separate evalScript call into cep/jsx/host.jsx's
+injectColorLut() / injectParametricColorMatch() — which can never work:
+AE exposes Apply Color LUT2's file-path property as
+PropertyValueType.NO_VALUE, so no scripting mechanism can set it. LUT
+*injection* is a permanent AE platform limitation (Dimension #494), not
+a bug, and no workaround is being chased. LUT *synthesis* (validate /
+derive / derive-parametric / derive-smart below) is fully local math
+and works headless. Levels Smart Match is the supported in-AE backend.
 
 Usage:
     lut_cli.py validate <path>
@@ -44,11 +49,16 @@ Usage:
         -> forwards to scripts.derive_parametric_match.main()
     lut_cli.py derive-smart <ref_image> <graded_image> <output_cube> [--size N] [--comp-id ID]
         -> forwards to scripts.derive_smart_match.main()
+    lut_cli.py inject <lut_path> [...]
+        -> HONEST-FAIL: prints {"status": "ERROR", "code": "LUT_UNSCRIPTABLE", ...}
+           and exits 65. LUT injection into AE is impossible (see above).
 """
 
 import json
 import sys
+from typing import NoReturn
 
+from bridge.color_match_bridge import LutUnscriptableError
 from core.lut_parser import LutParseError, load_lut
 
 
@@ -73,8 +83,44 @@ def _validate(path: str) -> dict:
 
 _USAGE_ERROR = {
     "status": "ERROR",
-    "error": "Usage: lut_cli.py <validate|derive|derive-parametric|derive-smart> ...",
+    "error": "Usage: lut_cli.py <validate|derive|derive-parametric|derive-smart|inject> ...",
 }
+
+
+# EX_DATAERR: the inject request named a real operation the platform
+# cannot perform (Dimension #494). Distinct from 1 (usage/parse error).
+_EXIT_UNSCRIPTABLE = 65
+
+
+def _inject_honest_fail() -> "NoReturn":
+    """`lut inject` — fail loudly with the named code, never a traceback."""
+    try:
+        raise LutUnscriptableError()
+    except LutUnscriptableError as e:
+        print(json.dumps({"status": "ERROR", "code": e.code, "error": str(e)}))
+    sys.exit(_EXIT_UNSCRIPTABLE)
+
+
+_HELP_TEXT = """\
+dimension lut — local LUT math (validate, derive). LUT *injection* into
+After Effects is impossible and honest-fails.
+
+Subcommands:
+  validate <path>        Parse a .cube/.3dl and print a JSON summary.
+  derive <ref> <graded> <out.cube> [--size N]
+                         Synthesize a 33x33x33 .cube from graded stills.
+  derive-parametric <ref> <graded>
+                         Derive a parametric match (numbers, not a LUT).
+  derive-smart <ref> <graded> <out.cube> [--size N]
+                         Smart-match .cube synthesis.
+  inject <lut_path> [...]  HONEST-FAIL — prints LUT_UNSCRIPTABLE, exits 65.
+
+Platform limitation (Dimension #494): AE exposes Apply Color LUT2's
+file-path property as PropertyValueType.NO_VALUE, so no script can set
+it. There is no code path that injects a LUT into AE; none is planned.
+LUT *synthesis* above works locally and headless. Levels Smart Match is
+the supported in-AE backend.
+"""
 
 
 def main():
@@ -83,6 +129,13 @@ def main():
         sys.exit(1)
 
     subcommand = sys.argv[1]
+
+    if subcommand in ("--help", "-h", "help"):
+        print(_HELP_TEXT)
+        return
+
+    if subcommand == "inject":
+        _inject_honest_fail()
 
     if subcommand == "validate":
         if len(sys.argv) < 3:

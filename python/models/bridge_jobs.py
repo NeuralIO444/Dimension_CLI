@@ -395,9 +395,11 @@ class ColorMatchInjectJob(_BridgeJobBase):
     adjustment layer directly above a precomp wrapper in the active
     master composition.
 
-    Dispatched from `ColorMatchBridge.inject_lut()`. Handled by
-    `color-match-inject` in `socket_server.jsx` and
-    `Dimension_Launcher.jsx`.
+    RETIRED (issue #9): `ColorMatchBridge.inject_lut()` now honest-fails
+    with LUT_UNSCRIPTABLE and never dispatches this job — AE exposes Apply
+    Color LUT2's file-path property as NO_VALUE, so injection is a
+    permanent platform limitation (Dimension #494). The model is kept as
+    the wire-schema record only; do not re-wire a dispatch path.
 
     `target_layer_uid` is the UID token stamped into the precomp wrapper
     layer's comment field. `parent_comp_id` identifies the master

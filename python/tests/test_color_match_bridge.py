@@ -219,59 +219,44 @@ class TestExecuteBridgeJobFacade:
         assert seen["timeout_s"] == 5.0
 
 
-INJECT_OK_RESPONSE = {
-    "schema_version": "1.0",
-    "job_type": "color-match-inject",
-    "status": "OK",
-    "adjustment_layer_index": 2,
-    "adjustment_layer_name": "Dimension Color Match",
-    "effect_match_name": "ADBE Apply Color LUT 2",
-    "reused_existing_layer": False,
-}
-
-
 class TestInjectLut:
-    def test_dispatches_job_with_correct_shape(self, tmp_path, bridge_factory):
+    """Issue #9 — inject honest-fails: LUT injection into AE is impossible
+    (Dimension #494, permanent platform limitation), so every inject path
+    raises LutUnscriptableError (code LUT_UNSCRIPTABLE) before dispatch."""
+
+    def test_inject_honest_fails_with_named_code(self, tmp_path, bridge_factory):
+        from bridge.color_match_bridge import LutUnscriptableError
+
         cm = bridge_factory()
-        captured = []
-        responder, stop = _spawn_jsx_responder(
-            Path(cm._bridge._inbox_dir()), INJECT_OK_RESPONSE, capture_jobs=captured,
+        with pytest.raises(LutUnscriptableError) as exc_info:
+            cm.inject_lut("100", "42", tmp_path / "g.cube")
+        assert exc_info.value.code == "LUT_UNSCRIPTABLE"
+
+    def test_inject_never_dispatches(self, tmp_path, bridge_factory, monkeypatch):
+        from bridge.color_match_bridge import LutUnscriptableError
+
+        cm = bridge_factory()
+        calls = []
+        monkeypatch.setattr(
+            cm._bridge, "execute_bridge_job", lambda job, timeout: calls.append(job)
         )
-        lut_file = tmp_path / "grade.cube"
-        lut_file.write_text("LUT_3D_SIZE 2\n0 0 0\n", encoding="utf-8")
-
-        try:
-            payload = cm.inject_lut(
-                "100", "42", lut_file, target_layer_uid="uid-wrap-1", timeout_s=4.0,
+        with pytest.raises(LutUnscriptableError):
+            cm.inject_lut(
+                "100", "42", tmp_path / "g.cube",
+                target_layer_uid="uid-wrap-1", timeout_s=4.0,
             )
-        finally:
-            stop.set()
-            responder.join(timeout=2)
+        assert calls == []
 
-        assert payload["status"] == "OK"
-        assert payload["adjustment_layer_index"] == 2
-        assert payload["adjustment_layer_name"] == "Dimension Color Match"
+    def test_inject_fails_regardless_of_arguments(self, bridge_factory):
+        """The platform cannot do it, so argument validation is moot —
+        empty args get LUT_UNSCRIPTABLE too, not ValueError."""
+        from bridge.color_match_bridge import LutUnscriptableError
 
-        assert len(captured) == 1
-        desc = captured[0]
-        assert desc["type"] == "color-match-inject"
-        assert desc["parent_comp_id"] == "100"
-        assert desc["precomp_comp_id"] == "42"
-        assert desc["target_layer_uid"] == "uid-wrap-1"
-        assert desc["lut_path"] == str(lut_file)
-
-    def test_rejects_missing_parent_comp_id(self, bridge_factory, tmp_path):
         cm = bridge_factory()
-        with pytest.raises(ValueError, match="parent_comp_id is required"):
-            cm.inject_lut("", "42", tmp_path / "g.cube")
-
-    def test_rejects_missing_precomp_comp_id(self, bridge_factory, tmp_path):
-        cm = bridge_factory()
-        with pytest.raises(ValueError, match="precomp_comp_id is required"):
-            cm.inject_lut("100", "", tmp_path / "g.cube")
-
-    def test_rejects_missing_lut_path(self, bridge_factory):
-        cm = bridge_factory()
-        with pytest.raises(ValueError, match="lut_path is required"):
+        with pytest.raises(LutUnscriptableError):
+            cm.inject_lut("", "42", "g.cube")
+        with pytest.raises(LutUnscriptableError):
+            cm.inject_lut("100", "", "g.cube")
+        with pytest.raises(LutUnscriptableError):
             cm.inject_lut("100", "42", "")
 
