@@ -42,13 +42,15 @@ test = [
 ]
 
 [project.scripts]
-# Stub entry until issue #5 lands the unified `dimension` CLI tree.
-dimension = "dimension_stub:main"
+# Unified `dimension` CLI tree (issue #5): argparse subcommands over
+# `dimension.ops` pure functions; every command supports --json.
+dimension = "dimension.cli:main"
 
 # The engine tree lives in `python/` with flat top-level imports
 # (`from logic.x import ...`, `import cli`, ...). Install it as-is:
-# packages are found under `python/`, top-level modules are listed
-# explicitly. Issue #5 will reshape this into one `dimension` tree.
+# packages are found under `python/` (including the `dimension`
+# package: the unified CLI tree from issue #5); legacy flat
+# top-level modules are listed explicitly.
 [tool.setuptools.packages.find]
 where = ["python"]
 namespaces = true
@@ -60,7 +62,6 @@ py-modules = [
     "comment_garden_cli",
     "data_dumper",
     "dimension_server",
-    "dimension_stub",
     "duplication_cli",
     "lut_cli",
     "mask_cli",
