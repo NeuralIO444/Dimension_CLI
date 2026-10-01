@@ -1,0 +1,74 @@
+# Dimension_CLI packaging (issue #3).
+#
+# Dependency pins are EXACT, never `>=` — Dimension's convention: CI must
+# test the dependency set that actually ships, not whatever resolved today.
+# To bump: change the pin, run the full suite, commit both together.
+#
+# HARD requirement: PyPI pins ONLY. No git-SHA / VCS dependencies — this
+# protects the offline-first build philosophy and keeps public installs
+# clean. Verified by the offline-install CI job (.github/workflows/ci.yml).
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dimension-cli"
+version = "0.1.0"
+description = "Dimension's format-conform math engine as a headless CLI"
+requires-python = ">=3.11"
+license = { text = "Dual-licensed: PolyForm Noncommercial 1.0.0 + commercial (see LICENSE)" }
+dependencies = [
+    "pydantic==2.13.5",
+    "watchdog==6.0.0",
+    "pillow==12.3.0",
+    "pyyaml==6.0.3",
+    # Spatial Occlusion Engine: thresholding + cv2.distanceTransform for
+    # the safe-zone mask processing.
+    "opencv-python-headless==5.0.0.93",
+    # Expression scaling pass: pure-Python ES parser for AST-based scaling
+    # of numeric literals in AE expressions.
+    "esprima==4.0.1",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==9.1.1",
+    # Parallel worker distribution for the full-catalog preset sweep.
+    "pytest-xdist==3.8.0",
+    # ruff check runs in CI, so it is pinned like everything else
+    # (matches Dimension's own CI pin).
+    "ruff==0.16.4",
+]
+
+[project.scripts]
+# Stub entry until issue #5 lands the unified `dimension` CLI tree.
+dimension = "dimension_stub:main"
+
+# The engine tree lives in `python/` with flat top-level imports
+# (`from logic.x import ...`, `import cli`, ...). Install it as-is:
+# packages are found under `python/`, top-level modules are listed
+# explicitly. Issue #5 will reshape this into one `dimension` tree.
+[tool.setuptools.packages.find]
+where = ["python"]
+namespaces = true
+exclude = ["web"]
+
+[tool.setuptools]
+py-modules = [
+    "cli",
+    "comment_garden_cli",
+    "data_dumper",
+    "dimension_server",
+    "dimension_stub",
+    "duplication_cli",
+    "lut_cli",
+    "mask_cli",
+    "orchestrator",
+    "prefs_cli",
+    "profile_cli",
+    "survey",
+    "target_cli",
+    "unit_override_cli",
+    "units_cli",
+]
