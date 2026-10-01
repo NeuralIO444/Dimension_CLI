@@ -14,9 +14,10 @@ DIMENSION_DUP_PATTERN regex matched none of the names
 `output_naming.resolve_output_name` actually produces, so the CLEAN COMPS
 report was inert on real projects. The regex is deleted. A comp is now a
 duplicate candidate if and only if its name appears in the provenance set:
-`.dimension/duplication_log.json` (Babysitter records every comp it
-creates: `duplicate_name` + ids) unioned with the manifest's
-`duplication_plan`. No provenance → no candidates (safe default).
+the project database `.dimension/dimension.db` (issue #16 — Babysitter
+records every comp it creates in the `creations` table; this DB REPLACES
+`duplication_log.json`) unioned with the manifest's `duplication_plan`.
+No provenance → no candidates (safe default).
 
 Invariants (unchanged):
   1. Never flag an active/open composition currently being viewed.
@@ -31,8 +32,12 @@ Invariants (unchanged):
 from __future__ import annotations
 
 import json
+import os
+import sqlite3
 from dataclasses import dataclass
 from typing import Any, Collection, Dict, List, Optional, Set
+
+from core.dimension_db import known_duplicate_names
 
 
 @dataclass(frozen=True)
@@ -57,34 +62,39 @@ class CompCleanupPlan:
 
 
 def load_known_duplicate_names(
-    duplication_log_path: Optional[str] = None,
+    db_path: Optional[str] = None,
     manifest_path: Optional[str] = None,
 ) -> Set[str]:
     """Build the provenance set for `CompCleaner.analyze_project`.
 
     Union of:
-      - `<duplication_log_path>` → `duplicates_made[].duplicate_name`
-        (Babysitter's per-run record of every comp it created), and
+      - `<db_path>` → `creations.name` from the project database
+        `.dimension/dimension.db` (issue #16; REPLACES
+        `duplication_log.json`), and
       - `<manifest_path>` → `duplication_plan.duplicates[].duplicate_name`
-        (the chunk/scrape manifest's planned duplicates).
+        (the chunk/scrape manifest's planned duplicates; manifests stay
+        JSON).
 
-    Missing or unreadable files contribute nothing — provenance is
-    opt-in evidence, and its absence must never invent candidates.
+    The database is opened read-only and never created here — this is
+    the read path of a read-only report. A missing or unreadable
+    database contributes nothing, just like a missing manifest:
+    provenance is opt-in evidence, and its absence must never invent
+    candidates.
     """
     names: Set[str] = set()
 
-    if duplication_log_path:
+    if db_path and os.path.exists(db_path):
         try:
-            with open(duplication_log_path, "r", encoding="utf-8") as f:
-                payload = json.load(f)
-        except (OSError, ValueError):
-            payload = None
-        if isinstance(payload, dict):
-            for entry in payload.get("duplicates_made") or []:
-                if isinstance(entry, dict):
-                    name = str(entry.get("duplicate_name") or "").strip()
-                    if name:
-                        names.add(name)
+            conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        except sqlite3.Error:
+            conn = None
+        if conn is not None:
+            try:
+                names |= known_duplicate_names(conn)
+            except sqlite3.Error:
+                pass
+            finally:
+                conn.close()
 
     if manifest_path:
         try:

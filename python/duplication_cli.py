@@ -98,12 +98,12 @@ def main():
                      help="AE comp.id of the currently active comp, if known "
                           "(protects it from being listed as an orphan)")
     # Issue #10 — provenance, not names. Duplicate candidates come from
-    # Babysitter's duplication_log.json (default: .dimension/ next to the
-    # project structure) unioned with a manifest's duplication_plan.
+    # the project database .dimension/dimension.db (issue #16; REPLACES
+    # duplication_log.json) unioned with a manifest's duplication_plan.
     # The old --pattern regex override is gone with DIMENSION_DUP_PATTERN.
-    cr.add_argument("--duplication-log", default=None,
-                     help="Path to .dimension/duplication_log.json "
-                          "(default: <project-structure-dir>/.dimension/duplication_log.json)")
+    cr.add_argument("--db", default=None,
+                     help="Path to .dimension/dimension.db "
+                          "(default: <project-structure-dir>/.dimension/dimension.db)")
     cr.add_argument("--chunk-manifest", default=None,
                      help="Optional chunk/scrape manifest whose duplication_plan "
                           "is unioned into the provenance set")
@@ -208,15 +208,16 @@ def main():
         legacy_shape = adapt_project_structure_for_comp_cleaner(ps)
 
         # Provenance, not names (issue #10): candidates are comps Babysitter
-        # provably created, per duplication_log.json ∪ manifest plan.
-        dup_log = args.duplication_log
-        if dup_log is None:
-            dup_log = os.path.join(
+        # provably created, per .dimension/dimension.db (issue #16) ∪
+        # manifest plan. The DB is read-only here — never created.
+        db_path = args.db
+        if db_path is None:
+            db_path = os.path.join(
                 os.path.dirname(os.path.abspath(args.project_structure)),
-                ".dimension", "duplication_log.json",
+                ".dimension", "dimension.db",
             )
         known = load_known_duplicate_names(
-            duplication_log_path=dup_log,
+            db_path=db_path,
             manifest_path=args.chunk_manifest,
         )
         plan = CompCleaner.analyze_project(
