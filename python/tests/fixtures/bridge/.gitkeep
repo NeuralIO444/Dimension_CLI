@@ -1,0 +1,3 @@
+# This file keeps the bridge fixtures directory committed even
+# before any actual fixtures land. See README.md for capture
+# procedure. PR-B Layer 2 fixtures are pending manual AE capture.

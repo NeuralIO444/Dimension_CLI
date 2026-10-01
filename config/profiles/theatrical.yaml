@@ -1,0 +1,112 @@
+# config/profiles/theatrical.yaml
+# revision: v1.0.0  ·  updated: 2026-05-15
+#
+# Slot 11.5 Phase 2 — profile reduction 9 → 4.
+# DCP cinema (Container / Scope / Flat). No social UI overlays;
+# theatrical safe-zone respect for legal copy.
+#
+# Centre-first composition lets the projector throw breathe;
+# letterboxing handles aspect deltas at the conform level
+# (widen fill-width handles overflow naturally; bleed stays at
+# 1.0).
+#
+# Replaces (per the Phase 2 migration map): A24, Disney+,
+# trailer_theatrical.
+#
+# v6.0: updated tag vocabulary to FILL/CENTER/TOP/BOTTOM.
+
+id:           theatrical
+display_name: "Theatrical"
+revision:     "v1.0.0"
+author:       "neural_io_444"
+updated:      "2026-05-15"
+color:        "#b07ed4"
+description: |
+  DCP cinema. No platform UI; centre-first composition; BOTTOM with
+  theatrical safe-zone respect at bottom. 1.0 base scale (no
+  bleed) — widen fill-width handles aspect deltas naturally.
+
+safe_area:
+  top:    0.05
+  right:  0.04
+  bottom: 0.07
+  left:   0.04
+
+prefixes:
+  # ── Centred content ──
+  - match:   "HERO_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  high
+  - match:   "CENTER_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  high
+  - match:   "BOXART_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "ARTWORK_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "LOGO_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "BRAND_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+
+  # ── Title text — centre (cinema has no top UI to dodge) ──
+  - match:   "TITLE_"
+    tag:     TOP
+    gravity: center
+    scale:   1.00
+    weight:  high
+  - match:   "TOP_"
+    tag:     TOP
+    gravity: center
+    scale:   1.00
+    weight:  high
+
+  # ── Legal — bottom with theatrical safe-zone clearance ──
+  - match:   "LEGAL_"
+    tag:     BOTTOM
+    gravity: bottom
+    scale:   0.85
+    weight:  pinned
+  - match:   "BOTTOM_"
+    tag:     BOTTOM
+    gravity: bottom
+    scale:   0.85
+    weight:  pinned
+  - match:   "BILLING_"
+    tag:     BOTTOM
+    gravity: bottom
+    scale:   0.85
+    weight:  pinned
+
+  # ── Background — fills the frame ──
+  - match:   "BG_"
+    tag:     FILL
+    gravity: fill
+    scale:   1.00
+    weight:  normal
+  - match:   "FILL_"
+    tag:     FILL
+    gravity: fill
+    scale:   1.00
+    weight:  normal
+
+type_overrides:
+  CENTER: 1.00
+  TOP:    1.00
+  BOTTOM: 0.85

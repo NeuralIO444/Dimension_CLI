@@ -1,0 +1,17 @@
+{
+  "status": "OK",
+  "job_type": "tag-write",
+  "uid": "19f7601411d_595b14",
+  "tag": "HERO",
+  "source": "manual_comment",
+  "label": 2,
+  "layer_index": 3,
+  "layer_name": "Contrast_BW_Grunge_4.jpg",
+  "resolved_via": "uid",
+  "dimension_schema_version": "5.8.13",
+  "dimension_panel_build": "v5.1.11",
+  "schema_version": "1.0",
+  "_claim_ms": 1784391264911,
+  "_started_ms": 1784391264933,
+  "_finished_ms": 1784391265016
+}

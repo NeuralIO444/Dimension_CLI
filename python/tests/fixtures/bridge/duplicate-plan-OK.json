@@ -1,0 +1,20 @@
+{
+  "status": "OK",
+  "job_type": "duplicate-plan",
+  "duplicates_made": 1,
+  "rewires_made": 1,
+  "skipped": 0,
+  "errors": 0,
+  "log": {
+    "duplicates_made": ["Comp_Duplicate_1"],
+    "rewires_made": ["Layer 1 -> Comp_Duplicate_1"],
+    "skipped": [],
+    "errors": []
+  },
+  "dimension_schema_version": "5.8.13",
+  "dimension_panel_build": "v5.1.11",
+  "schema_version": "1.0",
+  "_claim_ms": 1784391264911,
+  "_started_ms": 1784391264933,
+  "_finished_ms": 1784391265016
+}

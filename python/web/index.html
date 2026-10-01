@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimension · Dashboard</title>
+    <!-- Import Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Shared design tokens (source of truth: cep/css/tokens.css) →
+         Dashboard component styles → SGI Irix Motif skin. Load order
+         matters: irix.css's !important overrides must load last. -->
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="dashboard-base.css">
+    <style>
+        /* Kept inline: nothing left here after the 2026-07-21 CSS
+           consolidation moved everything into dashboard-base.css. This
+           block is intentionally empty — a future genuinely
+           page-specific override belongs here, not in the shared file. */
+
+    </style>
+    <!-- SGI Irix Theme styling override -->
+    <link rel="stylesheet" href="irix.css">
+</head>
+<body>
+    <header>
+        <div class="logo-area">
+            <h1>Dimension</h1>
+            <span class="badge-mode">Dashboard</span>
+        </div>
+        <div class="status-area">
+            <button id="btn-open-history" class="history-btn" onclick="openHistoryModal()" title="Past conform runs and their reports">History</button>
+            <span id="license-badge" class="license-badge license-badge--none hidden"></span>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                Connected to local host engine
+            </div>
+        </div>
+    </header>
+    
+    <div class="workspace">
+        <!-- Left Panel: Conform Config & Deliverables Queue -->
+        <section class="card panel-conforming">
+            <div class="card-header">
+                <h2 class="section-title">Conform & Deliverables Queue</h2>
+            </div>
+            
+            <!-- Config Inputs (Row Grid) -->
+            <div class="config-grid">
+                <div>
+                    <label for="profile-select">Studio Profile</label>
+                    <select id="profile-select">
+                        <option value="default">Default Profile</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="mode-select">Scaling Algorithm</label>
+                    <select id="mode-select">
+                        <option value="Fit">Fit (Aspect-Preserved)</option>
+                        <option value="Fill">Fill (Aspect-Crop)</option>
+                        <option value="Stretch">Stretch (Non-Uniform)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Bleed Slider -->
+            <div class="slider-container">
+                <div class="slider-header">
+                    <label style="margin-bottom: 0;">Target Canvas Bleed</label>
+                    <span id="bleed-val" style="font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--accent);">5.0%</span>
+                </div>
+                <input type="range" id="bleed-slider" min="0" max="25" step="0.5" value="5.0">
+            </div>
+            
+            <!-- AI Queue Builder — search + queue target picker
+                 (2026-07-21 port of the CEP panel's July 7 redesign,
+                 replacing the old flat checkbox-grid picker). -->
+            <div class="ai-queue-section">
+                <div class="control-label">Search formats to queue</div>
+                <div class="ai-queue-input-wrapper">
+                    <div class="ai-queue-input-row">
+                        <input type="text" id="ai-queue-input" class="ai-queue-input"
+                               placeholder="Search formats… e.g. TikTok, 4K DCP, Instagram"
+                               autocomplete="off">
+                    </div>
+                    <div id="ai-queue-dropdown" class="ai-queue-dropdown hidden"></div>
+                </div>
+            </div>
+
+            <div class="queue-panel">
+                <div class="queue-panel-header">
+                    <span class="queue-panel-label">Queue</span>
+                    <span id="queue-count-badge" class="queue-count-badge">0</span>
+                </div>
+                <div class="queue-panel-body">
+                    <div id="ai-queue-chips" class="ai-queue-list"></div>
+                    <div id="ai-queue-empty" class="ai-queue-empty">No matching format found.</div>
+                    <div id="custom-format-inputs" class="custom-inputs hidden">
+                        <div class="input-row">
+                            <input type="text" id="custom-width" placeholder="Width">
+                            <span>×</span>
+                            <input type="text" id="custom-height" placeholder="Height">
+                        </div>
+                        <div class="input-row">
+                            <input type="text" id="custom-duration" placeholder="Duration (s, optional)">
+                            <input type="text" id="custom-fps" placeholder="FPS (optional)">
+                        </div>
+                        <span class="quick-action-link" onclick="addCustomSizeToQueue()">Add custom size to queue</span>
+                    </div>
+                    <div id="recon-summary" class="recon-summary hidden"></div>
+                </div>
+            </div>
+
+            <!-- Advanced disclosure: Layout -->
+            <div class="override-section">
+                <button id="btn-override-toggle" class="override-toggle" onclick="toggleOverridePanel()">
+                    <span class="override-caret" id="override-caret">▸</span>
+                    <span class="override-label">Advanced</span>
+                    <span class="override-summary" id="override-summary"></span>
+                </button>
+                <div id="override-panel" class="override-panel hidden">
+                    <label for="layout-select">Layout</label>
+                    <select id="layout-select" class="select">
+                        <option value="auto" selected>Auto — keep composition for 3D camera scenes</option>
+                        <option value="scene">Keep composition (uniform scale + center)</option>
+                        <option value="tags">Tag-driven zones (TOP/BOTTOM/CENTER pinning)</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+            <!-- License-blocked banner (hidden unless /api/execute-batch returns 403) -->
+            <div id="license-blocked-banner" class="license-blocked-banner hidden"></div>
+
+            <!-- Prominent Execute Action -->
+            <div class="execute-area">
+                <button id="btn-execute-batch" onclick="triggerBatchExecute()">Execute Batch Conform</button>
+                <label class="focus-ae-toggle" for="focus-ae-checkbox" title="Brings After Effects to the front when a batch starts, so you can watch it run. Turn off if you're running the Dashboard on a second monitor.">
+                    <input type="checkbox" id="focus-ae-checkbox" checked>
+                    Focus After Effects on Execute
+                </label>
+            </div>
+            
+            <!-- Integrated Logs Terminal Console -->
+            <div class="terminal-area">
+                <div class="terminal-header">
+                    <div class="terminal-title">
+                        <div class="terminal-indicator" id="console-pulse"></div>
+                        Engine Console logs
+                    </div>
+                    <div class="terminal-actions">
+                        <button class="terminal-btn" onclick="clearConsoleLogs()">Clear</button>
+                        <button class="terminal-btn active" id="btn-scroll-lock" onclick="toggleScrollLock()">Auto-Scroll</button>
+                    </div>
+                </div>
+                <div class="terminal-body" id="console-log-body">
+                    <p class="log-row">> Console listening. Ready for batch conform trigger.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vertical Resizable Panel Splitter -->
+        <div class="workspace-splitter" id="panel-splitter"></div>
+        
+        <!-- Right Panel: Layers Tagging -->
+        <section class="card panel-tagging">
+            <div class="card-header">
+                <h2 class="section-title" style="color: var(--text-primary);">Scraped Composition Layers</h2>
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <input type="text" id="layer-search" placeholder="Search layers by name or tag..." oninput="filterLayersTable()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Bar widget -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <span class="stat-label">Total Layers</span>
+                    <span class="stat-value" id="stats-total">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Tagged Layers</span>
+                    <span class="stat-value accent" id="stats-tagged">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Untagged</span>
+                    <span class="stat-value" id="stats-untagged" style="color: var(--warning);">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Avg Confidence</span>
+                    <span class="stat-value" id="stats-confidence" style="color: var(--success);">0%</span>
+                </div>
+            </div>
+
+            <!-- Table Filters Bar -->
+            <div class="filters-bar">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" id="filter-all" onclick="setLayerFilter('all')">All Layers</button>
+                    <button class="filter-tab" id="filter-tagged" onclick="setLayerFilter('tagged')">Tagged</button>
+                    <button class="filter-tab" id="filter-untagged" onclick="setLayerFilter('untagged')">Untagged</button>
+                </div>
+                <div style="font-size: 0.72rem; color: var(--text-secondary);" id="filter-results-count">
+                    Showing all layers
+                </div>
+            </div>
+            
+            <div class="table-container" style="position: relative;">
+                <table id="layers-table">
+                    <thead>
+                        <tr>
+                            <th class="checkbox-col"><input type="checkbox" id="master-layer-checkbox" onchange="toggleSelectAllLayers(this)"></th>
+                            <th style="width: 50px;">#</th>
+                            <th style="width: 30%;">Layer Name</th>
+                            <th style="width: 80px;">Kind</th>
+                            <th style="width: 120px;">Current Tag</th>
+                            <th style="width: 150px;">Manual Tag Override</th>
+                            <th style="width: 100px;">Confidence</th>
+                            <th style="width: 35%;">Surveyor Rule Path / Context</th>
+                        </tr>
+                    </thead>
+                    <tbody id="layers-tbody">
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 48px; color: var(--text-secondary);">
+                                Loading manifest composition data...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Floating Bulk Actions Bar -->
+            <div class="bulk-actions-bar" id="bulk-actions-bar">
+                <div class="bulk-info">
+                    <span class="bulk-count-badge" id="bulk-selected-count">0</span>
+                    <span>Layers Selected</span>
+                </div>
+                <div class="bulk-controls">
+                    <select class="bulk-select" id="bulk-tag-select">
+                        <option value="" disabled selected>Select tag...</option>
+                        <!-- custom tags will be added dynamically by JS -->
+                    </select>
+                    <button class="bulk-btn" onclick="applyBulkTag()">Apply Tag</button>
+                    <button class="bulk-btn bulk-btn-secondary" onclick="clearBulkTagOverrides()">Restore Heuristic</button>
+                    <button class="bulk-btn bulk-btn-secondary" onclick="deselectAllLayers()">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Loading overlay inside Right Panel -->
+            <div class="card-loading-overlay" id="tagging-loading-overlay">
+                <div class="mini-spinner"></div>
+                <div class="loading-text" id="tagging-loading-text">Applying overrides...</div>
+            </div>
+        </section>
+        
+        <!-- Batch Overlay Loader -->
+        <div class="overlay" id="exec-overlay">
+            <div class="progress-ring-container">
+                <svg class="progress-ring" width="100" height="100">
+                    <circle class="progress-ring-circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="5" fill="transparent" r="44" cx="50" cy="50"/>
+                    <circle class="progress-ring-circle" stroke-width="5" stroke-linecap="round" fill="transparent" r="44" cx="50" cy="50" stroke-dasharray="276.46" stroke-dashoffset="276.46" id="progress-circle"/>
+                </svg>
+                <div class="progress-pct-text" id="progress-text-pct">0%</div>
+            </div>
+            <div class="overlay-title" id="overlay-title-text">Conforming Batch Deliverables</div>
+            <div class="overlay-status" id="overlay-status-text">Processing targets queue...</div>
+            <button id="overlay-cancel-btn" style="width: auto; padding: 8px 20px; margin-top: 12px; display: none;" onclick="cancelBatchExecute()">Cancel</button>
+            <button id="overlay-retry-btn" style="width: auto; padding: 8px 20px; margin-top: 12px; display: none;" onclick="retryFailedTargets()">Retry Failed Targets</button>
+            <button id="overlay-close-btn" style="width: auto; padding: 8px 20px; margin-top: 12px; display: none;" onclick="closeOverlay()">Close Command Console</button>
+        </div>
+    </div>
+
+    <footer id="app-footer">
+        <div class="footer-spacer"></div>
+        <span class="footer-version" id="footer-version">&nbsp;</span>
+    </footer>
+
+    <!-- History modal — past conform runs (sessions of conform_report__*.html
+         files in the project directory), grouped and linked exactly like the
+         CEP panel's History tab, via /api/history + /api/report. -->
+    <div class="history-modal" id="history-modal">
+        <div class="history-modal-panel">
+            <div class="history-modal-header">
+                <h2 class="section-title">History</h2>
+                <button class="history-modal-close" onclick="closeHistoryModal()" aria-label="Close history">&times;</button>
+            </div>
+            <div class="history-modal-body" id="history-modal-body">
+                <div class="history-empty">Loading past runs...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let layersData = [];
+        let configData = {};
+        let isPollingStatus = false;
+        let activeTagPicker = null;
+        let currentFilterState = 'all';
+        let selectedLayers = new Set();
+        let scrollLockEnabled = true;
+
+        // Custom tags list for dropdown picker
+        const COMMON_TAGS = [
+            "HERO", "BGTEMP", "BGTRANS", "FGCOLLAPSE", "FGLEGAL", "FGGFX", "FGSTATIC", "FGKEYFRAME", "CAM3D", "LGT3D", "NULL3D"
+        ];
+
+        // Bleed slider connection
+        const slider = document.getElementById('bleed-slider');
+        const sliderVal = document.getElementById('bleed-val');
+        slider.addEventListener('input', (e) => {
+            sliderVal.textContent = parseFloat(e.target.value).toFixed(1) + '%';
+        });
+
+        // Initialize Splitter Dragging
+        // 2026-08-23: panels swapped (Conform & Deliverables Queue is now
+        // the left/anchor panel; Layers moved right) — leftPanel must
+        // track .panel-conforming, and the min-width constants below
+        // mirror the two panels' CSS min-widths in dashboard-base.css.
+        function initSplitter() {
+            const splitter = document.getElementById('panel-splitter');
+            const leftPanel = document.querySelector('.panel-conforming');
+            const workspace = document.querySelector('.workspace');
+            let isDragging = false;
+
+            splitter.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                splitter.classList.add('dragging');
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const workspaceRect = workspace.getBoundingClientRect();
+                const leftWidth = e.clientX - workspaceRect.left;
+                const totalWidth = workspaceRect.width;
+
+                const minLeft = 380; // .panel-conforming min-width
+                const maxLeft = totalWidth - 316; // 300px .panel-tagging min-width + 16px splitter
+
+                const percentage = (Math.max(minLeft, Math.min(leftWidth, maxLeft)) / totalWidth) * 100;
+                leftPanel.style.width = `${percentage}%`;
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    splitter.classList.remove('dragging');
+                    document.body.style.cursor = '';
+                    document.body.style.userSelect = '';
+                }
+            });
+        }
+
+        // Initialize App
+        window.addEventListener('load', async () => {
+            initSplitter();
+            populateBulkTagSelect();
+            _initQueueTypeahead();
+            _renderQueueChips();
+            initFocusAeToggle();
+            fetchVersionInfo();
+            await fetchEngineData();
+            await fetchManifest();
+            await checkLicenseStatus();
+
+            // Close tag pickers when clicking outside
+            document.addEventListener('click', (e) => {
+                if (activeTagPicker && !activeTagPicker.contains(e.target) && !e.target.classList.contains('tag-picker-btn')) {
+                    activeTagPicker.classList.remove('show');
+                    activeTagPicker = null;
+                }
+            });
+        });
+
+        // "Focus AE on Execute" — per-browser preference (this is a
+        // Dashboard-only display/workflow concern, not shared pipeline
+        // state, so localStorage is the right place for it, not
+        // state.json / preferences_state.py). Defaults on: most Dashboard
+        // use is one monitor, watching AE do the work. Flip off on a
+        // two-monitor rig where you'd rather the Dashboard stay in view.
+        const FOCUS_AE_STORAGE_KEY = 'dimension_focus_ae_on_execute';
+
+        function initFocusAeToggle() {
+            const checkbox = document.getElementById('focus-ae-checkbox');
+            if (!checkbox) return;
+            let stored;
+            try {
+                stored = localStorage.getItem(FOCUS_AE_STORAGE_KEY);
+            } catch (e) {
+                stored = null;
+            }
+            checkbox.checked = stored === null ? true : stored === 'true';
+            checkbox.addEventListener('change', () => {
+                try {
+                    localStorage.setItem(FOCUS_AE_STORAGE_KEY, String(checkbox.checked));
+                } catch (e) {
+                    // localStorage unavailable (private window, etc.) — the
+                    // toggle still works for this session, just won't persist.
+                }
+            });
+        }
+
+        function focusAeOnExecuteEnabled() {
+            const checkbox = document.getElementById('focus-ae-checkbox');
+            return checkbox ? checkbox.checked : false;
+        }
+
+        // Build-info footer — Python-side equivalent of the CEP panel's
+        // lower-right footer (main.js::initVersionFooter), since this
+        // page has no Node runtime to read manifest.xml / git itself.
+        async function fetchVersionInfo() {
+            const el = document.getElementById('footer-version');
+            if (!el) return;
+            try {
+                const response = await fetch('/api/version');
+                const data = await response.json();
+                if (data.status === 'ok') {
+                    el.textContent = `${data.version} · build ${data.build_date} · ${data.ref}`;
+                }
+            } catch (e) {
+                // non-fatal — footer just stays blank
+            }
+        }
+
+        function populateBulkTagSelect() {
+            const select = document.getElementById('bulk-tag-select');
+            select.innerHTML = '<option value="" disabled selected>Select tag...</option>' + 
+                COMMON_TAGS.map(t => `<option value="${t}">${t}</option>`).join('');
+        }
+
+        // Fetch profiles & targets config
+        async function fetchEngineData() {
+            try {
+                const response = await fetch('/api/data');
+                if (!response.ok) throw new Error('Data endpoint failed');
+                configData = await response.json();
+
+                // Populate Profile dropdown
+                const profileSelect = document.getElementById('profile-select');
+                profileSelect.innerHTML = configData.profiles.map(p =>
+                    `<option value="${p.id}">${p.name}</option>`
+                ).join('');
+
+                // Build the search index for the queue picker — same
+                // shape as the CEP panel's client-side window.PRESETS
+                // transform (main.js ~L294-312), just against this
+                // Dashboard's own /api/data response.
+                window.DASH_PRESETS = {};
+                for (const cat in configData.formats_grouped) {
+                    window.DASH_PRESETS[cat] = { formats: configData.formats_grouped[cat] };
+                }
+            } catch (err) {
+                console.error("Failed to load engine profiles/targets:", err);
+                appendConsoleLog(`Error: Failed to load config data from server.`, 'error');
+            }
+        }
+
+        // Fetch current Scraped Manifest
+        async function fetchManifest() {
+            try {
+                const response = await fetch('/api/manifest');
+                if (!response.ok) throw new Error('Manifest endpoint failed');
+                const data = await response.json();
+                
+                if (data.status === 'ok' && data.manifest && data.manifest.layers) {
+                    layersData = data.manifest.layers;
+                    deselectAllLayers();
+                    renderLayersTable(layersData);
+                    updateStatsBar();
+                    runCameraDepthPreflight(data.manifest);
+                    appendConsoleLog(`Loaded manifest containing ${layersData.length} layers successfully.`);
+                }
+            } catch (err) {
+                console.error("Failed to load manifest layers:", err);
+                document.getElementById('layers-tbody').innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 48px; color: var(--error);">
+                            Failed to read manifest.json. Is the server running with --source specified?
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Stats Bar Update
+        function updateStatsBar() {
+            const total = layersData.length;
+            const tagged = layersData.filter(l => l.content_tag).length;
+            const untagged = total - tagged;
+            
+            let sumConf = 0;
+            let confCount = 0;
+            layersData.forEach(l => {
+                if (l.content_tag) {
+                    const conf = typeof l.surveyor_confidence === 'number' ? l.surveyor_confidence : 1.0;
+                    sumConf += conf;
+                    confCount++;
+                }
+            });
+            const avgConf = confCount > 0 ? Math.round((sumConf / confCount) * 100) : 0;
+            
+            document.getElementById('stats-total').textContent = total;
+            document.getElementById('stats-tagged').textContent = tagged;
+            document.getElementById('stats-untagged').textContent = untagged;
+            document.getElementById('stats-confidence').textContent = `${avgConf}%`;
+        }
+
+        // Render Layers Table
+        function renderLayersTable(layers) {
+            const tbody = document.getElementById('layers-tbody');
+            if (layers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 24px; color: var(--text-secondary);">No layers found in manifest.</td></tr>`;
+                return;
+            }
+            
+            let html = '';
+            layers.forEach(layer => {
+                let kindIcon = '📄';
+                if (layer.layer_kind === 'comp') kindIcon = '📁';
+                else if (layer.layer_kind === 'camera') kindIcon = '📷';
+                else if (layer.layer_kind === 'light') kindIcon = '💡';
+                else if (layer.layer_kind === 'null') kindIcon = '⊘';
+                else if (layer.layer_kind === 'text') kindIcon = 'T';
+                else if (layer.layer_kind === 'shape') kindIcon = '◆';
+
+                // Tag Source Pill
+                let srcClass = '';
+                let srcLabel = layer.content_tag_source || 'heuristic';
+                if (srcLabel.startsWith('manual')) {
+                    srcClass = 'manual';
+                    srcLabel = 'manual';
+                } else if (srcLabel.startsWith('profile')) {
+                    srcClass = 'profile';
+                    srcLabel = 'profile';
+                }
+                const srcBadge = layer.content_tag ? `<span class="badge-src ${srcClass}">${srcLabel}</span>` : '';
+
+                // Tag pill
+                const tagBadge = layer.content_tag 
+                    ? `<span class="badge-tag">${layer.content_tag}</span>` 
+                    : `<span class="badge-tag untagged">untagged</span>`;
+
+                // Confidence styling
+                const confidence = typeof layer.surveyor_confidence === 'number' ? layer.surveyor_confidence : 1.0;
+                const confidencePct = Math.floor(confidence * 100);
+                let confColor = 'var(--success)';
+                if (confidence < 0.5) confColor = 'var(--error)';
+                else if (confidence < 0.8) confColor = 'var(--warning)';
+
+                // Reasoning
+                const rulePath = layer.surveyor_rule_path || '—';
+                const compName = layer.containing_comp_name || '';
+                const isSelected = selectedLayers.has(layer.uid);
+
+                html += `
+                    <tr class="layer-row ${isSelected ? 'selected-row' : ''}" data-uid="${layer.uid || ''}" data-index="${layer.index}" data-name="${layer.name}" data-comp="${compName}" data-tagged="${layer.content_tag ? 'true' : 'false'}" ondblclick="focusLayerInAE(this)">
+                        <td class="checkbox-col" onclick="event.stopPropagation();">
+                            <input type="checkbox" class="layer-checkbox" data-uid="${layer.uid}" ${isSelected ? 'checked' : ''} onchange="toggleSelectLayerRow('${layer.uid}', this)">
+                        </td>
+                        <td style="color: var(--text-tertiary); font-family: 'Fira Code', monospace;">${layer.index}</td>
+                        <td style="font-weight: 500;">
+                            <span class="kind-accent ${layer.layer_kind || 'av'}"></span>
+                            <span style="margin-right: 8px; font-size: 1rem;">${kindIcon}</span>
+                            ${layer.name}
+                        </td>
+                        <td><span class="badge-type">${layer.layer_kind || 'av'}</span></td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                ${tagBadge}
+                                ${srcBadge}
+                            </div>
+                        </td>
+                        <td class="tag-select-cell">
+                            <button class="tag-picker-btn" onclick="toggleTagPicker(event, this)">
+                                ${layer.content_tag_source && layer.content_tag_source.startsWith('manual') ? 'Change Tag' : 'Add Override'} ▾
+                            </button>
+                            <div class="floating-tag-picker">
+                                ${COMMON_TAGS.map(t => `
+                                    <div class="tag-option" onclick="applyTagOverride(event, '${layer.uid}', '${t}', ${layer.index}, '${layer.name}', '${compName}')">
+                                        ${t}
+                                    </div>
+                                `).join('')}
+                                <div class="tag-option clear-btn" onclick="clearTagOverride(event, '${layer.uid}', ${layer.index}, '${layer.name}', '${compName}')">
+                                    Restore Heuristic
+                                </div>
+                            </div>
+                        </td>
+                        <td class="confidence-cell">
+                            <span style="font-family: 'Fira Code', monospace; width: 32px; font-size: 0.8rem; font-weight: 600; color: ${confColor};">${confidencePct}%</span>
+                            <div class="confidence-bar-bg">
+                                <div class="confidence-bar-fill" style="width: ${confidencePct}%; background-color: ${confColor};"></div>
+                            </div>
+                        </td>
+                        <td class="reason-cell" title="${rulePath}">${rulePath}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+            applyFilters();
+        }
+
+        // Set Layer Filter (All, Tagged, Untagged)
+        function setLayerFilter(mode) {
+            currentFilterState = mode;
+            
+            // Update active state in UI
+            document.querySelectorAll('.filter-tab').forEach(btn => {
+                btn.classList.toggle('active', btn.id === `filter-${mode}`);
+            });
+            
+            applyFilters();
+        }
+
+        // Unified Filter application (checks Text Search and Tag/Untag tabs)
+        function applyFilters() {
+            const query = document.getElementById('layer-search').value.toLowerCase().trim();
+            const rows = document.querySelectorAll('.layer-row');
+            let visibleCount = 0;
+            
+            rows.forEach(row => {
+                const name = row.getAttribute('data-name').toLowerCase();
+                const uid = row.getAttribute('data-uid').toLowerCase();
+                const isTagged = row.getAttribute('data-tagged') === 'true';
+                
+                // Find tag and rule in cells (adjusted for 1-based index with checkbox col at 0)
+                const cells = row.getElementsByTagName('td');
+                const tag = cells[4].textContent.toLowerCase();
+                const rule = cells[7].textContent.toLowerCase();
+                
+                // 1. Check Status Filter
+                let matchesStatus = true;
+                if (currentFilterState === 'tagged' && !isTagged) matchesStatus = false;
+                if (currentFilterState === 'untagged' && isTagged) matchesStatus = false;
+                
+                // 2. Check Text Query
+                let matchesQuery = true;
+                if (query) {
+                    matchesQuery = name.includes(query) || tag.includes(query) || rule.includes(query) || uid.includes(query);
+                }
+                
+                // Show/hide row
+                if (matchesStatus && matchesQuery) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            // Update results label
+            const label = document.getElementById('filter-results-count');
+            let statusText = currentFilterState === 'all' ? 'all layers' : currentFilterState;
+            label.textContent = `Showing ${visibleCount} of ${layersData.length} ${statusText}`;
+            
+            // Sync check all state
+            syncMasterCheckboxState();
+        }
+
+        // Selection & Checkbox operations
+        function toggleSelectAllLayers(masterCb) {
+            const rows = document.querySelectorAll('.layer-row');
+            rows.forEach(row => {
+                // Only select visible rows
+                if (row.style.display !== 'none') {
+                    const uid = row.getAttribute('data-uid');
+                    const cb = row.querySelector('.layer-checkbox');
+                    if (cb) {
+                        cb.checked = masterCb.checked;
+                        if (masterCb.checked) {
+                            selectedLayers.add(uid);
+                            row.classList.add('selected-row');
+                        } else {
+                            selectedLayers.delete(uid);
+                            row.classList.remove('selected-row');
+                        }
+                    }
+                }
+            });
+            syncCheckboxStates();
+        }
+
+        function toggleSelectLayerRow(uid, cb) {
+            const row = cb.closest('tr');
+            if (cb.checked) {
+                selectedLayers.add(uid);
+                if (row) row.classList.add('selected-row');
+            } else {
+                selectedLayers.delete(uid);
+                if (row) row.classList.remove('selected-row');
+            }
+            syncCheckboxStates();
+        }
+
+        function syncMasterCheckboxState() {
+            const masterCb = document.getElementById('master-layer-checkbox');
+            if (!masterCb) return;
+            
+            const visibleCbs = Array.from(document.querySelectorAll('.layer-row'))
+                .filter(row => row.style.display !== 'none')
+                .map(row => row.querySelector('.layer-checkbox'))
+                .filter(Boolean);
+                
+            if (visibleCbs.length === 0) {
+                masterCb.checked = false;
+                return;
+            }
+            
+            const allChecked = visibleCbs.every(cb => cb.checked);
+            masterCb.checked = allChecked;
+        }
+
+        function syncCheckboxStates() {
+            const count = selectedLayers.size;
+            document.getElementById('bulk-selected-count').textContent = count;
+            
+            const bar = document.getElementById('bulk-actions-bar');
+            if (count > 0) {
+                bar.classList.add('show');
+            } else {
+                bar.classList.remove('show');
+            }
+            
+            syncMasterCheckboxState();
+        }
+
+        function deselectAllLayers() {
+            selectedLayers.clear();
+            document.querySelectorAll('.layer-checkbox').forEach(cb => cb.checked = false);
+            document.querySelectorAll('.layer-row').forEach(row => row.classList.remove('selected-row'));
+            syncCheckboxStates();
+        }
+
+        // Bulk operations action methods
+        async function applyBulkTag() {
+            const tagSelect = document.getElementById('bulk-tag-select');
+            const tag = tagSelect.value;
+            if (!tag) {
+                alert("Please select a tag to apply.");
+                return;
+            }
+            
+            const count = selectedLayers.size;
+            if (!confirm(`Apply manual override [${tag}] to ${count} selected layer(s)?`)) return;
+            
+            // Gather selected layers info
+            const selectedUids = Array.from(selectedLayers);
+            const targets = layersData.filter(l => selectedLayers.has(l.uid));
+            
+            const overlay = document.getElementById('tagging-loading-overlay');
+            const overlayText = document.getElementById('tagging-loading-text');
+            overlayText.textContent = `Applying tag override [${tag}] to ${count} layers...`;
+            overlay.classList.add('active');
+            
+            appendConsoleLog(`Starting bulk tag overrides of ${count} layers...`);
+            
+            let success = 0;
+            let failed = 0;
+            
+            for (let i = 0; i < targets.length; i++) {
+                const layer = targets[i];
+                overlayText.textContent = `Tagging (${i + 1}/${count}): ${layer.name}...`;
+                try {
+                    const response = await fetch('/api/apply-tag', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            uid: layer.uid,
+                            tag: tag,
+                            layer_index: layer.index,
+                            layer_name: layer.name,
+                            comp_name: layer.containing_comp_name || ''
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.result.status === 'OK') {
+                            success++;
+                        } else {
+                            failed++;
+                            appendConsoleLog(`Failed to tag layer "${layer.name}": ${data.result.error || data.result.status}`, 'error');
+                        }
+                    } else {
+                        failed++;
+                    }
+                } catch (err) {
+                    failed++;
+                    appendConsoleLog(`Connection error tagging "${layer.name}": ${err.message}`, 'error');
+                }
+            }
+            
+            overlay.classList.remove('active');
+            appendConsoleLog(`Bulk tag complete: ${success} succeeded, ${failed} failed.`, success > 0 ? 'ae' : 'error');
+            
+            tagSelect.selectedIndex = 0;
+            await fetchManifest();
+        }
+
+        async function clearBulkTagOverrides() {
+            const count = selectedLayers.size;
+            if (!confirm(`Clear manual tag overrides and restore heuristics for ${count} selected layer(s)?`)) return;
+            
+            const selectedUids = Array.from(selectedLayers);
+            const targets = layersData.filter(l => selectedLayers.has(l.uid));
+            
+            const overlay = document.getElementById('tagging-loading-overlay');
+            const overlayText = document.getElementById('tagging-loading-text');
+            overlayText.textContent = `Restoring heuristics for ${count} layers...`;
+            overlay.classList.add('active');
+            
+            appendConsoleLog(`Clearing overrides for ${count} layers...`);
+            
+            let success = 0;
+            let failed = 0;
+            
+            for (let i = 0; i < targets.length; i++) {
+                const layer = targets[i];
+                overlayText.textContent = `Restoring (${i + 1}/${count}): ${layer.name}...`;
+                try {
+                    const response = await fetch('/api/clear-tag', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            uid: layer.uid,
+                            layer_index: layer.index,
+                            layer_name: layer.name,
+                            comp_name: layer.containing_comp_name || ''
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.result.status === 'OK') {
+                            success++;
+                        } else {
+                            failed++;
+                            appendConsoleLog(`Failed to restore layer "${layer.name}": ${data.result.error || data.result.status}`, 'error');
+                        }
+                    } else {
+                        failed++;
+                    }
+                } catch (err) {
+                    failed++;
+                    appendConsoleLog(`Connection error clearing "${layer.name}": ${err.message}`, 'error');
+                }
+            }
+            
+            overlay.classList.remove('active');
+            appendConsoleLog(`Bulk restore complete: ${success} succeeded, ${failed} failed.`, success > 0 ? 'ae' : 'error');
+            
+            await fetchManifest();
+        }
+
+        // Wrapper for text input filtering
+        function filterLayersTable() {
+            applyFilters();
+        }
+
+        // Console logs helper actions
+        function clearConsoleLogs() {
+            const consoleBody = document.getElementById('console-log-body');
+            consoleBody.innerHTML = '<p class="log-row">> Console logs cleared.</p>';
+        }
+
+        function toggleScrollLock() {
+            scrollLockEnabled = !scrollLockEnabled;
+            const btn = document.getElementById('btn-scroll-lock');
+            btn.classList.toggle('active', scrollLockEnabled);
+            appendConsoleLog(`Auto-Scroll is now ${scrollLockEnabled ? 'enabled' : 'disabled'}.`);
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // AI Queue Builder — search + queue target picker
+        // Ported from cep/js/main.js's _queueTargets/_pushQueueChip/
+        // _renderQueueChips/typeahead (2026-07-21). Every BB.*/csInterface
+        // call in the CEP original is replaced with a fetch() against
+        // this Dashboard's own /api/* routes — there's no Node/CEP bridge
+        // in a plain browser tab.
+        // ─────────────────────────────────────────────────────────────
+        let _queueTargets = [];
+
+        function _allDashFormats() {
+            const out = [];
+            const presets = window.DASH_PRESETS || {};
+            for (const cat in presets) {
+                for (const fmt of (presets[cat].formats || [])) {
+                    out.push({ ...fmt, category: cat });
+                }
+            }
+            return out;
+        }
+
+        function _pushQueueChip(presetId, label, width, height, duration, fps) {
+            _queueTargets.push({ presetId: presetId || null, label, width, height, duration: duration || null, fps: fps || null });
+            _renderQueueChips();
+        }
+
+        function _renderQueueChips() {
+            const badge = document.getElementById('queue-count-badge');
+            badge.textContent = _queueTargets.length;
+
+            const list = document.getElementById('ai-queue-chips');
+            const empty = document.getElementById('ai-queue-empty');
+            if (_queueTargets.length === 0) {
+                list.innerHTML = '';
+                empty.classList.remove('hidden');
+            } else {
+                empty.classList.add('hidden');
+                list.innerHTML = _queueTargets.map((t, i) => `
+                    <div class="queue-chip">
+                        <span class="queue-chip-label">${t.label}</span>
+                        <span class="queue-chip-dims">${t.width}×${t.height}</span>
+                        <button class="queue-chip-remove" onclick="_removeQueueChip(${i})">×</button>
+                    </div>
+                `).join('');
+            }
+            _updateExecuteButtonLabel();
+        }
+
+        function _removeQueueChip(index) {
+            _queueTargets.splice(index, 1);
+            _renderQueueChips();
+        }
+
+        function _updateExecuteButtonLabel() {
+            const btn = document.getElementById('btn-execute-batch');
+            if (!btn) return;
+            if (_queueTargets.length > 0) {
+                btn.textContent = _queueTargets.length === 1
+                    ? 'Execute Batch Conform'
+                    : `Execute ${_queueTargets.length} Targets`;
+                btn.disabled = false;
+            } else {
+                btn.textContent = 'Add targets above';
+                btn.disabled = true;
+            }
+        }
+
+        function addCustomSizeToQueue() {
+            const w = parseInt(document.getElementById('custom-width').value, 10);
+            const h = parseInt(document.getElementById('custom-height').value, 10);
+            if (!w || !h) {
+                alert('Enter a valid width and height.');
+                return;
+            }
+            const duration = parseFloat(document.getElementById('custom-duration').value) || null;
+            const fps = parseFloat(document.getElementById('custom-fps').value) || null;
+            _pushQueueChip(null, `${w}×${h}`, w, h, duration, fps);
+            document.getElementById('custom-format-inputs').classList.add('hidden');
+            document.getElementById('ai-queue-input').value = '';
+        }
+
+        // ── Live typeahead dropdown ─────────────────────────────────────
+        let _ddHighlightIndex = -1;
+        let _ddResults = [];
+
+        function _searchDashFormats(query) {
+            if (!query) return [];
+            const q = query.toLowerCase().split(/\s+/).filter(Boolean);
+            const results = [];
+            for (const fmt of _allDashFormats()) {
+                const haystack = `${fmt.category} ${fmt.name}`.toLowerCase();
+                if (q.every(word => haystack.includes(word))) {
+                    results.push(fmt);
+                }
+                if (results.length >= 8) break;
+            }
+            return results;
+        }
+
+        function _showDashDropdown(results) {
+            _ddResults = results;
+            _ddHighlightIndex = -1;
+            const dd = document.getElementById('ai-queue-dropdown');
+            if (results.length === 0) {
+                dd.classList.add('hidden');
+                dd.innerHTML = '';
+                return;
+            }
+            dd.innerHTML = results.map((r, i) => `
+                <div class="queue-dd-item" data-index="${i}" onclick="_selectDashDropdownResult(${i})">
+                    <span class="queue-dd-cat">${r.category}</span>
+                    <span class="queue-dd-name">${r.name}</span>
+                    <span class="queue-dd-dims">${r.width}×${r.height}</span>
+                </div>
+            `).join('');
+            dd.classList.remove('hidden');
+        }
+
+        function _selectDashDropdownResult(i) {
+            const r = _ddResults[i];
+            if (!r) return;
+            _pushQueueChip(r.id, `${r.category} · ${r.name}`, r.width, r.height);
+            document.getElementById('ai-queue-input').value = '';
+            document.getElementById('ai-queue-dropdown').classList.add('hidden');
+            document.getElementById('custom-format-inputs').classList.add('hidden');
+        }
+
+        function _initQueueTypeahead() {
+            const input = document.getElementById('ai-queue-input');
+            const dd = document.getElementById('ai-queue-dropdown');
+            const customInputs = document.getElementById('custom-format-inputs');
+
+            input.addEventListener('input', () => {
+                const query = input.value.trim();
+                if (!query) {
+                    dd.classList.add('hidden');
+                    customInputs.classList.add('hidden');
+                    return;
+                }
+                const results = _searchDashFormats(query);
+                _showDashDropdown(results);
+                if (results.length === 0) {
+                    customInputs.classList.remove('hidden');
+                } else {
+                    customInputs.classList.add('hidden');
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (dd.classList.contains('hidden')) return;
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    _ddHighlightIndex = Math.min(_ddHighlightIndex + 1, _ddResults.length - 1);
+                    _paintDashDropdownHighlight();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    _ddHighlightIndex = Math.max(_ddHighlightIndex - 1, 0);
+                    _paintDashDropdownHighlight();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (_ddHighlightIndex >= 0) _selectDashDropdownResult(_ddHighlightIndex);
+                } else if (e.key === 'Escape') {
+                    dd.classList.add('hidden');
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!input.contains(e.target) && !dd.contains(e.target)) {
+                    dd.classList.add('hidden');
+                }
+            });
+        }
+
+        function _paintDashDropdownHighlight() {
+            document.querySelectorAll('.queue-dd-item').forEach((el, i) => {
+                el.classList.toggle('is-highlighted', i === _ddHighlightIndex);
+            });
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // Advanced disclosure (Style References + Layout)
+        // ─────────────────────────────────────────────────────────────
+        function toggleOverridePanel() {
+            const panel = document.getElementById('override-panel');
+            const toggle = document.getElementById('btn-override-toggle');
+            const isOpen = !panel.classList.contains('hidden');
+            panel.classList.toggle('hidden', isOpen);
+            toggle.classList.toggle('is-open', !isOpen);
+            document.getElementById('override-caret').textContent = isOpen ? '▸' : '▾';
+        }
+
+        // ── Camera Depth Mode (Autonomous Math Determination) ─────────
+        // Retired intrusive #camera-depth-card UI banner (#273).
+        // The Math Engine in scale_engine.py auto-detects Mode K vs S.
+        // ─────────────────────────────────────────────────────────────
+        function runCameraDepthPreflight(manifestData) {
+            // Autonomous: Math Engine automatically selects Mode K for animated depth, Mode S for static.
+        }
+
+        async function saveConformOption(key, value) {
+            try {
+                await fetch('/api/save-conform-option', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key, value }),
+                });
+            } catch (err) {
+                console.error('Failed to save conform option:', err);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // License status badge + blocked-state banner. Gate itself is
+        // enforced server-side (dimension_server.py's /api/execute-batch)
+        // — this is UI polish on top, not a substitute for it. The
+        // Dashboard has no activation flow of its own (license state is
+        // shared with the CEP panel via the same state.json); a blocked
+        // user is told to activate over there.
+        // ─────────────────────────────────────────────────────────────
+        const _LICENSE_BADGE_TEXT = {
+            trial: (s) => `BETA · ${s.daysRemaining}D`,
+            full: () => 'LICENSED',
+            bypass: () => 'BYPASS',
+            expired: () => 'EXPIRED',
+            revoked: () => 'REVOKED',
+            none: () => 'UNACTIVATED',
+        };
+        const _LICENSE_BADGE_CLASS = {
+            trial: 'license-badge--trial',
+            full: 'license-badge--full',
+            bypass: 'license-badge--bypass',
+            expired: 'license-badge--danger',
+            revoked: 'license-badge--danger',
+            none: 'license-badge--none',
+        };
+
+        async function checkLicenseStatus() {
+            try {
+                const res = await fetch('/api/license/status');
+                const body = await res.json();
+                renderLicenseBadge(body.license);
+                return body.license;
+            } catch (err) {
+                console.error('Failed to check license status:', err);
+                return { canUsePipeline: false, status: 'none' };
+            }
+        }
+
+        function renderLicenseBadge(status) {
+            const badge = document.getElementById('license-badge');
+            badge.classList.remove('hidden', ...Object.values(_LICENSE_BADGE_CLASS));
+            badge.classList.add(_LICENSE_BADGE_CLASS[status.status] || 'license-badge--none');
+            const textFn = _LICENSE_BADGE_TEXT[status.status] || _LICENSE_BADGE_TEXT.none;
+            badge.textContent = textFn(status);
+        }
+
+        function showLicenseBlockedBanner(message) {
+            const banner = document.getElementById('license-blocked-banner');
+            banner.textContent = message;
+            banner.classList.remove('hidden');
+        }
+
+        function hideLicenseBlockedBanner() {
+            document.getElementById('license-blocked-banner').classList.add('hidden');
+        }
+
+        // Floating Tag Picker
+        function toggleTagPicker(event, button) {
+            event.stopPropagation();
+            const picker = button.nextElementSibling;
+            
+            // Close any active picker first
+            if (activeTagPicker && activeTagPicker !== picker) {
+                activeTagPicker.classList.remove('show');
+            }
+            
+            picker.classList.toggle('show');
+            activeTagPicker = picker.classList.contains('show') ? picker : null;
+        }
+
+        // double-click View Layer in AE
+        async function focusLayerInAE(row) {
+            const uid = row.getAttribute('data-uid');
+            const idx = parseInt(row.getAttribute('data-index'));
+            const name = row.getAttribute('data-name');
+            const comp = row.getAttribute('data-comp');
+            
+            appendConsoleLog(`Requesting AE select layer: "${name}" [idx: ${idx}]...`);
+            
+            try {
+                const response = await fetch('/api/select-layer', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        uid: uid,
+                        layer_index: idx,
+                        layer_name: name,
+                        comp_name: comp
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.result.status === 'OK') {
+                        appendConsoleLog(`AE selected layer successfully.`, 'ae');
+                    } else {
+                        appendConsoleLog(`AE select failed: ${data.result.error || data.result.status}`, 'warning');
+                    }
+                }
+            } catch (err) {
+                console.error("View in AE failed:", err);
+                appendConsoleLog(`Error: Network issue talking to bridge.`, 'error');
+            }
+        }
+
+        // Apply Manual Tag Override
+        async function applyTagOverride(event, uid, tag, idx, name, comp) {
+            event.stopPropagation();
+            if (activeTagPicker) {
+                activeTagPicker.classList.remove('show');
+                activeTagPicker = null;
+            }
+            
+            appendConsoleLog(`Applying tag override [${tag}] to layer "${name}"...`);
+            
+            try {
+                const response = await fetch('/api/apply-tag', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        uid: uid,
+                        tag: tag,
+                        layer_index: idx,
+                        layer_name: name,
+                        comp_name: comp
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.result.status === 'OK') {
+                        appendConsoleLog(`Tag override successfully written in AE composition.`, 'ae');
+                        await fetchManifest(); // Reload manifest from disk
+                    } else {
+                        appendConsoleLog(`Tag-write failed: ${data.result.error || data.result.status}`, 'error');
+                        alert(`Tag write failed: ${data.result.error || data.result.status}`);
+                    }
+                }
+            } catch (err) {
+                console.error("Tag override failed:", err);
+                appendConsoleLog(`Error: Network connection failed.`, 'error');
+            }
+        }
+
+        // Clear Tag Override
+        async function clearTagOverride(event, uid, idx, name, comp) {
+            event.stopPropagation();
+            if (activeTagPicker) {
+                activeTagPicker.classList.remove('show');
+                activeTagPicker = null;
+            }
+            
+            appendConsoleLog(`Clearing manual tag override on layer "${name}"...`);
+            
+            try {
+                const response = await fetch('/api/clear-tag', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        uid: uid,
+                        layer_index: idx,
+                        layer_name: name,
+                        comp_name: comp
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.result.status === 'OK') {
+                        appendConsoleLog(`Manual overrides cleared in AE. Surveyor restored.`, 'ae');
+                        await fetchManifest();
+                    } else {
+                        appendConsoleLog(`Clear-tag failed: ${data.result.error || data.result.status}`, 'error');
+                        alert(`Clear tag failed: ${data.result.error || data.result.status}`);
+                    }
+                }
+            } catch (err) {
+                console.error("Clear tag failed:", err);
+                appendConsoleLog(`Error: Network connection failed.`, 'error');
+            }
+        }
+
+        // Trigger Batch Execution
+        async function triggerBatchExecute() {
+            if (_queueTargets.length === 0) {
+                alert("Please add at least one target to the queue above.");
+                return;
+            }
+            const targets = _queueTargets.map(t =>
+                t.presetId
+                    ? { preset: t.presetId }
+                    : { width: t.width, height: t.height, name: t.label, duration: t.duration, fps: t.fps }
+            );
+
+            if (!confirm(`Trigger conform matrix execution for ${targets.length} targets?`)) {
+                return;
+            }
+            await _startBatchExecute(targets);
+        }
+
+        // Re-run only the target(s) that failed conform in the last batch.
+        // Reads execution_state["target_results"] (last captured by
+        // pollStatus) rather than re-deriving from the queue UI, so a
+        // retry is exactly the failed subset regardless of what's
+        // currently queued.
+        async function retryFailedTargets() {
+            const failed = (_lastTargetResults || []).filter(r => !r.success).map(r => r.target);
+            if (failed.length === 0) return;
+            if (!confirm(`Retry ${failed.length} failed target(s)?`)) return;
+            await _startBatchExecute(failed);
+        }
+
+        async function _startBatchExecute(targets) {
+            hideLicenseBlockedBanner();
+            const preflightStatus = await checkLicenseStatus();
+            if (!preflightStatus.canUsePipeline) {
+                showLicenseBlockedBanner(
+                    'Your Dimension trial needs activating (or has expired) — open the ' +
+                    'Dimension panel in After Effects to activate, then retry.'
+                );
+                return;
+            }
+
+            const profile = document.getElementById('profile-select').value;
+            const mode = document.getElementById('mode-select').value;
+            const bleed = parseFloat(document.getElementById('bleed-slider').value);
+            const layout = document.getElementById('layout-select').value;
+
+            appendConsoleLog(`Starting batch queue execute trigger...`);
+            requestNotificationPermissionIfNeeded();
+
+            try {
+                const response = await fetch('/api/execute-batch', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        profile: profile,
+                        mode: mode,
+                        bleed: bleed,
+                        layout: layout,
+                        targets: targets,
+                        focus_ae: focusAeOnExecuteEnabled()
+                    })
+                });
+
+                const data = await response.json();
+                if (response.ok && data.status === 'ok') {
+                    // Open Overlay
+                    document.getElementById('exec-overlay').classList.add('active');
+                    document.getElementById('console-pulse').classList.add('active');
+                    document.getElementById('overlay-close-btn').style.display = 'none';
+                    document.getElementById('overlay-retry-btn').style.display = 'none';
+                    document.getElementById('overlay-cancel-btn').style.display = 'inline-block';
+                    document.getElementById('overlay-cancel-btn').disabled = false;
+                    document.getElementById('overlay-cancel-btn').textContent = 'Cancel';
+                    updateProgressRing(0);
+
+                    // Start polling
+                    isPollingStatus = true;
+                    pollStatus();
+                } else if (data.code === 'license_blocked') {
+                    showLicenseBlockedBanner(data.message);
+                } else {
+                    alert(`Batch failed: ${data.message || 'unknown error'}`);
+                }
+            } catch (err) {
+                console.error("Batch execute failed:", err);
+                appendConsoleLog(`Error: Failed to post execute job to local server.`, 'error');
+            }
+        }
+
+        async function cancelBatchExecute() {
+            const btn = document.getElementById('overlay-cancel-btn');
+            btn.disabled = true;
+            btn.textContent = 'Cancelling…';
+            try {
+                const response = await fetch('/api/execute-batch/cancel', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: '{}' });
+                const data = await response.json();
+                appendConsoleLog(data.message || 'Cancel requested.', response.ok ? '' : 'error');
+            } catch (err) {
+                appendConsoleLog('Error: Failed to reach local server to cancel.', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Cancel';
+            }
+        }
+
+        // Poll execution status
+        let lastLogIndex = 0;
+        let _lastTargetResults = [];
+
+        async function pollStatus() {
+            if (!isPollingStatus) return;
+
+            try {
+                const response = await fetch('/api/status');
+                if (response.ok) {
+                    const state = await response.json();
+                    _lastTargetResults = state.target_results || [];
+
+                    // Update progress ring & percentage text
+                    const pct = state.progress_pct || 0;
+                    updateProgressRing(pct);
+                    document.getElementById('progress-text-pct').textContent = `${pct}%`;
+                    document.getElementById('overlay-status-text').textContent = state.progress_text;
+
+                    // Cancel is meaningful for the whole run: during
+                    // conform it stops between targets; during inject
+                    // (pct >= 90) it writes inject_abort_request.json
+                    // so Babysitter stops at the next chunk boundary.
+                    const cancelBtn = document.getElementById('overlay-cancel-btn');
+                    if (state.status === 'running') {
+                        cancelBtn.style.display = 'inline-block';
+                    } else {
+                        cancelBtn.style.display = 'none';
+                    }
+
+                    // Render new logs
+                    if (state.logs && state.logs.length > lastLogIndex) {
+                        const newLogs = state.logs.slice(lastLogIndex);
+                        newLogs.forEach(log => {
+                            let type = '';
+                            if (log.toLowerCase().includes('error')) type = 'error';
+                            else if (log.toLowerCase().includes('warning') || log.includes('⚠')) type = 'warning';
+                            else if (log.startsWith('[AE Progress]') || log.startsWith('AE Injection')) type = 'ae';
+
+                            appendConsoleLog(log, type);
+                        });
+                        lastLogIndex = state.logs.length;
+                    }
+
+                    const hasFailedTargets = _lastTargetResults.some(r => !r.success);
+
+                    // Handle terminal state
+                    if (state.status === 'success') {
+                        isPollingStatus = false;
+                        document.getElementById('overlay-title-text').textContent = "Pipeline Execution Successful!";
+                        document.getElementById('overlay-status-text').textContent = state.progress_text;
+                        document.getElementById('overlay-close-btn').style.display = 'inline-block';
+                        document.getElementById('overlay-retry-btn').style.display = hasFailedTargets ? 'inline-block' : 'none';
+                        document.getElementById('console-pulse').classList.remove('active');
+                        appendConsoleLog("MATRIX BATCH SUCCESSFUL.", 'ae');
+                        notifyBatchComplete('Conform complete', state.progress_text);
+                    } else if (state.status === 'failed') {
+                        isPollingStatus = false;
+                        document.getElementById('overlay-title-text').textContent = "Pipeline Conform Failed";
+                        document.getElementById('overlay-status-text').innerHTML = `<span style="color: var(--error);">${state.error || 'Check console logs for details.'}</span>`;
+                        document.getElementById('overlay-close-btn').style.display = 'inline-block';
+                        document.getElementById('overlay-retry-btn').style.display = hasFailedTargets ? 'inline-block' : 'none';
+                        document.getElementById('console-pulse').classList.remove('active');
+                        appendConsoleLog("MATRIX BATCH FAILED.", 'error');
+                        notifyBatchComplete('Conform failed', state.error || 'Check the Dashboard for details.');
+                    } else if (state.status === 'cancelled') {
+                        isPollingStatus = false;
+                        document.getElementById('overlay-title-text').textContent = "Batch Cancelled";
+                        document.getElementById('overlay-status-text').textContent = state.progress_text;
+                        document.getElementById('overlay-close-btn').style.display = 'inline-block';
+                        document.getElementById('overlay-retry-btn').style.display = 'none';
+                        document.getElementById('console-pulse').classList.remove('active');
+                        appendConsoleLog("BATCH CANCELLED.", 'warning');
+                        notifyBatchComplete('Conform cancelled', state.progress_text);
+                    } else {
+                        // Keep polling
+                        setTimeout(pollStatus, 500);
+                    }
+                }
+            } catch (err) {
+                console.error("Poll status failed:", err);
+                setTimeout(pollStatus, 1000);
+            }
+        }
+
+        function closeOverlay() {
+            document.getElementById('exec-overlay').classList.remove('active');
+            lastLogIndex = 0;
+            // Refresh layers table just in case composition comments updated
+            fetchManifest();
+        }
+
+        // Completion notifications — most useful with "Focus AE on Execute"
+        // turned off (two-monitor setups), where nothing else tells you
+        // the Dashboard isn't being watched right now.
+        function requestNotificationPermissionIfNeeded() {
+            if (!('Notification' in window)) return;
+            if (Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+        }
+
+        function notifyBatchComplete(title, body) {
+            if (!('Notification' in window) || Notification.permission !== 'granted') return;
+            // Only notify if the tab isn't the one the user is looking at —
+            // no need to pop a system notification over what's already
+            // on screen.
+            if (document.visibilityState === 'visible' && document.hasFocus()) return;
+            try {
+                new Notification(title, { body: body || '', tag: 'dimension-batch-complete' });
+            } catch (e) {
+                // Notification construction can throw in some contexts
+                // (e.g. no OS permission despite Notification.permission
+                // reading 'granted' on some Linux setups) — never let a
+                // notification failure disrupt the actual batch result.
+            }
+        }
+
+        // ── History modal ────────────────────────────────────────────
+
+        function openHistoryModal() {
+            document.getElementById('history-modal').classList.add('active');
+            refreshHistoryModal();
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('history-modal').classList.remove('active');
+        }
+
+        async function refreshHistoryModal() {
+            const body = document.getElementById('history-modal-body');
+            body.innerHTML = '<div class="history-empty">Loading past runs...</div>';
+            try {
+                const response = await fetch('/api/history');
+                const data = await response.json();
+                renderHistorySessions(data.sessions || []);
+            } catch (err) {
+                body.innerHTML = '<div class="history-empty">Failed to load history — is the local server running?</div>';
+            }
+        }
+
+        function _formatSessionTimestamp(ms) {
+            const d = new Date(ms);
+            const now = new Date();
+            const sameDay = d.toDateString() === now.toDateString();
+            const yest = new Date(now.getTime() - 86400000);
+            const isYest = d.toDateString() === yest.toDateString();
+            const time = d.toTimeString().slice(0, 5);
+            if (sameDay) return `Today ${time}`;
+            if (isYest) return `Yesterday ${time}`;
+            return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' ' + time;
+        }
+
+        function renderHistorySessions(sessions) {
+            const body = document.getElementById('history-modal-body');
+            if (sessions.length === 0) {
+                body.innerHTML = '<div class="history-empty">No conform reports in this project yet — they\'ll show up here after your first Execute.</div>';
+                return;
+            }
+            body.innerHTML = sessions.map(session => {
+                const ts = _formatSessionTimestamp(session.first_mtime * 1000);
+                const reportLinks = session.reports.map(r => `
+                    <a class="history-report-link" href="/api/report?name=${encodeURIComponent(r.name)}" target="_blank" rel="noopener">
+                        ${r.slug} <span class="history-report-dims">${r.dims}</span>
+                    </a>
+                `).join('');
+                return `
+                    <div class="history-session">
+                        <div class="history-session-header">
+                            <span class="history-session-time">${ts}</span>
+                            <span class="history-session-count">${session.reports.length} report${session.reports.length === 1 ? '' : 's'}</span>
+                        </div>
+                        <div class="history-session-reports">${reportLinks}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // SVG progress ring calculation
+        function updateProgressRing(percent) {
+            const circle = document.getElementById('progress-circle');
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            const offset = circumference - (percent / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // Helper to append logs to custom terminal panel
+        function appendConsoleLog(text, type = '') {
+            const consoleBody = document.getElementById('console-log-body');
+            if (!consoleBody) return;
+            const p = document.createElement('p');
+            p.className = 'log-row';
+            if (type) p.classList.add(type);
+            
+            // Highlight prefixes
+            p.textContent = (type === 'ae' ? '' : '> ') + text;
+            consoleBody.appendChild(p);
+            
+            // Limit log nodes in DOM to 1000
+            if (consoleBody.children.length > 1000) {
+                consoleBody.removeChild(consoleBody.firstChild);
+            }
+            
+            if (scrollLockEnabled) {
+                consoleBody.scrollTop = consoleBody.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>

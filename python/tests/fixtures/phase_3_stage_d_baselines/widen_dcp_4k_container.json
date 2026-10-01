@@ -1,0 +1,3224 @@
+{
+  "status": "SAFE",
+  "layers": [
+    {
+      "id": 1600004801,
+      "index": 1,
+      "name": "CheckersAndMattes_3.0",
+      "uid": "19ddccddde8_ed1cba",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "comp",
+        "id": 889102244,
+        "name": "CheckersAndMattes_3.0",
+        "width": 1920,
+        "height": 1080,
+        "duration": 120.286953620287,
+        "pixel_aspect": 1.0,
+        "frame_rate": 23.9759979248047,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 120.286953620287,
+        "start_time": 0.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "GUIDE",
+      "content_tag_source": "structural",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "Checkers uid:19ddccddde8_ed1cba",
+      "source_rect": [
+        0.0,
+        0.0,
+        1920.0,
+        1080.0
+      ],
+      "world_bounds": {
+        "l": 0.0,
+        "t": 0.0,
+        "r": 1920.0,
+        "b": 1080.0
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 15,
+      "conformed_transforms": {
+        "is_root": false,
+        "position": [
+          960.0,
+          540.0,
+          0.0
+        ],
+        "scale": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          960.0,
+          540.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004758,
+      "index": 2,
+      "name": "Camera 1",
+      "uid": "19ddccddde9_b02df0",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "camera",
+      "threeD": true,
+      "position": [
+        960.0,
+        540.0,
+        -1948.01893285466
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "anchor": null,
+      "camera": {
+        "zoom": 2666.6666666,
+        "pointOfInterest": [
+          960.0,
+          540.0,
+          0.0
+        ],
+        "depthOfField": true,
+        "focusDistance": 1190.55118110236,
+        "aperture": 50.0,
+        "blurLevel": 100.0
+      },
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": {
+          "times": [
+            0.0,
+            6.75,
+            9.95833333333333
+          ],
+          "values": [
+            960,
+            960,
+            960
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6612,
+            6612
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6612,
+            6612
+          ]
+        },
+        "position_y": {
+          "times": [
+            0.0,
+            6.75,
+            9.95833333333333
+          ],
+          "values": [
+            540,
+            540,
+            540
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6612,
+            6612
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6612,
+            6612
+          ]
+        },
+        "position_z": {
+          "times": [
+            0.0,
+            6.75,
+            9.95833333333333
+          ],
+          "values": [
+            -366.6666666,
+            -2583.54464556255,
+            -2666.6666666
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6613,
+            6612
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6613,
+            6612
+          ]
+        },
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "undefined",
+        "quality": "undefined",
+        "sampling": "undefined",
+        "is_text_layer": false,
+        "has_video": false,
+        "has_audio": false,
+        "audio_enabled": false
+      },
+      "source_item": null,
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 10.0,
+        "start_time": -0.41666666666667,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": null,
+      "content_tag_source": null,
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "#HERO uid:19ddccddde9_b02df0",
+      "source_rect": null,
+      "world_bounds": null,
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE Camera Layer",
+      "label": 4,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2048.0,
+          1080.0,
+          -4155.7737234232745
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          210.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "camera": {
+          "zoom": 5688.888888746666,
+          "pointOfInterest": [
+            2048.0,
+            1080.0,
+            0.0
+          ],
+          "depthOfField": true,
+          "focusDistance": 2539.842519685035,
+          "aperture": 50.0,
+          "blurLevel": 100.0
+        },
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004803,
+      "index": 3,
+      "name": "Shake",
+      "uid": "19ddccddde9_003b19",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": false,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": true,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "solid",
+        "id": 1600004802,
+        "name": "Shake",
+        "width": 1920,
+        "height": 1080,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 10.0,
+        "start_time": 0.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "BOXART",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccddde9_003b19",
+      "source_rect": null,
+      "world_bounds": null,
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 5,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2066.390147816051,
+          1079.083262723142,
+          0.0
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          960.0,
+          540.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004757,
+      "index": 4,
+      "name": "Grain",
+      "uid": "19ddccddde9_deff0f",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": true,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "solid",
+        "id": 1600004674,
+        "name": "Grain",
+        "width": 1920,
+        "height": 1080,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 10.0,
+        "start_time": -0.41666666666667,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "BOXART",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccddde9_deff0f",
+      "source_rect": null,
+      "world_bounds": null,
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 5,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2066.390147816051,
+          1079.083262723142,
+          0.0
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          960.0,
+          540.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004755,
+      "index": 5,
+      "name": "EFX",
+      "uid": "19ddccddde9_d3080a",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": true,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "solid",
+        "id": 1600004672,
+        "name": "EFX",
+        "width": 1920,
+        "height": 1080,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 10.0,
+        "start_time": -0.41666666666667,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "BOXART",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "EFX uid:19ddccddde9_d3080a",
+      "source_rect": null,
+      "world_bounds": null,
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 5,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2066.390147816051,
+          1079.083262723142,
+          0.0
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          960.0,
+          540.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004754,
+      "index": 6,
+      "name": "Contrast_BW_Grunge_4.jpg",
+      "uid": "19ddccddde9_52a0ee",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        856.0,
+        400.0,
+        0.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        1174.0,
+        1540.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": {
+          "times": [
+            5.91666666666667,
+            7.95833333333333
+          ],
+          "values": [
+            100,
+            0
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6613
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6612
+          ]
+        },
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5226",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "footage",
+        "id": 1600004558,
+        "name": "Contrast_BW_Grunge_4.jpg",
+        "width": 2348,
+        "height": 3080,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": "/Volumes/Ciaglia10TB/WORK/PORTFOLIO/UNIVERSAL_PICTURES/2024/87N/87N_Reels_DEV_Grfx_Mstr_AE2021_mc folder/(Footage)/Assets/images/Contrast_BW_Grunge_4.jpg",
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 10.0,
+        "start_time": -0.41666666666667,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "BOXART",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccddde9_52a0ee",
+      "source_rect": [
+        0.0,
+        0.0,
+        2348.0,
+        3080.0
+      ],
+      "world_bounds": {
+        "l": -318.0,
+        "t": -1140.0,
+        "r": 2030.0,
+        "b": 1940.0
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 5,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          1847.9901478160511,
+          785.0832627231421,
+          0.0
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          1174.0,
+          1540.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004753,
+      "index": 7,
+      "name": "EVERYTHING  Outlines",
+      "uid": "19ddccdddea_308472",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": true,
+      "position": [
+        946.968383789062,
+        533.941711425781,
+        800.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "anchor": [
+        956.968383789062,
+        323.941711425781,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": {
+          "times": [
+            0.0,
+            0.83333333333333,
+            2.58333333333333
+          ],
+          "values": [
+            [
+              946.968383789062,
+              533.941711425781,
+              -774
+            ],
+            [
+              946.968383789062,
+              533.941711425781,
+              407
+            ],
+            [
+              946.968383789062,
+              533.941711425781,
+              800
+            ]
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6613,
+            6612
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6612,
+            6612
+          ]
+        },
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": {
+          "times": [
+            1.875,
+            2.125
+          ],
+          "values": [
+            100,
+            0
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6612
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6612
+          ]
+        },
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": true,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "solid",
+        "id": 1600004545,
+        "name": "EVERYTHING  Outlines",
+        "width": 1920,
+        "height": 1080,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 2.33333333333333,
+        "start_time": -8.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "TT",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddea_308472",
+      "source_rect": [
+        0.0,
+        0.0,
+        1920.0,
+        1080.0
+      ],
+      "world_bounds": {
+        "l": -10.0,
+        "t": 210.0,
+        "r": 1910.0,
+        "b": 1290.0
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": true,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 2,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2020.6336059570303,
+          336.5675989990233,
+          1680.0
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          210.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          956.968383789062,
+          323.941711425781,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004752,
+      "index": 8,
+      "name": "EVERYTHING ",
+      "uid": "19ddccdddea_89eb72",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        977.033081054688,
+        366.446105718613,
+        0.0
+      ],
+      "scale": [
+        131.0,
+        131.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": false,
+        "locked": false,
+        "shy": true,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": true,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": true,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": null,
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 6.95833333333333,
+        "start_time": -8.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "HERO",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddea_89eb72",
+      "source_rect": [
+        -332.037704652175,
+        -69.6982120387256,
+        634.06939734146,
+        74.5042121633887
+      ],
+      "world_bounds": {
+        "l": 542.063687960338,
+        "t": 275.141447947882,
+        "r": 1372.69459847765,
+        "b": 372.741965881921
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE Text Layer",
+      "label": 1,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2102.1596180308957,
+          714.6200847322294,
+          0.0
+        ],
+        "scale": [
+          275.1,
+          275.1,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004751,
+      "index": 9,
+      "name": "YOU WANT Outlines",
+      "uid": "19ddccdddea_020d02",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": true,
+      "position": [
+        946.968383789062,
+        533.941711425781,
+        800.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "anchor": [
+        949.442687988281,
+        433.723693847656,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": {
+          "times": [
+            1.04166666666667,
+            1.875,
+            3.70833333333333
+          ],
+          "values": [
+            [
+              946.968383789062,
+              533.941711425781,
+              -774
+            ],
+            [
+              946.968383789062,
+              533.941711425781,
+              407
+            ],
+            [
+              946.968383789062,
+              533.941711425781,
+              800
+            ]
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6613,
+            6612
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6612,
+            6612
+          ]
+        },
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": true,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "solid",
+        "id": 1600004547,
+        "name": "YOU WANT Outlines",
+        "width": 1920,
+        "height": 1080,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 1.04166666666667,
+        "out_point": 3.125,
+        "start_time": -9.04166666666667,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "TT",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddea_020d02",
+      "source_rect": [
+        0.0,
+        0.0,
+        1920.0,
+        1080.0
+      ],
+      "world_bounds": {
+        "l": -2.47430419921875,
+        "t": 100.218017578125,
+        "r": 1917.52569580078,
+        "b": 1180.21801757812
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": true,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 2,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2020.6336059570303,
+          336.5675989990233,
+          1680.0
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          210.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          949.442687988281,
+          433.723693847656,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004750,
+      "index": 10,
+      "name": "YOU WANT",
+      "uid": "19ddccdddea_d8ca5b",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        953.659393310547,
+        480.446105718613,
+        0.0
+      ],
+      "scale": [
+        144.0,
+        144.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": false,
+        "locked": false,
+        "shy": true,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": true,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": true,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": null,
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 6.95833333333333,
+        "start_time": -8.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "HERO",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddea_d8ca5b",
+      "source_rect": [
+        -283.180587952957,
+        -70.68414343521,
+        560.414734255522,
+        76.4760749563575
+      ],
+      "world_bounds": {
+        "l": 545.879346658289,
+        "t": 378.66093917191,
+        "r": 1352.87656398624,
+        "b": 488.786487109065
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE Text Layer",
+      "label": 1,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2053.0748737681997,
+          954.0200847322294,
+          0.0
+        ],
+        "scale": [
+          302.40000000000003,
+          302.40000000000003,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004749,
+      "index": 11,
+      "name": "IS ON THE Outlines",
+      "uid": "19ddccdddea_ed8bf5",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": true,
+      "position": [
+        946.968383789062,
+        533.941711425781,
+        721.40005864294
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "anchor": [
+        912.15087890625,
+        549.074768066406,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": {
+          "times": [
+            2.5,
+            3.33333333333333,
+            5.0
+          ],
+          "values": [
+            [
+              946.968383789062,
+              533.941711425781,
+              -774
+            ],
+            [
+              946.968383789062,
+              533.941711425781,
+              407
+            ],
+            [
+              946.968383789062,
+              533.941711425781,
+              800
+            ]
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6613,
+            6612
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6612,
+            6612
+          ]
+        },
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": true,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "solid",
+        "id": 1600004549,
+        "name": "IS ON THE Outlines",
+        "width": 1920,
+        "height": 1080,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 2.5,
+        "out_point": 4.625,
+        "start_time": -7.875,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "TT",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddea_ed8bf5",
+      "source_rect": [
+        0.0,
+        0.0,
+        1920.0,
+        1080.0
+      ],
+      "world_bounds": {
+        "l": 34.8175048828125,
+        "t": -15.133056640625,
+        "r": 1954.81750488281,
+        "b": 1064.86694335938
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": true,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 2,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2020.6336059570303,
+          336.5675989990233,
+          1514.9401231501743
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          210.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          912.15087890625,
+          549.074768066406,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004748,
+      "index": 12,
+      "name": "IS ON THE",
+      "uid": "19ddccdddea_4028aa",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        913.659393310547,
+        596.446105718613,
+        0.0
+      ],
+      "scale": [
+        146.0,
+        146.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": false,
+        "locked": false,
+        "shy": true,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": true,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": true,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": null,
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 6.95833333333333,
+        "start_time": -8.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "HERO",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddea_4028aa",
+      "source_rect": [
+        -248.739425843582,
+        -70.68414343521,
+        495.412323366851,
+        76.4760749563575
+      ],
+      "world_bounds": {
+        "l": 550.499831578918,
+        "t": 493.247256303206,
+        "r": 1273.80182369452,
+        "b": 604.902325739488
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE Text Layer",
+      "label": 1,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          1969.0748737681997,
+          1197.6200847322295,
+          0.0
+        ],
+        "scale": [
+          306.6,
+          306.6,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004747,
+      "index": 13,
+      "name": "OTHER SIDE Outlines",
+      "uid": "19ddccdddeb_87f6a9",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": true,
+      "position": [
+        946.968383789062,
+        533.941711425781,
+        407.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "anchor": [
+        977.075134277344,
+        641.5107421875,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": true,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "solid",
+        "id": 1600004551,
+        "name": "OTHER SIDE Outlines",
+        "width": 1920,
+        "height": 1080,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 3.91666666666667,
+        "out_point": 5.66666666666667,
+        "start_time": -6.75,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "TT",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddeb_87f6a9",
+      "source_rect": [
+        0.0,
+        0.0,
+        1920.0,
+        1080.0
+      ],
+      "world_bounds": {
+        "l": -30.1067504882814,
+        "t": -107.569030761719,
+        "r": 1889.89324951172,
+        "b": 972.430969238281
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 2,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2020.6336059570303,
+          336.5675989990233,
+          854.7
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          210.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          977.075134277344,
+          641.5107421875,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004746,
+      "index": 14,
+      "name": "OTHER SIDE",
+      "uid": "19ddccdddeb_5f728f",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        979.659393310547,
+        680.446105718613,
+        0.0
+      ],
+      "scale": [
+        120.0,
+        120.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": false,
+        "locked": false,
+        "shy": true,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": true,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": true,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": null,
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 6.95833333333333,
+        "start_time": -8.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "HERO",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddeb_5f728f",
+      "source_rect": [
+        -297.908874880522,
+        -70.68414343521,
+        589.107407169417,
+        76.4760749563575
+      ],
+      "world_bounds": {
+        "l": 622.16874345392,
+        "t": 595.625133596361,
+        "r": 1329.09763205722,
+        "b": 687.39642354399
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE Text Layer",
+      "label": 1,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2107.6748737681996,
+          1374.0200847322294,
+          0.0
+        ],
+        "scale": [
+          252.0,
+          252.0,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004745,
+      "index": 15,
+      "name": "OF FEAR Outlines",
+      "uid": "19ddccdddeb_a158df",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": true,
+      "position": [
+        946.968383789062,
+        533.941711425781,
+        -1764.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "anchor": [
+        988.26904296875,
+        762.367553710938,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": {
+          "times": [
+            5.33333333333333,
+            6.20833333333333,
+            7.125
+          ],
+          "values": [
+            [
+              946.968383789062,
+              533.941711425781,
+              -1764
+            ],
+            [
+              946.968383789062,
+              533.941711425781,
+              407
+            ],
+            [
+              946.968383789062,
+              533.941711425781,
+              800
+            ]
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6613,
+            6612
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6612,
+            6612
+          ]
+        },
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": true,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "solid",
+        "id": 1600004553,
+        "name": "OF FEAR Outlines",
+        "width": 1920,
+        "height": 1080,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 5.33333333333333,
+        "out_point": 7.16666666666667,
+        "start_time": -5.58333333333333,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "TT",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddeb_a158df",
+      "source_rect": [
+        0.0,
+        0.0,
+        1920.0,
+        1080.0
+      ],
+      "world_bounds": {
+        "l": -41.3006591796874,
+        "t": -228.425842285156,
+        "r": 1878.69934082031,
+        "b": 851.574157714844
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": true,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 2,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2020.6336059570303,
+          336.5675989990233,
+          -3704.4
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          210.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          988.26904296875,
+          762.367553710938,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004744,
+      "index": 16,
+      "name": "OF FEAR",
+      "uid": "19ddccdddeb_427ba7",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        987.659393310547,
+        820.446105718613,
+        0.0
+      ],
+      "scale": [
+        179.0,
+        179.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": false,
+        "locked": false,
+        "shy": true,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": true,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": true,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": null,
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 6.95833333333333,
+        "start_time": -8.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "HERO",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddeb_427ba7",
+      "source_rect": [
+        -209.996261965483,
+        -70.68414343521,
+        420.673279546201,
+        76.4760749563575
+      ],
+      "world_bounds": {
+        "l": 611.766084392332,
+        "t": 693.921488969587,
+        "r": 1364.77125478003,
+        "b": 830.813663141467
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE Text Layer",
+      "label": 1,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2124.4748737682,
+          1668.0200847322294,
+          0.0
+        ],
+        "scale": [
+          375.90000000000003,
+          375.90000000000003,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004743,
+      "index": 17,
+      "name": "87N_Reels_DEV_87Neon_HD_10_mc",
+      "uid": "19ddccdddeb_c19340",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": true,
+      "position": [
+        960.0,
+        540.0,
+        470.0
+      ],
+      "scale": [
+        73.0,
+        73.0,
+        73.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "anchor": [
+        960.0,
+        580.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": {
+          "times": [
+            1.66666666666667,
+            2.66666666666667
+          ],
+          "values": [
+            0,
+            100
+          ],
+          "keyInInterpolationType": [
+            6612,
+            6612
+          ],
+          "keyOutInterpolationType": [
+            6612,
+            6612
+          ]
+        },
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": true,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "comp",
+        "id": 1600004489,
+        "name": "87N_Reels_DEV_87Neon_HD_10_mc",
+        "width": 1920,
+        "height": 1080,
+        "duration": 10.01001001001,
+        "pixel_aspect": 1.0,
+        "frame_rate": 23.9759979248047,
+        "file_path": null,
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 10.0,
+        "start_time": 0.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "TT",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "Render to 4K uid:19ddccdddeb_c19340",
+      "source_rect": [
+        0.0,
+        0.0,
+        1920.0,
+        1080.0
+      ],
+      "world_bounds": {
+        "l": 259.2,
+        "t": 116.6,
+        "r": 1660.8,
+        "b": 905.0
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 2,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2048.0,
+          349.29000500488314,
+          987.0
+        ],
+        "scale": [
+          153.3,
+          153.3,
+          153.3
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          960.0,
+          580.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004742,
+      "index": 18,
+      "name": "Contrast_BW_Grunge_2.jpg",
+      "uid": "19ddccdddeb_7b9d17",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        956.0,
+        384.0,
+        0.0
+      ],
+      "scale": [
+        73.0,
+        73.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": -91.0,
+      "orientation": null,
+      "anchor": [
+        1219.0,
+        1738.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5220",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "footage",
+        "id": 1600004556,
+        "name": "Contrast_BW_Grunge_2.jpg",
+        "width": 2438,
+        "height": 3476,
+        "duration": 0.0,
+        "pixel_aspect": 1.0,
+        "frame_rate": 0.0,
+        "file_path": "/Volumes/Ciaglia10TB/WORK/PORTFOLIO/UNIVERSAL_PICTURES/2024/87N/87N_Reels_DEV_Grfx_Mstr_AE2021_mc folder/(Footage)/Assets/images/Contrast_BW_Grunge_2.jpg",
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 10.0,
+        "start_time": -0.41666666666667,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "BOXART",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddeb_7b9d17",
+      "source_rect": [
+        0.0,
+        0.0,
+        2438.0,
+        3476.0
+      ],
+      "world_bounds": {
+        "l": 66.13,
+        "t": -884.74,
+        "r": 1845.87,
+        "b": 1652.74
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 5,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2057.990147816051,
+          751.4832627231422,
+          0.0
+        ],
+        "scale": [
+          153.3,
+          153.3,
+          100.0
+        ],
+        "rotation": -91.0,
+        "anchor": [
+          1219.0,
+          1738.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    },
+    {
+      "id": 1600004741,
+      "index": 19,
+      "name": "87N.mov",
+      "uid": "19ddccdddec_b7f160",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "scale": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [
+        960.0,
+        540.0,
+        0.0
+      ],
+      "camera": null,
+      "light": null,
+      "breadcrumb": null,
+      "dependencies": [],
+      "expressions": {},
+      "temporal_data": {
+        "position": null,
+        "position_x": null,
+        "position_y": null,
+        "position_z": null,
+        "scale": null,
+        "rotation": null,
+        "anchor": null,
+        "opacity": null,
+        "camera_zoom": null,
+        "camera_focusDistance": null,
+        "camera_pointOfInterest": null
+      },
+      "containing_comp_id": null,
+      "containing_comp_uid": null,
+      "wrapper_layer_uid": null,
+      "nesting_depth": null,
+      "layer_references": null,
+      "flags": {
+        "enabled": false,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "continuously_rasterize": false,
+        "auto_orient": "4212",
+        "blend_mode": "5212",
+        "quality": "4614",
+        "sampling": "4812",
+        "is_text_layer": false,
+        "has_video": true,
+        "has_audio": true,
+        "audio_enabled": true
+      },
+      "source_item": {
+        "kind": "footage",
+        "id": 1600004525,
+        "name": "87N.mov",
+        "width": 1920,
+        "height": 1080,
+        "duration": 14.9583333333333,
+        "pixel_aspect": 1.0,
+        "frame_rate": 24.0,
+        "file_path": "/Volumes/Ciaglia10TB/WORK/PORTFOLIO/UNIVERSAL_PICTURES/2024/87N/87N_Reels_DEV_Grfx_Mstr_AE2021_mc folder/(Footage)/Ref/87N.mov",
+        "nested_comp_id": null,
+        "has_audio": null,
+        "is_still": null
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 6.95833333333333,
+        "start_time": -8.0,
+        "stretch": 100.0,
+        "time_remap_enabled": false,
+        "time_remap_keys": null
+      },
+      "properties": [],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [],
+      "v5_errors": null,
+      "content_tag": "ARTWORK",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": null,
+      "profile_suggested_tag": null,
+      "comment": "uid:19ddccdddec_b7f160",
+      "source_rect": [
+        0.0,
+        0.0,
+        1920.0,
+        1080.0
+      ],
+      "world_bounds": {
+        "l": 0.0,
+        "t": 0.0,
+        "r": 1920.0,
+        "b": 1080.0
+      },
+      "hero_time": 5.0,
+      "is_keyed": {
+        "position": false,
+        "scale": false,
+        "anchor": false
+      },
+      "source_coverage": null,
+      "match_name": "ADBE AV Layer",
+      "label": 3,
+      "conformed_transforms": {
+        "is_root": true,
+        "position": [
+          2066.390147816051,
+          1079.083262723142,
+          0.0
+        ],
+        "scale": [
+          210.0,
+          210.0,
+          100.0
+        ],
+        "rotation": 0.0,
+        "anchor": [
+          960.0,
+          540.0,
+          0.0
+        ],
+        "rotation_x": null,
+        "rotation_y": null,
+        "orientation": null,
+        "camera": null,
+        "light": null,
+        "skip_inject": false
+      }
+    }
+  ],
+  "scale": {
+    "base_S": 2.0,
+    "S": 2.1,
+    "mode": "Fit",
+    "bleed_pct": 0.05
+  },
+  "aspect_strategy": "widen",
+  "aspect_ar_delta_pct": 0.06666666666666676,
+  "warnings": {
+    "collapsed_layers": [],
+    "child_layers": [],
+    "tag_passthrough": [
+      "CheckersAndMattes_3.0"
+    ]
+  }
+}

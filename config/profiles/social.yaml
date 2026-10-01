@@ -1,0 +1,138 @@
+# config/profiles/social.yaml
+# revision: v1.0.0  ·  updated: 2026-05-15
+#
+# Slot 11.5 Phase 2 — profile reduction 9 → 4.
+# Vertical-first social platforms (TikTok / IG Reels / Stories /
+# Shorts). Bottom UI overlays (caption bar, action rail) pull
+# captions / CTAs up; titles stay near the top safe edge to
+# survive a viewer's autoplay UI chrome.
+#
+# This profile is where 87N's naming conventions resolve after
+# the manifest's manual tags are cleared — TOP/top, CENTER/center,
+# FILL/fill, BOTTOM/bottom maps onto the social-platform default
+# vertical layout.
+#
+# Replaces (per the Phase 2 migration map): Netflix,
+# agency_commercial.
+#
+# v6.0: updated tag vocabulary to FILL/CENTER/TOP/BOTTOM.
+
+id:           social
+display_name: "Social"
+revision:     "v1.0.0"
+author:       "neural_io_444"
+updated:      "2026-05-15"
+color:        "#22c55e"
+description: |
+  TikTok / IG Reels / Stories / Shorts. Vertical-first. TOP/top
+  and CENTER/top keep titles above the action rail; BOTTOM/bottom
+  rides above the safe zone with extra clearance for the
+  bottom UI chrome. 1.05 bleed applied at conform time.
+
+safe_area:
+  top:    0.05
+  right:  0.04
+  bottom: 0.08
+  left:   0.04
+
+prefixes:
+  # ── Centred content ──
+  - match:   "HERO_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  high
+  - match:   "CENTER_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  high
+  - match:   "BOXART_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "ARTWORK_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+
+  # ── Title text — top (social platforms have bottom UI overlays) ──
+  - match:   "TITLE_"
+    tag:     TOP
+    gravity: top
+    scale:   1.00
+    weight:  high
+  - match:   "TOP_"
+    tag:     TOP
+    gravity: top
+    scale:   1.00
+    weight:  high
+
+  # ── Logo / brand mark — top, out of the bottom action-rail zone ──
+  - match:   "LOGO_"
+    tag:     CENTER
+    gravity: top
+    scale:   1.00
+    weight:  normal
+  - match:   "BRAND_"
+    tag:     CENTER
+    gravity: top
+    scale:   1.00
+    weight:  normal
+
+  # ── Legal — bottom, above the platform's bottom UI ──
+  - match:   "LEGAL_"
+    tag:     BOTTOM
+    gravity: bottom
+    scale:   0.85
+    weight:  pinned
+  - match:   "BOTTOM_"
+    tag:     BOTTOM
+    gravity: bottom
+    scale:   0.85
+    weight:  pinned
+
+  # ── Background — fills the frame ──
+  - match:   "BG_"
+    tag:     FILL
+    gravity: fill
+    scale:   1.00
+    weight:  normal
+  - match:   "FILL_"
+    tag:     FILL
+    gravity: fill
+    scale:   1.00
+    weight:  normal
+
+  # ── Broadcast lower-third coverage — surfaces from retired
+  #    news_broadcast / sports_broadcast profiles. Persistent UI
+  #    elements (scorebugs, tickers, news crawls) must never move
+  #    or rescale with the rest of the comp; PROTECT keeps the
+  #    conform engine's hands off them.
+  - match:   "SCOREBUG_"
+    tag:     PROTECT
+    gravity: top
+    scale:   1.00
+    weight:  pinned
+  - match:   "SCORE_"
+    tag:     PROTECT
+    gravity: top
+    scale:   1.00
+    weight:  pinned
+  - match:   "TICKER_"
+    tag:     PROTECT
+    gravity: bottom
+    scale:   1.00
+    weight:  pinned
+  - match:   "CRAWL_"
+    tag:     PROTECT
+    gravity: bottom
+    scale:   1.00
+    weight:  pinned
+
+type_overrides:
+  CENTER: 1.00
+  TOP:    1.00
+  BOTTOM: 0.85

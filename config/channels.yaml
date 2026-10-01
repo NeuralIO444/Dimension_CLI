@@ -1,0 +1,32 @@
+# Channel-level safe-zone derivation config.
+
+channels:
+  theatrical:
+    strategy: derived_from_vectors # SOE-4
+    zones:
+      - zone: TITLE_SAFE
+        bounds: [0.05, 0.05, 0.95, 0.95] # 5% inset on all sides
+  broadcast:
+    strategy: authored_png  # Deferred to future slot.
+  streaming:
+    strategy: authored_png  # Deferred to future slot.
+  social:
+    strategy: derived_from_vectors # SOE-2
+    zones:
+      - zone: CUTOFF
+        bounds: [0.0, 0.0, 1.0, 0.15] # Top 15%
+      - zone: NUDGE
+        bounds: [0.0, 0.15, 1.0, 0.20] # Top nudge band (SOE-3)
+      - zone: NUDGE
+        bounds: [0.0, 0.80, 1.0, 0.85] # Bottom nudge band (SOE-3)
+      - zone: CUTOFF
+        bounds: [0.0, 0.85, 1.0, 1.0] # Bottom 15%
+  social_square:
+    strategy: derived_from_vectors
+    zones:
+      # Defines a 1:1 safe area centered in a 9:16 frame (e.g. 1080x1920 -> 1080x1080).
+      # The area outside this is NUDGE by default.
+      - zone: TITLE_SAFE
+        bounds: [0.0, 0.21875, 1.0, 0.78125]
+  ooh:
+    strategy: authored_png  # Deferred to future slot.

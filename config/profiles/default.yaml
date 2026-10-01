@@ -1,0 +1,111 @@
+# config/profiles/default.yaml
+# revision: v1.0.0  ·  updated: 2026-05-15
+#
+# Slot 11.5 Phase 2 — profile reduction 9 → 4.
+# Active on first launch when no specific use case is selected.
+#
+# Center-first sensible neutral. Every content tag routes through
+# centre gravity; FILL fills the frame; BOTTOM stays centred (no
+# platform-UI assumptions baked in — pick `social` for that, or
+# `theatrical` for cinema safe-zone respect).
+#
+# Naming-convention prefix rules cover the canonical layer
+# patterns (CENTER_, TOP_, FILL_, etc.). Layers tagged via heuristic
+# or AE label color without a conventional name fall through to
+# `core/gravity.py::BASELINE_RULES`.
+#
+# Replaces (per the Phase 2 migration map): Universal_HV,
+# news_broadcast, sports_broadcast, 87N.
+#
+# v6.0: updated tag vocabulary to FILL/CENTER/TOP/BOTTOM.
+
+id:           default
+display_name: "Default"
+revision:     "v1.0.0"
+author:       "neural_io_444"
+updated:      "2026-05-15"
+color:        "#7eb8d4"
+description: |
+  Center-first sensible neutral. Active on first launch when no
+  specific use case is selected. All content tags route to centre;
+  FILL fills, BOTTOM stays centred. 1.05 bleed applied at conform time.
+
+safe_area:
+  top:    0.05
+  right:  0.04
+  bottom: 0.06
+  left:   0.04
+
+prefixes:
+  # ── Centred content ──
+  - match:   "HERO_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  high
+  - match:   "CENTER_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  high
+  - match:   "BOXART_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "ARTWORK_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "LOGO_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "BRAND_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+
+  # ── Title text — default routes to centre (overrides baseline TOP/top) ──
+  - match:   "TITLE_"
+    tag:     TOP
+    gravity: center
+    scale:   1.00
+    weight:  high
+  - match:   "TOP_"
+    tag:     TOP
+    gravity: center
+    scale:   1.00
+    weight:  high
+
+  # ── Legal — default routes to centre (overrides baseline BOTTOM/bottom) ──
+  - match:   "LEGAL_"
+    tag:     BOTTOM
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "BOTTOM_"
+    tag:     BOTTOM
+    gravity: center
+    scale:   1.00
+    weight:  normal
+
+  # ── Background — fills the frame ──
+  - match:   "BG_"
+    tag:     FILL
+    gravity: fill
+    scale:   1.00
+    weight:  normal
+  - match:   "FILL_"
+    tag:     FILL
+    gravity: fill
+    scale:   1.00
+    weight:  normal
+
+type_overrides:
+  CENTER: 1.00
+  TOP:    1.00
+  BOTTOM: 1.00

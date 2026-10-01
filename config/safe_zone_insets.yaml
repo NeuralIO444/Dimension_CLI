@@ -1,0 +1,52 @@
+# Per-preset safe-zone insets. This file is the spec.
+# PNGs in config/safe_zones/ are optional overrides only.
+#
+# title_safe: WAV / ads-style envelope (central 90% unless noted).
+# ui_chrome: measured app chrome (2026-09-03). SOE uses ui_chrome.
+# Values are percent of canvas unless unit: px.
+#
+# aliases: catalog subcategory / family → preset key (#522 B).
+
+version: 1
+profile: ui_chrome
+
+aliases:
+  instagram: instagram_post
+  youtube: youtube_shorts
+  x_twitter: twitter
+  twitter: twitter
+  threads: instagram_post
+  pinterest: instagram_post
+  facebook: facebook
+  linkedin: linkedin
+  snapchat: snapchat
+  tiktok: tiktok
+
+presets:
+  tiktok:
+    title_safe: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+    ui_chrome: {top: 13.0, bottom: 21.9, left: 5.0, right: 13.0}
+  instagram_reels:
+    title_safe: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+    ui_chrome: {top: 11.5, bottom: 20.8, left: 3.7, right: 13.0}
+  instagram_story:
+    title_safe: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+    ui_chrome: {top: 13.0, bottom: 13.0, left: 3.7, right: 3.7}
+  instagram_post:
+    title_safe: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+    ui_chrome: {top: 3.7, bottom: 3.7, left: 3.7, right: 3.7}
+  youtube_shorts:
+    title_safe: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+    ui_chrome: {top: 7.8, bottom: 13.0, left: 3.7, right: 13.0}
+  facebook:
+    title_safe: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+    ui_chrome: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+  twitter:
+    title_safe: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+    ui_chrome: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+  linkedin:
+    title_safe: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+    ui_chrome: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+  snapchat:
+    title_safe: {top: 5.0, bottom: 5.0, left: 5.0, right: 5.0}
+    ui_chrome: {top: 10.0, bottom: 10.0, left: 5.0, right: 5.0}

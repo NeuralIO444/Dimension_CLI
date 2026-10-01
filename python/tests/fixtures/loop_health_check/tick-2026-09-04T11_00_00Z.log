@@ -1,0 +1,5 @@
+Tick 2026-09-04 11:00:00Z - FAILURE
+Picked issue #401
+Running verification gate...
+op read timed out while fetching API key
+aborting tick: failed to read credentials

@@ -1,0 +1,60 @@
+# Dimension — Target Format grid.
+#
+# Source of truth for the Orchestrator's Target Format picker.
+# Hand-edit this file to add / reorder / rename presets; the UI reloads
+# this list at import time via `load_formats_yaml()` in
+# python/ui/orchestrator_qt.py.
+#
+# Schema (per entry):
+#   id:   short slug, must be unique — used as the signal payload.
+#   name: short display label, rendered UPPERCASE with letter-spacing.
+#   sub:  secondary label under `name` (e.g. aspect ratio hint).
+#   w, h: target pixel dimensions.
+#
+# Override path precedence, see load_formats_yaml():
+#   1. explicit path argument
+#   2. $DIMENSION_FORMATS_YAML
+#   3. <repo>/config/formats.yaml   (this file)
+#   4. hardcoded DEFAULT_FORMATS fallback (only if pyyaml missing or file unreadable)
+
+formats:
+  - id: youtube
+    name: YOUTUBE
+    sub: "(1:1)"
+    w: 800
+    h: 800
+  - id: tiktok
+    name: TIKTOK
+    sub: "(9:18)"
+    w: 1080
+    h: 1920
+  - id: dcp4kflat
+    name: DCP 4K FLAT
+    sub: "Flat (1.85)"
+    w: 3996
+    h: 2160
+  - id: dcp4kscope
+    name: DCP 4K SCOPE
+    sub: "Scope (2.39)"
+    w: 4096
+    h: 1716
+  - id: dcp4kfull
+    name: DCP 4K CONTAINER
+    sub: "Full (1.90)"
+    w: 4096
+    h: 2160
+  - id: dcp2kflat
+    name: DCP 2K FLAT
+    sub: "Flat (1.85)"
+    w: 1998
+    h: 1080
+  - id: dcp2kscope
+    name: DCP 2K SCOPE
+    sub: "Scope (2.39)"
+    w: 2048
+    h: 858
+  - id: dcp2kfull
+    name: DCP 2K CONTAINER
+    sub: "Full (1.90)"
+    w: 2048
+    h: 1080

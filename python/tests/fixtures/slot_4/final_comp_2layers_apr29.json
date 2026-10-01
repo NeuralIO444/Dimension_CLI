@@ -1,0 +1,224 @@
+{
+    "status": "OK",
+    "project_info": {
+        "name": "Final Comp",
+        "width": 1920,
+        "height": 1080,
+        "fps": 30
+    },
+    "layers": [
+        {
+            "id": 2500,
+            "index": 1,
+            "name": "Color Comp",
+            "uid": "19ddafa5c09_286684",
+            "parent_uid": null,
+            "parent_index": -1,
+            "is_dependency": false,
+            "isBrittle": false,
+            "collapseTransformations": false,
+            "layer_kind": "av",
+            "threeD": false,
+            "position": [
+                960,
+                540,
+                0
+            ],
+            "scale": [
+                100,
+                100,
+                100
+            ],
+            "rotation_x": 0,
+            "rotation_y": 0,
+            "rotation_z": 0,
+            "orientation": null,
+            "anchor": [
+                960,
+                540,
+                0
+            ],
+            "temporal_data": {},
+            "effects": [],
+            "flags": {
+                "enabled": true,
+                "locked": false,
+                "shy": false,
+                "solo": false,
+                "three_d": false,
+                "adjustment": false,
+                "null_layer": false,
+                "guide": false,
+                "motion_blur": false,
+                "frame_blending": false,
+                "preserve_transparency": false,
+                "collapse_transformations": false,
+                "auto_orient": "4212",
+                "blend_mode": "5212",
+                "quality": "4614",
+                "sampling": "4812",
+                "is_text_layer": false,
+                "has_video": true,
+                "has_audio": false,
+                "audio_enabled": false
+            },
+            "source_item": {
+                "name": "Color Comp",
+                "id": 2487,
+                "kind": "comp",
+                "file_path": null,
+                "width": 1920,
+                "height": 1080,
+                "frame_rate": 30,
+                "duration": 25,
+                "pixel_aspect": 1
+            },
+            "track_matte": null,
+            "time_info": {
+                "in_point": 0,
+                "out_point": 25,
+                "start_time": 0,
+                "stretch": 100
+            },
+            "properties": [],
+            "masks": [],
+            "layer_styles": [],
+            "markers": [],
+            "content_tag": "GUIDE",
+            "content_tag_source": "manual_label",
+            "match_name": "ADBE AV Layer",
+            "label": 15,
+            "source_rect": [
+                0,
+                0,
+                1920,
+                1080
+            ],
+            "world_bounds": {
+                "l": 0,
+                "t": 0,
+                "r": 1920,
+                "b": 1080
+            },
+            "hero_time": 12.5,
+            "is_keyed": {
+                "position": false,
+                "scale": false,
+                "anchor": false
+            },
+            "comment": "uid:19ddafa5c09_286684"
+        },
+        {
+            "id": 2503,
+            "index": 2,
+            "name": "Music",
+            "uid": "19ddafa5c0a_ae2bc1",
+            "parent_uid": null,
+            "parent_index": -1,
+            "is_dependency": false,
+            "isBrittle": false,
+            "collapseTransformations": false,
+            "layer_kind": "av",
+            "threeD": false,
+            "position": [
+                960,
+                540,
+                0
+            ],
+            "scale": [
+                100,
+                100,
+                100
+            ],
+            "rotation_x": 0,
+            "rotation_y": 0,
+            "rotation_z": 0,
+            "orientation": null,
+            "anchor": [
+                960,
+                540,
+                0
+            ],
+            "temporal_data": {},
+            "effects": [],
+            "flags": {
+                "enabled": true,
+                "locked": false,
+                "shy": false,
+                "solo": false,
+                "three_d": false,
+                "adjustment": false,
+                "null_layer": false,
+                "guide": false,
+                "motion_blur": false,
+                "frame_blending": false,
+                "preserve_transparency": false,
+                "collapse_transformations": false,
+                "auto_orient": "4212",
+                "blend_mode": "5212",
+                "quality": "4614",
+                "sampling": "4812",
+                "is_text_layer": false,
+                "has_video": true,
+                "has_audio": true,
+                "audio_enabled": true
+            },
+            "source_item": {
+                "name": "Music",
+                "id": 28,
+                "kind": "comp",
+                "file_path": null,
+                "width": 1920,
+                "height": 1080,
+                "frame_rate": 30,
+                "duration": 25,
+                "pixel_aspect": 1
+            },
+            "track_matte": null,
+            "time_info": {
+                "in_point": 0,
+                "out_point": 25,
+                "start_time": 0,
+                "stretch": 100
+            },
+            "properties": [],
+            "masks": [],
+            "layer_styles": [],
+            "markers": [],
+            "content_tag": "GUIDE",
+            "content_tag_source": "manual_label",
+            "match_name": "ADBE AV Layer",
+            "label": 15,
+            "source_rect": [
+                0,
+                0,
+                1920,
+                1080
+            ],
+            "world_bounds": {
+                "l": 0,
+                "t": 0,
+                "r": 1920,
+                "b": 1080
+            },
+            "hero_time": 12.5,
+            "is_keyed": {
+                "position": false,
+                "scale": false,
+                "anchor": false
+            },
+            "comment": "uid:19ddafa5c0a_ae2bc1"
+        }
+    ],
+    "scrape_meta": {
+        "schema_version": "5.0",
+        "scraper_version": "sovereign-5.0.0",
+        "scrape_duration_ms": 2,
+        "ae_version": "26.2.1x2",
+        "scrape_timestamp": "Wed Apr 29 2026 13:42:13 GMT-0700",
+        "total_layers": 2,
+        "total_properties_scraped": 0,
+        "total_errors": 0
+    },
+    "errors": []
+}

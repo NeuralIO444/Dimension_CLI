@@ -1,0 +1,95 @@
+/* Dimension v2 — design tokens. Dark AE-flavored panel surface.
+ *
+ * Drop-in source from the v2 UX redesign handoff. Imported before
+ * styles.css so the legacy --bg-window / --accent / etc. tokens in
+ * styles.css can alias against these.
+ */
+:root {
+  /* Surface — graded dark grays. AE panel = ~#232323; we're a touch warmer */
+  --ae-bg: #1a1a1c;
+  --ae-surface: #222226;
+  --ae-raised: #2a2a30;
+  --ae-row-hover: #2e2e36;
+  --ae-row-selected: #2c3a52;
+  --ae-row-selected-edge: #4a78c8;
+  --ae-border: #34343c;
+  --ae-border-strong: #44444e;
+  --ae-divider: #2a2a30;
+
+  /* Text */
+  --t-1: #e8e8ea;        /* primary */
+  --t-2: #a8a8b0;        /* secondary */
+  --t-3: #707078;        /* tertiary, labels */
+  --t-4: #4a4a52;        /* placeholder, disabled */
+  --t-num: #d4d4dc;      /* monospace numbers */
+
+  /* Profile accents (used as 2px stripes, dots, focus rings — not floods) */
+  --p-default: #8a8a94;
+  --p-social: #ffa940;
+  --p-theatrical: #5891ff;
+  --p-ooh: #ff5891;
+
+  /* Tag palette — matches AE label-color tradition, muted slightly.
+   * Both the canonical Dimension ids (TT/LGL/HERO/...) AND the v2 UX
+   * spec's display ids (TT/LEGAL/HERO/...) are exposed so consumers
+   * can use either. surveyor.py emits the canonical ids; the v2 UX
+   * uses LEGAL as the display label for LGL. */
+  --tag-hero: #e66b5c;
+  --tag-boxart: #5c8ce6;
+  --tag-artwork: #a26ee6;
+  --tag-logo: #e6c25c;
+  --tag-tt: #5cd6b6;
+  --tag-legal: #989898;
+  --tag-lgl: #989898;     /* alias — surveyor uses LGL */
+  --tag-disc: #d45a2a;    /* alias — surveyor uses DISC, red-orange distinct from LGL */
+  --tag-body: #7e9ed4;
+  --tag-cta: #5cb88a;
+  --tag-sup: #7ed4b0;
+  --tag-animation: #d4a07e;
+  --tag-bg: #4e6e8e;
+  --tag-guide: #6e8a7e;
+  --tag-protect: #a07ed4;
+  --tag-null: #4a4a52;
+  --tag-unclass: #4a4a52;
+  --tag-untagged: #4a4a52;
+
+  /* Source-badge colors (P/M/#/H/S) — keyed by glyph */
+  --src-profile: #5891ff;    /* P */
+  --src-manual: #ff8c40;     /* M */
+  --src-comment: #5cd6b6;    /* # */
+  --src-heuristic: #707078;  /* H */
+  --src-system: #898998;     /* S */
+  --src-ai: #a855f7;         /* A — Ollama LLM auto-tagged */
+  --src-style: #e0a93e;      /* Y — Stage 3a style-influence badge (view-only) */
+
+  /* Semantic */
+  --ok: #4ec98a;
+  --warn: #ffb340;
+  --err: #ff6e6e;
+
+  /* Typography */
+  --font-sans: "Geist", "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Radii */
+  --r-1: 3px;
+  --r-2: 4px;
+  --r-3: 6px;
+  --r-4: 8px;
+
+  /* Shadow (subtle inset feel for floating panels in dark UI) */
+  --sh-pop: 0 8px 24px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.04);
+}
+
+/* Reset inside any .ae element */
+.ae, .ae * { box-sizing: border-box; }
+.ae {
+  font-family: var(--font-sans);
+  color: var(--t-1);
+  font-size: 12px;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0;
+}
+.ae .mono { font-family: var(--font-mono); font-feature-settings: "ss01", "zero"; }
+.ae ::selection { background: rgba(88,145,255,.4); }
