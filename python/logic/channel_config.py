@@ -21,10 +21,8 @@ import yaml
 
 
 def _config_path() -> Path:
-    import sys
-    if getattr(sys, 'frozen', False):
-        return Path(sys._MEIPASS) / "config" / "channels.yaml"
-    return Path(__file__).resolve().parents[2] / "config" / "channels.yaml"
+    from logic.config_paths import config_path
+    return config_path("channels.yaml")
 
 
 def _load_channels() -> Dict[str, Dict[str, Any]]:

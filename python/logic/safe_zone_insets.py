@@ -10,14 +10,9 @@ if TYPE_CHECKING:
     import numpy as np
     from models.target import Target
 
-_REPO_YAML = Path(__file__).resolve().parents[2] / "config" / "safe_zone_insets.yaml"
-
-
 def _repo_yaml_path() -> Path:
-    import sys
-    if getattr(sys, "frozen", False):
-        return Path(sys._MEIPASS) / "config" / "safe_zone_insets.yaml"
-    return _REPO_YAML
+    from logic.config_paths import config_path
+    return config_path("safe_zone_insets.yaml")
 
 
 @lru_cache(maxsize=1)

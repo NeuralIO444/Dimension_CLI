@@ -1,5 +1,5 @@
 # (c) 2026 NeuralIO 444
-# Licensed under NeuralIO Shared Source License (NSSL).
+# Licensed under PolyForm Noncommercial 1.0.0 + commercial.
 # See LICENSE for full terms.
 
 """The unified `dimension` command tree (issue #5).
@@ -23,6 +23,7 @@ Commands tagged [headless] run anywhere. Commands under `ae` tagged
 from __future__ import annotations
 
 import argparse
+import logging
 import sys
 from typing import Any, Callable, Optional
 
@@ -235,6 +236,7 @@ def _run(args: argparse.Namespace, op: Callable[[], dict[str, Any]],
             emit_human(f"error [{e.code}]: {e}")
         return e.exit_code
     except Exception as e:  # noqa: BLE001 — last-resort contract guard
+        logging.getLogger("dimension").exception("unhandled op failure")
         err = DimensionError(f"internal error: {e}", code="INTERNAL")
         if args.json:
             emit_json(error_payload(err))
@@ -480,8 +482,11 @@ def dispatch(args: argparse.Namespace) -> int:
                     _show_lut_validate)
     if op_name in ("lut derive", "lut derive-parametric", "lut derive-smart"):
         kind = op_name.split(" ", 1)[1]
-        code = lut_ops.derive_op(kind=kind, args=args.args)
-        return code
+        return _run(
+            args,
+            lambda: lut_ops.derive_op(kind=kind, args=args.args),
+            lambda r: emit_human(r.get("output") or r.get("status", "ok")),
+        )
     if op_name == "lut inject":
         # Honest fail: raises DimensionError(code=LUT_UNSCRIPTABLE, exit 65).
         return _run(args, lut_ops.inject_op, lambda r: None)

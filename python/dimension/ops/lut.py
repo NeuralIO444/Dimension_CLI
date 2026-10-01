@@ -1,5 +1,5 @@
 # (c) 2026 NeuralIO 444
-# Licensed under NeuralIO Shared Source License (NSSL).
+# Licensed under PolyForm Noncommercial 1.0.0 + commercial.
 # See LICENSE for full terms.
 
 """LUT / color-match ops.
@@ -13,6 +13,7 @@ Levels Smart Match is the supported in-AE backend.
 
 from __future__ import annotations
 
+import json
 import os
 import sys
 from typing import Any, NoReturn
@@ -78,8 +79,17 @@ def _run_script_main(argv: list[str], module: str, attr: str = "main") -> int:
         sys.argv = old_argv
 
 
-def derive_op(*, kind: str, args: list[str]) -> int:
-    """Run a LUT-derivation script. Returns its exit code. Headless."""
+def derive_op(*, kind: str, args: list[str]) -> dict[str, Any]:
+    """Run a LUT-derivation script. Captures its stdout so the CLI owns
+    the machine face. Headless.
+
+    A successful script that prints a JSON object is returned as that
+    object (status forced to OK). Anything else is wrapped. Non-zero
+    exits raise DimensionError so --json stays one document.
+    """
+    import io
+    from contextlib import redirect_stdout
+
     scripts = {
         "derive": ("scripts.derive_lut", ["derive_lut.py"]),
         "derive-parametric": (
@@ -91,4 +101,28 @@ def derive_op(*, kind: str, args: list[str]) -> int:
     if kind not in scripts:
         raise DimensionError(f"unknown derive kind: {kind}", code="USAGE")
     module, prog = scripts[kind]
-    return _run_script_main(prog + args, module)
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        code = _run_script_main(prog + args, module)
+    text = buf.getvalue().strip()
+    if code != 0:
+        raise DimensionError(
+            text or f"{kind} failed (exit {code})",
+            code="LUT_DERIVE_FAILED",
+        )
+    if text:
+        try:
+            payload = json.loads(text)
+        except ValueError:
+            payload = None
+        if isinstance(payload, dict):
+            payload.setdefault("status", "OK")
+            payload.setdefault("headless", True)
+            payload["kind"] = kind
+            return payload
+    return {
+        "status": "OK",
+        "headless": True,
+        "kind": kind,
+        "output": text,
+    }

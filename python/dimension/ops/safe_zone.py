@@ -1,5 +1,5 @@
 # (c) 2026 NeuralIO 444
-# Licensed under NeuralIO Shared Source License (NSSL).
+# Licensed under PolyForm Noncommercial 1.0.0 + commercial.
 # See LICENSE for full terms.
 
 """Safe-zone ops: which mask a preset resolves to, and zone coverage.

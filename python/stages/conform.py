@@ -81,6 +81,72 @@ class ConformResult:
     chunk_count: int = 0
 
 
+def _creation_names(chunk_manifest_path: str) -> list[str]:
+    """Output comp names the slicer emitted. Empty if the manifest
+    cannot be read — provenance must not invent names."""
+    try:
+        with open(chunk_manifest_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return []
+    if not isinstance(data, dict):
+        return []
+    names: list[str] = []
+    output = data.get("output_comp_name")
+    if isinstance(output, str) and output.strip():
+        names.append(output.strip())
+    for entry in data.get("mirror_tree") or []:
+        if isinstance(entry, dict):
+            name = entry.get("name") or entry.get("comp_name")
+            if isinstance(name, str) and name.strip():
+                names.append(name.strip())
+    return names
+
+
+def _record_conform_provenance(
+    config: ConformConfig,
+    *,
+    status: str,
+    session: str = "",
+    chunk_manifest_path: str = "",
+    names: Optional[list[str]] = None,
+    detail: Optional[dict] = None,
+) -> None:
+    """Write the project SQLite store. Failures are logged, never raised.
+
+    Successful runs record one creation per emitted comp name. Failed
+    runs record the run only — no invented creations. Does not write
+    duplication_log.json.
+    """
+    try:
+        from core.dimension_db import open_project_db, record_creation, record_run
+        project_dir = os.path.dirname(os.path.abspath(config.source))
+        conn = open_project_db(project_dir)
+        try:
+            record_run(
+                conn,
+                session=session,
+                status=status,
+                detail={
+                    **(detail or {}),
+                    "chunk_manifest": chunk_manifest_path,
+                },
+            )
+            if status == "ok":
+                for name in names or []:
+                    record_creation(
+                        conn,
+                        name=name,
+                        source=os.path.basename(config.source),
+                        session=session,
+                        operation="conform",
+                    )
+        finally:
+            conn.close()
+    except Exception as exc:  # noqa: BLE001 — provenance must not fail the conform
+        log.warning("Provenance write failed", extra={"error": str(exc)})
+
+
 def build_layer_payloads(manifest, conformed_result, plan):
     """Build per-comp layer_payloads lists and attach them to each new_comps entry.
 
@@ -726,17 +792,23 @@ def run_conform(
                      extra={"path": report_path, "session_id": session_id})
 
         log.info("Pipeline complete", extra={"chunk_manifest": chunk_manifest_path})
-        # Emit structured done event before the plain chunk_manifest_path line
-        # so the CEP panel can surface the report path while CLI callers
-        # still get the bare path on its own line (unchanged).
         _emit_engine_event(
             {"type": "done", "report_path": str(_report_path)},
             on_engine_event,
         )
-        try:
-            print(chunk_manifest_path, flush=True)  # stdout: shell scripts / CI
-        except Exception:  # noqa: BLE001
-            pass
+        log.info("Chunk manifest path", extra={"path": chunk_manifest_path})
+        _record_conform_provenance(
+            config,
+            status="ok",
+            session=session_id if not config.no_report else "",
+            chunk_manifest_path=chunk_manifest_path,
+            names=_creation_names(chunk_manifest_path),
+            detail={
+                "preset": config.preset,
+                "chunk_count": _chunk_count,
+                "conformed_path": conformed_path,
+            },
+        )
 
         # Stage 4: emit reconstruction plan for arbitrary/custom targets (sidecar for later injection/review)
         try:
@@ -780,14 +852,18 @@ def run_conform(
     except SpatialBoundError as e:
         log.error("Spatial bound exceeded", extra={"error": str(e)})
         _emit_engine_event({"type": "error", "msg": str(e)}, on_engine_event)
+        _record_conform_provenance(config, status="failed", detail={"error": str(e)})
         raise ConformError(str(e)) from e
-    except ConformError:
+    except ConformError as e:
+        _record_conform_provenance(config, status="failed", detail={"error": str(e)})
         raise
     except (ValueError, OSError) as e:
         log.error("Pipeline error", extra={"error": str(e)})
         _emit_engine_event({"type": "error", "msg": str(e)}, on_engine_event)
+        _record_conform_provenance(config, status="failed", detail={"error": str(e)})
         raise ConformError(str(e)) from e
     except Exception as e:
         log.error("Unexpected pipeline failure", extra={"error": str(e), "type": type(e).__name__})
         _emit_engine_event({"type": "error", "msg": str(e)}, on_engine_event)
+        _record_conform_provenance(config, status="failed", detail={"error": str(e)})
         raise ConformError(str(e)) from e
