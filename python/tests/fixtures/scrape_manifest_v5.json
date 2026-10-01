@@ -1,0 +1,389 @@
+{
+  "status": "OK",
+  "project_info": {
+    "name": "Hero_Shot_v3",
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0
+  },
+  "layers": [
+    {
+      "id": 1,
+      "index": 1,
+      "name": "Camera 1",
+      "uid": "abc123_ff0011",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "camera",
+      "threeD": true,
+      "position": [960.0, 540.0, -2000.0],
+      "scale": null,
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": [0.0, 0.0, 0.0],
+      "anchor": [960.0, 540.0, 0.0],
+      "temporal_data": {
+        "position": {
+          "times": [0.0, 1.0, 2.0],
+          "values": [[960.0, 540.0, -2000.0], [980.0, 540.0, -1900.0], [1000.0, 540.0, -1800.0]],
+          "keyInInterpolationType": [6613, 6613, 6613],
+          "keyOutInterpolationType": [6613, 6613, 6613]
+        },
+        "camera_zoom": {
+          "times": [0.0, 2.0],
+          "values": [2000.0, 1800.0],
+          "keyInInterpolationType": [6613, 6613],
+          "keyOutInterpolationType": [6613, 6613]
+        }
+      },
+      "camera": {
+        "zoom": 2000.0,
+        "depthOfField": false,
+        "focusDistance": 2000.0,
+        "aperture": 100.0,
+        "blurLevel": 100.0
+      },
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": true,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "auto_orient": "none",
+        "blend_mode": "normal",
+        "quality": "best",
+        "sampling": "bilinear",
+        "has_video": false,
+        "has_audio": false,
+        "audio_enabled": false
+      },
+      "source_item": null,
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 5.0,
+        "start_time": 0.0,
+        "stretch": 100.0
+      },
+      "properties": [
+        {
+          "path": ["transform", "ADBE Position"],
+          "match_name": "ADBE Position",
+          "display_name": "Position",
+          "category": "transform",
+          "value_kind": "vec3",
+          "scale_rule": "root_center_remap_xy_scale_z",
+          "static": [960.0, 540.0, -2000.0],
+          "keys": {
+            "times": [0.0, 1.0, 2.0],
+            "values": [[960.0, 540.0, -2000.0], [980.0, 540.0, -1900.0], [1000.0, 540.0, -1800.0]],
+            "in_interp": ["bezier", "bezier", "bezier"],
+            "out_interp": ["bezier", "bezier", "bezier"],
+            "temporal_ease_in": [[{"speed": 0.0, "influence": 33.33}], [{"speed": 0.0, "influence": 33.33}], [{"speed": 0.0, "influence": 33.33}]],
+            "temporal_ease_out": [[{"speed": 0.0, "influence": 33.33}], [{"speed": 0.0, "influence": 33.33}], [{"speed": 0.0, "influence": 33.33}]],
+            "spatial_tangent_in": [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]],
+            "spatial_tangent_out": [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]],
+            "is_roving": [false, false, false],
+            "is_hold": [false, false, false]
+          },
+          "per_axis": null,
+          "separated": false,
+          "expression": null,
+          "enabled": true,
+          "locked": false,
+          "extra": {}
+        },
+        {
+          "path": ["camera_option", "ADBE Camera Zoom"],
+          "match_name": "ADBE Camera Zoom",
+          "display_name": "Zoom",
+          "category": "camera_intrinsic",
+          "value_kind": "scalar",
+          "scale_rule": "camera_intrinsic_scale",
+          "static": 2000.0,
+          "keys": {
+            "times": [0.0, 2.0],
+            "values": [2000.0, 1800.0],
+            "in_interp": ["bezier", "bezier"],
+            "out_interp": ["bezier", "bezier"],
+            "temporal_ease_in": null,
+            "temporal_ease_out": null,
+            "spatial_tangent_in": null,
+            "spatial_tangent_out": null,
+            "is_roving": null,
+            "is_hold": [false, false]
+          },
+          "per_axis": null,
+          "separated": false,
+          "expression": null,
+          "enabled": true,
+          "locked": false,
+          "extra": {}
+        }
+      ],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": []
+    },
+    {
+      "id": 2,
+      "index": 2,
+      "name": "BG_Plate",
+      "uid": "def456_aa0022",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [960.0, 540.0, 0.0],
+      "scale": [100.0, 100.0, 100.0],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [960.0, 540.0, 0.0],
+      "temporal_data": {},
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "auto_orient": "none",
+        "blend_mode": "normal",
+        "quality": "best",
+        "sampling": "bilinear",
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": false
+      },
+      "source_item": {
+        "name": "BG_Plate.mov",
+        "id": 101,
+        "kind": "footage",
+        "file_path": "/Volumes/Projects/Assets/BG_Plate.mov",
+        "width": 1920,
+        "height": 1080,
+        "frame_rate": 24.0,
+        "duration": 10.0,
+        "pixel_aspect": 1.0
+      },
+      "track_matte": null,
+      "time_info": {
+        "in_point": 0.0,
+        "out_point": 5.0,
+        "start_time": 0.0,
+        "stretch": 100.0
+      },
+      "properties": [
+        {
+          "path": ["transform", "ADBE Position"],
+          "match_name": "ADBE Position",
+          "display_name": "Position",
+          "category": "transform",
+          "value_kind": "vec3",
+          "scale_rule": "root_center_remap_xy_scale_z",
+          "static": [960.0, 540.0, 0.0],
+          "keys": null,
+          "per_axis": null,
+          "separated": false,
+          "expression": null,
+          "enabled": true,
+          "locked": false,
+          "extra": {}
+        }
+      ],
+      "effects": [
+        {
+          "index": 1,
+          "match_name": "ADBE Drop Shadow",
+          "display_name": "Drop Shadow",
+          "enabled": true,
+          "properties": [
+            {
+              "path": ["effects", "ADBE Drop Shadow", "ADBE Drop Shadow-0004"],
+              "match_name": "ADBE Drop Shadow-0004",
+              "display_name": "Distance",
+              "category": "effect_scale",
+              "value_kind": "scalar",
+              "scale_rule": "multiply_by_s",
+              "static": 10.0,
+              "keys": null,
+              "per_axis": null,
+              "separated": false,
+              "expression": null,
+              "enabled": true,
+              "locked": false,
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "masks": [
+        {
+          "index": 1,
+          "name": "Mask 1",
+          "mode": "add",
+          "inverted": false,
+          "locked": false,
+          "shape": {
+            "vertices": [[0.0, 0.0], [100.0, 0.0], [100.0, 100.0], [0.0, 100.0]],
+            "in_tangents": [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]],
+            "out_tangents": [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]],
+            "closed": true
+          },
+          "properties": [
+            {
+              "path": ["masks", "Mask 1", "ADBE Mask Feather"],
+              "match_name": "ADBE Mask Feather",
+              "display_name": "Mask Feather",
+              "category": "mask_param",
+              "value_kind": "vec2",
+              "scale_rule": "multiply_by_s",
+              "static": [0.0, 0.0],
+              "keys": null,
+              "per_axis": null,
+              "separated": false,
+              "expression": null,
+              "enabled": true,
+              "locked": false,
+              "extra": {}
+            }
+          ]
+        }
+      ],
+      "layer_styles": [],
+      "markers": []
+    },
+    {
+      "id": 3,
+      "index": 3,
+      "name": "Title_Text",
+      "uid": "ghi789_bb0033",
+      "parent_uid": null,
+      "parent_index": -1,
+      "is_dependency": false,
+      "isBrittle": false,
+      "collapseTransformations": false,
+      "layer_kind": "av",
+      "threeD": false,
+      "position": [960.0, 900.0, 0.0],
+      "scale": [100.0, 100.0, 100.0],
+      "rotation_x": 0.0,
+      "rotation_y": 0.0,
+      "rotation_z": 0.0,
+      "orientation": null,
+      "anchor": [0.0, 0.0, 0.0],
+      "temporal_data": {},
+      "flags": {
+        "enabled": true,
+        "locked": false,
+        "shy": false,
+        "solo": false,
+        "three_d": false,
+        "adjustment": false,
+        "null_layer": false,
+        "guide": false,
+        "motion_blur": false,
+        "frame_blending": "none",
+        "preserve_transparency": false,
+        "collapse_transformations": false,
+        "auto_orient": "none",
+        "blend_mode": "normal",
+        "quality": "best",
+        "sampling": "bilinear",
+        "has_video": true,
+        "has_audio": false,
+        "audio_enabled": false
+      },
+      "source_item": null,
+      "track_matte": {
+        "type": "alpha",
+        "target_index": 4,
+        "target_uid": null
+      },
+      "time_info": {
+        "in_point": 1.0,
+        "out_point": 4.0,
+        "start_time": 0.0,
+        "stretch": 100.0
+      },
+      "properties": [
+        {
+          "path": ["transform", "ADBE Position"],
+          "match_name": "ADBE Position",
+          "display_name": "Position",
+          "category": "transform",
+          "value_kind": "vec3",
+          "scale_rule": "root_center_remap_xy_scale_z",
+          "static": [960.0, 900.0, 0.0],
+          "keys": null,
+          "per_axis": null,
+          "separated": false,
+          "expression": {
+            "source": "thisComp.width / 2",
+            "enabled": true,
+            "fallback_value": null,
+            "classification": "rewritable",
+            "refs_other_comps": [],
+            "refs_other_layers": [],
+            "refs_this_comp_dims": true,
+            "refs_index_numeric": false,
+            "refs_time_functions": false,
+            "hard_pixel_literals": [],
+            "analyzer_notes": []
+          },
+          "enabled": true,
+          "locked": false,
+          "extra": {}
+        }
+      ],
+      "effects": [],
+      "masks": [],
+      "layer_styles": [],
+      "markers": [
+        {
+          "time": 1.5,
+          "duration": 0.0,
+          "comment": "Title In",
+          "chapter": "",
+          "url": "",
+          "frame_target": "",
+          "cue_point_name": "",
+          "label": 0
+        }
+      ]
+    }
+  ],
+  "scrape_meta": {
+    "schema_version": "5.0",
+    "scraper_version": "sovereign-5.0.0",
+    "ae_version": "24.0.0",
+    "scrape_duration_ms": 142,
+    "total_layers": 3,
+    "total_properties_scraped": 4,
+    "total_errors": 0
+  },
+  "errors": []
+}

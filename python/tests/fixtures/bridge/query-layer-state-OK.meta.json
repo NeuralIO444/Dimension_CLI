@@ -1,0 +1,16 @@
+{
+  "capture_date": "2026-07-18T16:14:25+00:00",
+  "dimension_version": "5.8.13",
+  "bridge_version": "1.0",
+  "jsx_version": "5.8.13",
+  "jsx_bridge_version": "1.0",
+  "source_comp": "87N_Reels_DEV_87Neon_Anima_HD_01_mc",
+  "capture_args": {
+    "uid": "19f7601411d_595b14",
+    "property_paths": [
+      "position",
+      "scale"
+    ],
+    "time_s": null
+  }
+}

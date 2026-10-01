@@ -1,0 +1,247 @@
+{
+  "status": "OK",
+  "scrape_meta": {
+    "schema_version": "5.2.4",
+    "exported_at": "2026-04-24T19:00:00Z",
+    "scraper_revision": "tagging-manager-v1"
+  },
+  "project_info": {
+    "name": "TaggingManagerFixture",
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "duration": 10.0
+  },
+  "layers": [
+    {
+      "index": 1,
+      "name": "Camera 1",
+      "uid": "uid-camera-001",
+      "parent_index": -1,
+      "layer_kind": "camera",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": true, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": false, "is_text_layer": false,
+        "has_video": false, "has_audio": false, "audio_enabled": false
+      },
+      "position": [960, 540, -1000],
+      "scale": [100, 100, 100],
+      "anchor": [0, 0, 0],
+      "content_tag": null,
+      "content_tag_source": null,
+      "content_tag_confidence": null
+    },
+    {
+      "index": 2,
+      "name": "Key Light",
+      "uid": "uid-light-001",
+      "parent_index": -1,
+      "layer_kind": "light",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": true, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": false, "is_text_layer": false,
+        "has_video": false, "has_audio": false, "audio_enabled": false
+      },
+      "position": [200, 200, -500],
+      "scale": [100, 100, 100],
+      "anchor": [0, 0, 0],
+      "content_tag": null,
+      "content_tag_source": null,
+      "content_tag_confidence": null
+    },
+    {
+      "index": 3,
+      "name": "CTRL_NULL",
+      "uid": "uid-null-001",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": false, "null_layer": true,
+        "guide_layer": false, "is_text_layer": false,
+        "has_video": false, "has_audio": false, "audio_enabled": false
+      },
+      "position": [960, 540, 0],
+      "scale": [100, 100, 100],
+      "anchor": [0, 0, 0],
+      "content_tag": null,
+      "content_tag_source": null,
+      "content_tag_confidence": null
+    },
+    {
+      "index": 4,
+      "name": "GLOBAL_ADJ",
+      "uid": "uid-adj-001",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": true, "null_layer": false,
+        "guide_layer": false, "is_text_layer": false,
+        "has_video": true, "has_audio": false, "audio_enabled": false
+      },
+      "position": [960, 540, 0],
+      "scale": [100, 100, 100],
+      "anchor": [960, 540, 0],
+      "content_tag": null,
+      "content_tag_source": null,
+      "content_tag_confidence": null
+    },
+    {
+      "index": 5,
+      "name": "SAFE_GUIDE",
+      "uid": "uid-guide-001",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": true, "is_text_layer": false,
+        "has_video": true, "has_audio": false, "audio_enabled": false
+      },
+      "position": [960, 540, 0],
+      "scale": [100, 100, 100],
+      "anchor": [960, 540, 0],
+      "content_tag": "GUIDE",
+      "content_tag_source": "manual_comment",
+      "content_tag_confidence": 1.0
+    },
+    {
+      "index": 6,
+      "name": "TITLE_MAIN_v2",
+      "uid": "uid-title-001",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": false, "is_text_layer": true,
+        "has_video": true, "has_audio": false, "audio_enabled": false
+      },
+      "position": [960, 280, 0],
+      "scale": [100, 100, 100],
+      "anchor": [400, 50, 0],
+      "content_tag": "TYPE",
+      "content_tag_source": "manual_comment",
+      "content_tag_confidence": 1.0
+    },
+    {
+      "index": 7,
+      "name": "[TYPE] Subhead",
+      "uid": "uid-title-002",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": false, "is_text_layer": true,
+        "has_video": true, "has_audio": false, "audio_enabled": false
+      },
+      "position": [960, 360, 0],
+      "scale": [100, 100, 100],
+      "anchor": [200, 30, 0],
+      "label": 2,
+      "content_tag": "TYPE",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": 1.0
+    },
+    {
+      "index": 8,
+      "name": "LEGAL_RATING_BLK",
+      "uid": "uid-legal-001",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": false, "is_text_layer": false,
+        "has_video": true, "has_audio": false, "audio_enabled": false
+      },
+      "position": [960, 1020, 0],
+      "scale": [100, 100, 100],
+      "anchor": [400, 30, 0],
+      "label": 10,
+      "content_tag": "LEGALS",
+      "content_tag_source": "manual_label",
+      "content_tag_confidence": 1.0
+    },
+    {
+      "index": 9,
+      "name": "BG_PLATE",
+      "uid": "uid-bg-001",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": false, "is_text_layer": false,
+        "has_video": true, "has_audio": false, "audio_enabled": false
+      },
+      "position": [960, 540, 0],
+      "scale": [100, 100, 100],
+      "anchor": [960, 540, 0],
+      "content_tag": "BACKGROUND",
+      "content_tag_source": "heuristic",
+      "content_tag_confidence": 0.99
+    },
+    {
+      "index": 10,
+      "name": "RANDOM_BLOB",
+      "uid": "uid-unclass-001",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": false, "is_text_layer": false,
+        "has_video": true, "has_audio": false, "audio_enabled": false
+      },
+      "position": [400, 600, 0],
+      "scale": [100, 100, 100],
+      "anchor": [100, 100, 0],
+      "content_tag": null,
+      "content_tag_source": "heuristic",
+      "content_tag_confidence": 0.42
+    },
+    {
+      "index": 11,
+      "name": "HERO_PRODUCT",
+      "uid": "uid-hero-001",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": false, "is_text_layer": false,
+        "has_video": true, "has_audio": false, "audio_enabled": false
+      },
+      "position": [960, 540, 0],
+      "scale": [100, 100, 100],
+      "anchor": [500, 400, 0],
+      "content_tag": "HERO",
+      "content_tag_source": "profile",
+      "content_tag_confidence": 0.99
+    },
+    {
+      "index": 12,
+      "name": "ICON_BADGE",
+      "uid": "uid-icon-001",
+      "parent_index": -1,
+      "layer_kind": "av",
+      "flags": {
+        "enabled": true, "locked": false, "shy": false, "solo": false,
+        "three_d": false, "adjustment_layer": false, "null_layer": false,
+        "guide_layer": false, "is_text_layer": false,
+        "has_video": true, "has_audio": false, "audio_enabled": false
+      },
+      "position": [200, 200, 0],
+      "scale": [100, 100, 100],
+      "anchor": [50, 50, 0],
+      "content_tag": "ARTWORK",
+      "content_tag_source": "heuristic",
+      "content_tag_confidence": 0.78
+    }
+  ]
+}

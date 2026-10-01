@@ -1,0 +1,193 @@
+# ─────────────────────────────────────────────────────────────────────
+# Dimension — Canonical Tag Registry
+# ─────────────────────────────────────────────────────────────────────
+#
+# This file is the SINGLE SOURCE OF TRUTH for Dimension's tag
+# vocabulary. Every Python module reads from `python/core/tag_registry.py`
+# (which loads this file). Every JSX file reads from
+# `Scripts/Dimension_Assets/tag_registry.jsx` (generated from this file
+# by `python/scripts/generate_jsx_tag_mirror.py`).
+#
+# DO NOT hardcode tag values elsewhere in the codebase.
+#
+# ── Updating tags ───────────────────────────────────────────────────
+#
+#   1. Edit this file.
+#   2. Run: python python/scripts/generate_jsx_tag_mirror.py
+#   3. Commit BOTH files together.
+#   4. Reload the AE panel (panel staleness check fires on schema bump).
+#
+# ── Field reference ─────────────────────────────────────────────────
+#
+#   id              Canonical tag identifier. UPPERCASE letters/digits.
+#                   Used in Python code, JSX code, manifest JSON,
+#                   profile YAMLs, and presets.yaml.
+#
+#   display_name    Human-readable name. Used in UI labels and
+#                   tooltips.
+#
+#   abbrev          Short label for tag pills in dense UI rows.
+#                   Often equal to `id` (which is already short);
+#                   kept as a separate field so future longer ids
+#                   can have shorter pill displays.
+#
+#   color_hex       Pill text + border color (also the "key" color
+#                   for the pill background, derived via alpha at
+#                   render time).
+#
+#   ae_label_color  Index 0–16 in After Effects' label palette.
+#                   0 = no label. Multiple tags may share an index
+#                   (round-trip relies on the `#TAG` comment marker,
+#                   not the label color).
+#
+#   default_gravity ADVISORY ONLY. Used when no active studio
+#                   profile or no profile rule matches. Profile
+#                   rules ALWAYS override this.
+#                   Valid values: top | bottom | center | leftMid
+#                                 | rightMid | fill | none
+#
+#   semantic_class  NON-LOAD-BEARING in v1.0 — metadata for future
+#                   grouping and sorting features. May be null.
+#                   Valid values: text | graphic | structural
+#                                 | overlay | bg | null
+#
+#   description     One-line role/intent summary. Used in popover
+#                   tooltips and developer docs.
+#
+#   aliases         Optional list of legacy identifiers that
+#                   resolve to this canonical tag. The registry
+#                   normalises any alias on input. Existing data
+#                   carrying an alias is automatically read as the
+#                   canonical form.
+#
+
+schema_version: "1.0"
+
+tags:
+
+  # ── New canonical 4-tag vocabulary (v6.0) ─────────────────────────
+
+  - id: FILL
+    display_name: "Background Fill"
+    abbrev: "FILL"
+    color_hex: "#4a4a55"
+    ae_label_color: 1          # 1 = Red (Backgrounds/Plates Fill)
+    default_gravity: fill
+    semantic_class: bg
+    description: "Background plate. Fills the target frame."
+    aliases:
+      - BG
+      - BACKGROUND
+
+  - id: CENTER
+    display_name: "Centered Content"
+    abbrev: "CTR"
+    color_hex: "#b07ed4"
+    ae_label_color: 9          # 9 = Green (Live Type / Hero / Centered Content)
+    default_gravity: center
+    semantic_class: graphic
+    description: "Centered visual content — hero image, live type, product, logo, animation."
+    aliases:
+      - HERO
+      - BOXART
+      - ARTWORK
+      - LOGO
+      - ANIMATION
+      - KEYART
+      - BODY
+      - SUP
+
+  - id: TOP
+    display_name: "Top-Anchored"
+    abbrev: "TOP"
+    color_hex: "#7eb8d4"
+    ae_label_color: 10         # 10 = Purple (Main Title MT / Top-Anchored Title)
+    default_gravity: top
+    semantic_class: text
+    description: "Top-anchored content — main title treatment, headline, supertitle."
+    aliases:
+      - TT
+      - TYPE
+
+  - id: BOTTOM
+    display_name: "Bottom-Anchored"
+    abbrev: "BOT"
+    color_hex: "#c8820a"
+    ae_label_color: 8          # 8 = Blue (Legals / Disclaimers / CTA)
+    default_gravity: bottom
+    semantic_class: text
+    description: "Bottom-anchored content — legals, disclaimers, call-to-action."
+    aliases:
+      - LGL
+      - LEGALS
+      - CTA
+
+  # ── Compositing overlay ────────────────────────────────────────────
+
+  - id: OVERLAY
+    display_name: "Compositing Overlay"
+    abbrev: "OVR"
+    color_hex: "#a07eb0"
+    ae_label_color: 7
+    default_gravity: center
+    semantic_class: overlay
+    description: "Full-frame FX overlay (grain, vignette, color grade). Scales by S (not fill_S)."
+    aliases: []
+
+  # ── Remaining standalone tags ──────────────────────────────────────
+
+  - id: DISC
+    display_name: "Disclaimer"
+    abbrev: "DISC"
+    color_hex: "#c8820a"
+    ae_label_color: 13
+    default_gravity: bottom
+    semantic_class: text
+    description: "Disclaimer line (rendered at lower alpha than BOTTOM/LGL)."
+    aliases: []
+
+  # ── Structural — never moved by the conform engine ─────────────────
+
+  - id: GUIDE
+    display_name: "Guide / safe area"
+    abbrev: "GDE"
+    color_hex: "#7e7e8a"
+    ae_label_color: 0
+    default_gravity: none
+    semantic_class: structural
+    description: "Layout guide, safe-area marker. Never transformed."
+    aliases: []
+
+  - id: PROTECT
+    display_name: "Protect (no transform)"
+    abbrev: "PRT"
+    color_hex: "#a07ed4"
+    ae_label_color: 11
+    default_gravity: none
+    semantic_class: structural
+    description: "Layer marked PROTECT — never moved or scaled."
+    aliases: []
+
+  - id: "NULL"
+    display_name: "Null"
+    abbrev: "NULL"
+    color_hex: "#444444"
+    ae_label_color: 0
+    default_gravity: none
+    semantic_class: structural
+    description: "Null layer — purely a parenting/control object."
+    aliases: []
+
+  # ── Unclassified — has no semantic class ───────────────────────────
+
+  - id: UNCLASS
+    display_name: "Unclassified"
+    abbrev: "?"
+    color_hex: "#444444"
+    ae_label_color: 0
+    default_gravity: none
+    # semantic_class: not applicable — this tag indicates ABSENCE of
+    # classification, not membership in any class. Left null.
+    semantic_class: null
+    description: "Layer not yet classified by surveyor or by user."
+    aliases: []

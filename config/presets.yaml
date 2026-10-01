@@ -1,0 +1,239 @@
+# Dimension — Preset bundles.
+#
+# Higher-level layer on top of config/formats.yaml. Each preset is a
+# named bundle of output formats + a tag profile + conform mode/bleed/
+# padding + metadata. Consumed by the Preset Manager panel
+# (python/ui/preset_manager.py) and — once v5.2 Studio Profiles land —
+# by the fleet dispatcher.
+#
+# Schema per entry:
+#   id:         short slug, unique, signal payload.
+#   name:       display name ("Hero Launch — Film").
+#   group:      coarse bucket ("Studio" | "Social" | "Print" | "Internal").
+#   category:   sub-bucket ("Launch" | "Broadcast" | "Streaming" | ...).
+#   formats:    list of {label, w, h} — the output targets this preset emits.
+#   tags:       list of tag codes (see TAG_DEFS in preset_manager.py).
+#   rules:      (int) count of gravity/placement rules. Informational for v1.
+#   mode:       "Fit" | "Fill" | "Crop" | "Stretch".
+#   bleed:      percentage string ("5.0").
+#   padding:    pixels (int).
+#   last_used:  display string ("2h ago"). Updated by the runtime.
+#   usage:      dispatch counter (int).
+#   confidence: live-tagger confidence % (int). v5.2 backend populates;
+#               until then it's an author-set hint for how production-ready
+#               the preset is.
+#   author:     "team/xxx" or "you".
+#   status:     "live" | "draft".
+#   pinned:     bool — sorted to top regardless of other sort order.
+
+presets:
+- id: hero-launch-film
+  name: Hero Launch — Film
+  group: Studio
+  category: Launch
+  formats:
+  - {label: DCP 4K SCOPE, w: 4096, h: 1716}
+  - {label: DCP 4K FLAT, w: 3996, h: 2160}
+  - {label: DCP 2K SCOPE, w: 2048, h: 858}
+  tags: [TT, HERO, LOGO, LGL]
+  rules: 7
+  mode: Fit
+  bleed: '0.5'
+  padding: 32
+  last_used: 2h ago
+  usage: 142
+  confidence: 99
+  author: team/dcp
+  status: live
+  pinned: true
+- id: broadcast-16x9
+  name: Broadcast — 16:9 HD
+  group: Studio
+  category: Broadcast
+  formats:
+  - {label: 1920×1080, w: 1920, h: 1080}
+  - {label: 1280×720, w: 1280, h: 720}
+  tags: [TT, HERO, LOGO]
+  rules: 5
+  mode: Fit
+  bleed: '2.0'
+  padding: 48
+  last_used: 1d ago
+  usage: 286
+  confidence: 98
+  author: team/broadcast
+  status: live
+  pinned: true
+- id: social-vertical
+  name: Social — Vertical Stack
+  group: Social
+  category: Social
+  formats:
+  - {label: TIKTOK, w: 1080, h: 1920}
+  - {label: REELS, w: 1080, h: 1920}
+  - {label: SHORTS, w: 1080, h: 1920}
+  tags: [TT, CTA, HERO, SUP]
+  rules: 9
+  mode: Fill
+  bleed: '5.0'
+  padding: 64
+  last_used: 4m ago
+  usage: 438
+  confidence: 99
+  author: you
+  status: live
+  pinned: false
+- id: social-square
+  name: Social — Square
+  group: Social
+  category: Social
+  formats:
+  - {label: INSTAGRAM, w: 1080, h: 1080}
+  - {label: YOUTUBE, w: 800, h: 800}
+  - {label: FACEBOOK, w: 1200, h: 1200}
+  tags: [TT, CTA, HERO]
+  rules: 6
+  mode: Fill
+  bleed: '3.0'
+  padding: 48
+  last_used: 5h ago
+  usage: 201
+  confidence: 97
+  author: you
+  status: live
+  pinned: false
+- id: netflix-ui
+  name: Netflix — UI Packshot
+  group: Studio
+  category: Streaming
+  formats:
+  - {label: BILLBOARD, w: 1920, h: 1080}
+  - {label: PORTRAIT, w: 1080, h: 1620}
+  - {label: TVUI, w: 3840, h: 2160}
+  tags: [TT, HERO, CTA]
+  rules: 8
+  mode: Crop
+  bleed: '1.0'
+  padding: 40
+  last_used: 3d ago
+  usage: 94
+  confidence: 96
+  author: team/streaming
+  status: draft
+  pinned: false
+- id: print-ooh
+  name: Print / OOH Adaptive
+  group: Print
+  category: Print
+  formats:
+  - {label: BILLBOARD, w: 2400, h: 1050}
+  - {label: BUS-SIDE, w: 3000, h: 960}
+  - {label: POSTER-A1, w: 2384, h: 3370}
+  tags: [TT, HERO, LOGO, LGL]
+  rules: 11
+  mode: Fit
+  bleed: '10.0'
+  padding: 120
+  last_used: 2w ago
+  usage: 37
+  confidence: 92
+  author: team/print
+  status: live
+  pinned: false
+- id: disney-launch
+  name: Disney+ — Launch Suite
+  group: Studio
+  category: Streaming
+  formats:
+  - {label: HERO, w: 3840, h: 2160}
+  - {label: MOBILE, w: 1080, h: 1920}
+  tags: [TT, HERO, LOGO, SUP]
+  rules: 6
+  mode: Fill
+  bleed: '2.0'
+  padding: 56
+  last_used: 6d ago
+  usage: 58
+  confidence: 95
+  author: team/streaming
+  status: draft
+  pinned: false
+- id: a24-theatrical
+  name: A24 — Theatrical
+  group: Studio
+  category: Launch
+  formats:
+  - {label: DCP 4K SCOPE, w: 4096, h: 1716}
+  - {label: DCP 2K SCOPE, w: 2048, h: 858}
+  tags: [TT, HERO, LGL]
+  rules: 5
+  mode: Fit
+  bleed: '0.5'
+  padding: 32
+  last_used: 1w ago
+  usage: 12
+  confidence: 88
+  author: you
+  status: draft
+  pinned: false
+- id: ooh
+  name: OOH
+  group: OOH
+  category: Library
+  formats:
+  - {label: LAX_IVISIONS, w: 1080, h: 1920}
+  - {label: LAX_CHARGING_KIOSK, w: 1080, h: 1920}
+  - {label: LAX_BRIDGE_BAND, w: 4800, h: 1080}
+  - {label: LAX_DIGITAL_WALL_5401DG, w: 1280, h: 480}
+  - {label: LAX_DIGITAL_WALL_1401DV, w: 800, h: 400}
+  - {label: ORD_DIRECT_VIEW, w: 480, h: 288}
+  - {label: DFW_IVISIONS, w: 1080, h: 1920}
+  - {label: JFK_T5_PREMIER, w: 1920, h: 1080}
+  - {label: JFK_PK6LED, w: 1440, h: 2025}
+  - {label: JFK_PK2VWX_ULTRAWIDE, w: 6480, h: 540}
+  - {label: JFK_PK2VWX_STANDARD, w: 1920, h: 1080}
+  - {label: JFK_7S_LED_1, w: 1520, h: 240}
+  - {label: ATL_PREMIER_SMALL, w: 720, h: 406}
+  - {label: ATL_PREMIER_MEDIUM, w: 1440, h: 405}
+  - {label: ATL_PREMIER_LARGE, w: 2880, h: 406}
+  - {label: MCO_PRESTIGE, w: 1920, h: 1080}
+  - {label: BRANDED_CITIES_MOXY, w: 11480, h: 1890}
+  - {label: HOLLYWOOD_PARK_A5_PYLON, w: 80, h: 240}
+  - {label: HOLLYWOOD_PARK_A6_PYLON, w: 128, h: 368}
+  - {label: HOLLYWOOD_PARK_KIOSK, w: 1080, h: 1920}
+  - {label: HOLLYWOOD_PARK_NFL_SOUTH, w: 1152, h: 648}
+  - {label: HOLLYWOOD_PARK_NFL_EAST, w: 1984, h: 648}
+  - {label: TS7144_FULL_WRAP, w: 2688, h: 1344}
+  - {label: TS7144_HALF_FACE, w: 1344, h: 1344}
+  - {label: NYC_SITE_124, w: 1888, h: 1392}
+  - {label: NYC_SUBWAY_SINGLE, w: 1920, h: 1080}
+  - {label: NYC_SUBWAY_TRIPTYCH_PANEL, w: 1920, h: 1080}
+  - {label: NYC_SUBWAY_TRIPTYCH_CANVAS, w: 3682, h: 1920}
+  - {label: OUTFRONT_1240_STATIC, w: 7680, h: 2160}
+  - {label: OUTFRONT_1240_MOTION, w: 2560, h: 720}
+  - {label: GROVE_STANDARD, w: 1920, h: 1080}
+  - {label: GROVE_ULTRAWIDE, w: 7040, h: 1080}
+  - {label: GROVE_MARQUEE_TOTAL, w: 3840, h: 2160}
+  - {label: GROVE_MARQUEE_A, w: 3328, h: 320}
+  - {label: GROVE_MARQUEE_B, w: 3840, h: 320}
+  - {label: GROVE_MARQUEE_C, w: 256, h: 320}
+  - {label: GROVE_ESCALATOR_PANEL, w: 5400, h: 1920}
+  - {label: IRON_MOUNTAIN_PROJECTION, w: 1920, h: 1080}
+  - {label: LALIVE_TOWER, w: 1920, h: 1080}
+  - {label: LALIVE_XBOX_PLAZA, w: 1920, h: 1080}
+  - {label: LALIVE_MICROSOFT_MARQUEE, w: 4600, h: 210}
+  - {label: LALIVE_MICROSOFT_PROW, w: 1360, h: 510}
+  - {label: LALIVE_HOTEL_VERTICAL, w: 640, h: 1056}
+  - {label: LALIVE_HOTEL_HORIZONTAL, w: 768, h: 432}
+  - {label: LALIVE_HOTEL_MESH, w: 196, h: 640}
+  tags: [TT, HERO, LOGO]
+  rules: 0
+  mode: Fit
+  bleed: '0.0'
+  padding: 24
+  last_used: —
+  usage: 0
+  confidence: 90
+  author: team/ooh
+  status: live
+  pinned: false

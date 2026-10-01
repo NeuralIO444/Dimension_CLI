@@ -1,0 +1,655 @@
+/*
+    ============================================================
+    NeuralIO - Dimension — Panel Stylesheet (SGI Dark Blue edition)
+    ============================================================
+    Product:    NeuralIO - Dimension
+    Version:    6.0.0
+    Author:     Neural IO 444
+    Contact:    neural_io_444@icloud.com
+    Store:      https://neuralio444.gumroad.com/
+    Copyright (c) 2026 Neural IO 444.
+    All rights reserved.
+    ============================================================
+*/
+
+:root {
+  /* Dark SGI Blues Palette variables */
+  --ae-bg: #141a29;
+  --ae-surface: #1b2436;
+  --ae-raised: #485c74;
+  --ae-row-hover: #243652;
+  --ae-row-selected: #2e466c;
+  --ae-row-selected-edge: #4a90e2;
+  --ae-border: #0d121c;
+  --ae-border-strong: #182236;
+  --ae-divider: #0d121c;
+
+  /* Text */
+  --t-1: #e8edf5;
+  --t-2: #a4b6d0;
+  --t-3: #6a7e98;
+  --t-4: #4c5d76;
+  --t-num: #cfdaf0;
+
+  /* Standard theme alias overrides */
+  --bg-window: var(--ae-bg);
+  --bg-panel: var(--ae-surface);
+  --bg-header: var(--ae-surface);
+  --bg-input: #0c101a;
+  --bg-hover: var(--ae-row-hover);
+  --bg-active: var(--ae-row-selected);
+
+  --border-faint: var(--ae-border);
+  --border-strong: var(--ae-border-strong);
+  --border-focus: var(--accent);
+
+  --accent: #4a90e2;
+  --accent-hover: #6ea3f2;
+  --accent-dim: #213554;
+
+  --text-primary: var(--t-1);
+  --text-secondary: var(--t-2);
+  --text-muted: var(--t-3);
+  --text-ghost: var(--t-4);
+
+  --radius: 0px !important;
+  --radius-sm: 0px !important;
+  --radius-lg: 0px !important;
+  --r-1: 0px !important;
+  --r-2: 0px !important;
+  --r-3: 0px !important;
+  --r-4: 0px !important;
+
+  /* Motif 3D bevels */
+  --bevel-light: #6e85a0;
+  --bevel-dark: #070b12;
+  --raise: inset 1px 1px 0 0 var(--bevel-light), inset -1px -1px 0 0 var(--bevel-dark);
+  --sink: inset 1px 1px 0 0 var(--bevel-dark), inset -1px -1px 0 0 var(--bevel-light);
+}
+
+/* ════════════════════════════════════════════════════════════
+   SGI MOTIF OVERRIDES
+   ════════════════════════════════════════════════════════════ */
+
+/* Force square corners on everything */
+*, *::before, *::after {
+    border-radius: 0 !important;
+}
+
+/* Base body and canvas */
+body, #app-main, .screen, .v2-tree, #output-log, .empty-state {
+    background-color: var(--ae-bg) !important;
+    color: var(--t-1) !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px !important;
+}
+::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--ae-raised) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--raise) !important;
+    border-radius: 0 !important;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #556c86 !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BUTTONS (Motif outset bevel)
+   ════════════════════════════════════════════════════════════ */
+.btn, .ae-btn, .header-icon-btn, .modal-close {
+    background-color: var(--ae-raised) !important;
+    color: var(--t-1) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--raise) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    transition: background-color var(--transition), color var(--transition) !important;
+}
+
+.btn:hover:not(:disabled), .ae-btn:hover:not(:disabled), .header-icon-btn:hover:not(:disabled) {
+    background-color: #556c86 !important;
+    color: #fff !important;
+}
+
+.btn:active:not(:disabled), .ae-btn:active:not(:disabled), .header-icon-btn:active:not(:disabled) {
+    box-shadow: var(--sink) !important;
+    transform: translateY(1px) !important;
+}
+
+.btn:disabled, .ae-btn:disabled {
+    opacity: 0.35 !important;
+    box-shadow: none !important;
+    border-color: var(--ae-border-strong) !important;
+}
+
+/* Primary buttons (blue-tinted raised Motif face) */
+.btn-primary, .btn-accent, .ae-btn-primary {
+    background-color: #2c4d75 !important;
+    color: var(--t-1) !important;
+    border-color: var(--ae-border) !important;
+    box-shadow: var(--raise) !important;
+}
+.btn-primary:hover:not(:disabled), .btn-accent:hover:not(:disabled), .ae-btn-primary:hover:not(:disabled) {
+    background-color: #365e8f !important;
+    color: #fff !important;
+}
+
+/* Danger buttons (red-tinted raised Motif face) */
+.btn-danger {
+    background-color: #723440 !important;
+    color: #f5d8dd !important;
+    border-color: var(--ae-border) !important;
+    box-shadow: var(--raise) !important;
+}
+.btn-danger:hover:not(:disabled) {
+    background-color: #8c404e !important;
+    color: #fff !important;
+}
+
+/* Secondary/Ghost button styling */
+.ae-btn-ghost {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: 1px solid transparent !important;
+}
+.ae-btn-ghost:hover {
+    background-color: var(--ae-row-hover) !important;
+    border-color: var(--ae-border) !important;
+    box-shadow: var(--raise) !important;
+}
+.ae-btn-ghost.is-active {
+    background-color: rgba(88, 145, 255, 0.12) !important;
+    border-color: var(--p-theatrical) !important;
+    color: var(--p-theatrical) !important;
+}
+
+/* Link buttons */
+.btn-link {
+    color: var(--t-2) !important;
+    text-decoration: underline !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.btn-link:hover {
+    color: var(--accent) !important;
+    background: transparent !important;
+    text-decoration: underline !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   FORM INPUTS (Motif sunken well)
+   ════════════════════════════════════════════════════════════ */
+input[type="text"], input[type="number"], select, textarea, .v2-search-input {
+    background-color: var(--bg-input) !important;
+    color: var(--t-1) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--sink) !important;
+    padding: 4px 6px !important;
+    outline: none !important;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus, .v2-search-input:focus {
+    border-color: var(--accent) !important;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' fill='none'%3E%3Cpath fill='%23a4b6d0' d='M4 5.5.5 1h7L4 5.5z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 6px center !important;
+    padding-right: 20px !important;
+}
+
+/* Onboarding select fix */
+#modal-onboarding select.ae-input {
+    width: 100% !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   HEADER, FOOTER & NAVIGATION
+   ════════════════════════════════════════════════════════════ */
+#app-header, .v2-titlebar {
+    background-color: var(--ae-surface) !important;
+    border-bottom: 1px solid var(--ae-border) !important;
+    height: 36px !important;
+    padding: 0 12px !important;
+}
+
+.v2-profile-strip {
+    display: none !important; /* Hide neon accent line */
+}
+
+#app-footer {
+    background-color: var(--ae-surface) !important;
+    border-top: 1px solid var(--ae-border) !important;
+    color: var(--t-3) !important;
+    height: 22px !important;
+    padding: 0 12px !important;
+}
+
+/* Tabs */
+.v2-tabs {
+    background-color: var(--ae-surface) !important;
+    border-bottom: 1px solid var(--ae-border) !important;
+    height: 28px !important;
+    padding: 0 4px !important;
+    gap: 2px !important;
+}
+
+.v2-tab {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-bottom: none !important;
+    color: var(--t-2) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    padding: 0 12px !important;
+    margin-top: 3px !important;
+    transition: none !important;
+}
+
+.v2-tab:hover {
+    background-color: var(--ae-row-hover) !important;
+    color: var(--t-1) !important;
+}
+
+.v2-tab.is-active {
+    background-color: var(--ae-bg) !important;
+    color: var(--accent) !important;
+    border-color: var(--ae-border) var(--ae-border) var(--ae-bg) var(--ae-border) !important;
+    box-shadow: inset 0 2px 0 0 var(--accent) !important;
+    margin-top: 1px !important;
+    z-index: 2 !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   TAG REVIEW SCREEN & TREE
+   ════════════════════════════════════════════════════════════ */
+.v2-state-strip {
+    background-color: var(--ae-surface) !important;
+    border-bottom: 1px solid var(--ae-border) !important;
+    padding: 10px 12px !important;
+}
+
+.v2-toolbar {
+    background-color: var(--ae-surface) !important;
+    border-bottom: 1px solid var(--ae-border) !important;
+    padding: 6px 12px !important;
+}
+
+.v2-tree {
+    background-color: var(--ae-bg) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--sink) !important;
+}
+
+.v2-row {
+    border-bottom: 1px solid var(--ae-border) !important;
+}
+
+.v2-row:hover {
+    background-color: var(--ae-row-hover) !important;
+}
+
+.v2-row.is-selected {
+    background-color: var(--ae-row-selected) !important;
+}
+
+.v2-row.is-selected::before {
+    background-color: var(--accent) !important;
+    width: 3px !important;
+}
+
+.v2-footer {
+    background-color: var(--ae-surface) !important;
+    border-top: 1px solid var(--ae-border) !important;
+    padding: 8px 12px !important;
+}
+
+.bottom-bar, .v2-bottom-bar {
+    background-color: var(--ae-surface) !important;
+    border-top: 1px solid var(--ae-border) !important;
+    padding: 8px 12px !important;
+}
+
+/* Multiselect bar */
+.v2-multiselect-bar {
+    background-color: var(--ae-surface) !important;
+    border-bottom: 1px solid var(--ae-border) !important;
+    padding: 6px 12px !important;
+}
+
+/* Inline tag picker */
+.v2-tag-picker {
+    background-color: var(--ae-surface) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--raise), 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.v2-tag-picker-header {
+    background-color: var(--ae-bg) !important;
+    border-bottom: 1px solid var(--ae-border) !important;
+    color: var(--t-2) !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SLIDERS (Motif style well + track)
+   ════════════════════════════════════════════════════════════ */
+input[type="range"].slider, input[type="range"] {
+    -webkit-appearance: none !important;
+    background-color: var(--bg-input) !important;
+    box-shadow: var(--sink) !important;
+    border: 1px solid var(--ae-border) !important;
+    height: 6px !important;
+    margin: 8px 0 !important;
+}
+
+input[type="range"].slider::-webkit-slider-thumb, input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    width: 10px !important;
+    height: 16px !important;
+    background-color: var(--ae-raised) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--raise) !important;
+    cursor: pointer !important;
+}
+
+input[type="range"].slider::-webkit-slider-thumb:hover, input[type="range"]::-webkit-slider-thumb:hover {
+    background-color: #556c86 !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   PROGRESS & CONSOLE LOG
+   ════════════════════════════════════════════════════════════ */
+.progress-track {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--sink) !important;
+    height: 8px !important;
+}
+
+.progress-fill {
+    background-color: var(--accent) !important;
+    box-shadow: var(--raise) !important;
+}
+
+.console-log, #output-log {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--sink) !important;
+    color: var(--t-2) !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   MODALS
+   ════════════════════════════════════════════════════════════ */
+.modal {
+    background-color: var(--ae-surface) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--raise), 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--ae-border) !important;
+    background-color: var(--ae-bg) !important;
+    padding: 8px 12px !important;
+}
+
+.modal-body {
+    padding: 16px !important;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--ae-border) !important;
+    background-color: var(--ae-bg) !important;
+    padding: 8px 12px !important;
+}
+
+.pref-readonly {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--sink) !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BANNERS & WARNINGS
+   ════════════════════════════════════════════════════════════ */
+.garden-banner, .v2-state-warnings {
+    border: 1px solid var(--ae-border) !important;
+    background-color: #3f2f1e !important; /* Muted SGI amber-brown for warnings */
+    color: #ffd8a8 !important;
+    box-shadow: var(--raise) !important;
+}
+
+/* .working-dir-hint used to be grouped into the warning-banner rule
+   above — it's a plain informational caption (the active output
+   path), not a warning or a panel, and any boxed/bordered treatment
+   here reads as a mystery colored line rather than a caption. No box
+   at all: quiet inline text, flush with the screen background. */
+.working-dir-hint {
+    border: none !important;
+    background-color: transparent !important;
+    color: var(--t-3) !important;
+    box-shadow: none !important;
+}
+
+.v2-state-warnings a, .garden-banner a {
+    color: #ffaa3a !important;
+}
+
+/* Status Lamp (solid flat color square) */
+.status-lamp {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+.status-lamp.ready {
+    background-color: var(--success) !important;
+    box-shadow: none !important;
+}
+.status-lamp.scraping,
+.status-lamp.busy {
+    background-color: var(--warning) !important;
+    box-shadow: none !important;
+    animation: none !important;
+}
+.status-lamp.surveying {
+    background-color: var(--accent) !important;
+    box-shadow: none !important;
+    animation: none !important;
+}
+.status-lamp.error {
+    background-color: var(--error) !important;
+    box-shadow: none !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BOTTOM AREA CLEANUP & SPACING OVERRIDES
+   ════════════════════════════════════════════════════════════ */
+
+/* Symmetrical and even button spacing in bottom bars */
+.bottom-bar, .v2-bottom-bar, #screen-configure .bottom-bar, #execute-bottom-bar {
+    display: flex !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+    background-color: var(--ae-surface) !important;
+    border-top: 1px solid var(--ae-border) !important;
+}
+
+.bottom-bar button, .bottom-bar .btn, .bottom-bar .ae-btn,
+.v2-bottom-bar button, .v2-bottom-bar .btn, .v2-bottom-bar .ae-btn,
+#screen-configure .bottom-bar button, #execute-bottom-bar button {
+    flex: 1 !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    box-shadow: var(--raise) !important;
+    border: 1px solid var(--ae-border) !important;
+    background-color: var(--ae-raised) !important;
+    color: var(--t-1) !important;
+}
+
+/* Hover and active states for bottom bar buttons */
+.bottom-bar button:hover, .v2-bottom-bar button:hover, 
+#screen-configure .bottom-bar button:hover, #execute-bottom-bar button:hover {
+    background-color: #556c86 !important;
+    color: #fff !important;
+}
+
+.bottom-bar button:active, .v2-bottom-bar button:active, 
+#screen-configure .bottom-bar button:active, #execute-bottom-bar button:active {
+    box-shadow: var(--sink) !important;
+    transform: translateY(1px) !important;
+}
+
+/* Ensure primary actions are styled as blue-tinted Motif buttons */
+.bottom-bar .btn-primary, .bottom-bar .ae-btn-primary,
+.v2-bottom-bar .btn-primary, .v2-bottom-bar .ae-btn-primary,
+#screen-configure .btn-primary, #execute-bottom-bar .btn-accent {
+    background-color: #2c4d75 !important;
+    color: var(--t-1) !important;
+}
+.bottom-bar .btn-primary:hover, .bottom-bar .ae-btn-primary:hover,
+.v2-bottom-bar .btn-primary:hover, .v2-bottom-bar .ae-btn-primary:hover,
+#screen-configure .btn-primary:hover, #execute-bottom-bar .btn-accent:hover {
+    background-color: #365e8f !important;
+    color: #fff !important;
+}
+
+/* Align and space the tagging review footer strip */
+.v2-footer {
+    height: auto !important;
+    padding: 8px 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background-color: var(--ae-surface) !important;
+    border-top: 1px solid var(--ae-border) !important;
+}
+
+.v2-footer div {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+}
+
+.v2-footer button, .v2-footer .ae-btn {
+    padding: 4px 10px !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    background-color: var(--ae-raised) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--raise) !important;
+    color: var(--t-1) !important;
+}
+
+.v2-footer button:hover {
+    background-color: #556c86 !important;
+    color: #fff !important;
+}
+
+.v2-footer button:active {
+    box-shadow: var(--sink) !important;
+    transform: translateY(1px) !important;
+}
+
+.v2-footer .ae-btn-primary {
+    background-color: #2c4d75 !important;
+}
+.v2-footer .ae-btn-primary:hover {
+    background-color: #365e8f !important;
+}
+
+/* Keyboard hint styling overrides */
+.v2-foot-hints {
+    font-size: 10px !important;
+    color: var(--t-2) !important;
+}
+
+.v2-key {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--ae-border) !important;
+    box-shadow: var(--sink) !important;
+    color: var(--accent) !important;
+    border-radius: 0 !important;
+    padding: 1px 4px !important;
+    font-weight: bold !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   CONTACT & TIP JAR LINKS IN APP FOOTER
+   ════════════════════════════════════════════════════════════ */
+#app-footer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 12px !important;
+    height: 24px !important;
+    background-color: var(--ae-surface) !important;
+    border-top: 1px solid var(--ae-border) !important;
+    font-size: 9.5px !important;
+}
+
+.footer-brand {
+    font-weight: bold !important;
+    color: var(--t-2) !important;
+}
+
+.footer-spacer {
+    flex: 1 !important;
+}
+
+.contact-link {
+    color: var(--t-2) !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition: color 0.15s ease !important;
+    font-size: 9.5px !important;
+    font-family: var(--font-sans) !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+}
+
+.contact-link:hover {
+    color: var(--accent) !important;
+}
+
+.contact-dot {
+    color: var(--t-3) !important;
+    margin: 0 6px !important;
+    font-size: 9.5px !important;
+    user-select: none !important;
+}
+
+.contact-coffee {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    color: #e6952e !important; /* warm orange highlight for coffee */
+}
+
+.contact-coffee:hover {
+    color: #ffaa3a !important;
+}
+
+.coffee-icon {
+    flex-shrink: 0 !important;
+    stroke: currentColor !important;
+}
+
+.footer-version {
+    color: var(--t-3) !important;
+    font-family: var(--font-mono) !important;
+}

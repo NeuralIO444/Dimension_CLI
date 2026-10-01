@@ -1,0 +1,53 @@
+# Ruff configuration — Dimension engine.
+#
+# Scope is deliberately narrow. The point of this gate is to catch code
+# that is wrong, not code that is unfashionable. A linter that reports
+# 1,500 style violations on day one gets switched off on day two, and a
+# permanently-noisy check trains everyone to ignore checks — the same
+# failure mode the fixture-sync job had.
+#
+# Enabling the full default rule set here would flag ~1,576 typing
+# modernisations (Optional[X] -> X | None and similar) with no bearing
+# on correctness. Those are a separate, reviewable change if ever wanted.
+
+target-version = "py311"
+line-length = 100
+
+extend-exclude = ["cep", "Dimension_Vault", "docs", ".pipeline"]
+
+[lint]
+# E9  — syntax / IO errors that stop the file being parsed at all.
+# F   — pyflakes: undefined names, unused imports, duplicate arguments,
+#       f-strings with no placeholders, broken __all__ entries.
+#
+# F401 in particular is the rule that finds vestigial imports, which is
+# the same class of cruft python/tools/reachability.py was hand-rolled
+# to detect. 90 of them were removed when this gate was first switched
+# on, and the suite stayed green.
+select = ["E9", "F"]
+
+# F841 (assigned-but-never-used) is deliberately not enforced yet. The
+# 9 current occurrences were each reviewed and none is a defect: they
+# are destructuring leftovers, an unused `except ... as e`, and one
+# test flag whose accompanying comment explains why it is intentionally
+# not asserted. Enforcing it today would mean adding 9 suppressions for
+# no safety gain. Worth revisiting if the count starts growing.
+ignore = ["F841"]
+
+[lint.per-file-ignores]
+# bridge_contract.py re-exports chunk_contract's names through a PEP 562
+# module-level __getattr__. The names in __all__ genuinely resolve at
+# runtime — verified by import — but ruff cannot see through __getattr__
+# and reports them as undefined exports. False positive, not a defect.
+"python/models/bridge_contract.py" = ["F822"]
+
+# CLAUDE.md designates the "report" and "tag" stages as sacred: changes
+# there need explicit owner sign-off, not a blanket go-ahead. Ruff's only
+# findings in these two files were F541 (an `f` prefix on a string with
+# no placeholders), which compiles to an identical constant and cannot
+# change behaviour — but "provably harmless" is not the same as
+# "approved", so the files are left untouched and the rule is disabled
+# for them. Drop these two lines and re-run `ruff check --fix` if the
+# owner would rather have the cleanup.
+"python/logic/report_generator.py" = ["F541"]
+"python/core/surveyor.py" = ["F541"]

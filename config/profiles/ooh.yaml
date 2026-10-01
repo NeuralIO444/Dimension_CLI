@@ -1,0 +1,113 @@
+# config/profiles/ooh.yaml
+# revision: v1.0.0  ·  updated: 2026-05-15
+#
+# Slot 11.5 Phase 2 — profile reduction 9 → 4.
+# Out-of-home — digital billboard, transit, large-format printed
+# and dynamic displays. Aggressive fit on CENTER (scale
+# modifier 1.15) so brand assets fill the throw distance; BOTTOM
+# stays small in the bottom corner.
+#
+# No retired profile maps to OOH — this is a net-new use case in
+# the four-profile model.
+#
+# v6.0: updated tag vocabulary to FILL/CENTER/TOP/BOTTOM.
+
+id:           ooh
+display_name: "OOH"
+revision:     "v1.0.0"
+author:       "neural_io_444"
+updated:      "2026-05-15"
+color:        "#d4a07e"
+description: |
+  Out-of-home. Digital billboard, transit, large-format displays.
+  Centre-first; CENTER scaled up 1.15× via type
+  overrides to fill long throws; BOTTOM pinned to a bottom corner,
+  small. 1.0 base scale.
+
+safe_area:
+  top:    0.05
+  right:  0.04
+  bottom: 0.06
+  left:   0.04
+
+prefixes:
+  # ── Centred content (aggressive fit via type_overrides) ──
+  - match:   "HERO_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.15
+    weight:  high
+  - match:   "CENTER_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.15
+    weight:  high
+  - match:   "BOXART_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.15
+    weight:  normal
+  - match:   "ARTWORK_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "LOGO_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+  - match:   "BRAND_"
+    tag:     CENTER
+    gravity: center
+    scale:   1.00
+    weight:  normal
+
+  # ── Title text — centre ──
+  - match:   "TITLE_"
+    tag:     TOP
+    gravity: center
+    scale:   1.00
+    weight:  high
+  - match:   "TOP_"
+    tag:     TOP
+    gravity: center
+    scale:   1.00
+    weight:  high
+
+  # ── Legal — bottom corner, small ──
+  - match:   "LEGAL_"
+    tag:     BOTTOM
+    gravity: bottomC
+    scale:   0.75
+    weight:  pinned
+  - match:   "BOTTOM_"
+    tag:     BOTTOM
+    gravity: bottomC
+    scale:   0.75
+    weight:  pinned
+
+  # ── Background — fills the frame ──
+  - match:   "BG_"
+    tag:     FILL
+    gravity: fill
+    scale:   1.00
+    weight:  normal
+  - match:   "FILL_"
+    tag:     FILL
+    gravity: fill
+    scale:   1.00
+    weight:  normal
+
+type_overrides:
+  CENTER: 1.15
+  TOP:    1.00
+  BOTTOM: 0.75
+
+# ── Extreme Ribbon Profile (>10:1 Aspect Ratio) ──
+# TASK-P2-04 (#252): Special handling for horizontal stadium/ribbon LED headers
+# (e.g. 21,360x48, 3840x120) to prevent vertical crop destruction.
+extreme_ribbon:
+  aspect_ratio_threshold: 10.0
+  height_fit_tags: ["HERO", "LOGO", "TT", "TYPE", "CENTER"]
+  horizontal_gravity: "pin_center"

@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "job_type": "scrape",
+  "status": "OK",
+  "manifest": "/Users/redacted/Dev/Dimension/logs/archive/Session_20260522_133452/scrape_manifest.json",
+  "comp": "87N_Reels_DEV_87Neon_Anima_HD_01_mc",
+  "result": "",
+  "dimension_schema_version": "5.8.13",
+  "dimension_panel_build": "v5.1.11"
+}
