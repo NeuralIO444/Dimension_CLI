@@ -76,11 +76,12 @@ class TestAdapterAgainstRealFixture:
         reference count -- proving the full chain, not just one hop."""
         ps = _load_real_fixture()
         legacy = adapt_project_structure_for_comp_cleaner(ps)
-        # Force every comp to match the orphan-candidate naming pattern
-        # so analyze_project's reference-count bookkeeping is exercised
-        # for all of them, then check specifically the ones we know
-        # from ps.references are real reference targets.
-        plan = CompCleaner.analyze_project(legacy, custom_pattern=".*")
+        # Provenance, not names (issue #10): treat every comp as a known
+        # duplicate so analyze_project's reference-count bookkeeping is
+        # exercised for all of them, then check specifically the ones we
+        # know from ps.references are real reference targets.
+        all_names = {c["name"] for c in legacy["items"]}
+        plan = CompCleaner.analyze_project(legacy, known_duplicates=all_names)
 
         referenced_ids = {ref.to_comp_id for ref in ps.references}
         protected_ids_with_refs = {
@@ -117,7 +118,8 @@ class TestCriticalFalseOrphanRegression:
             ],
         )
         legacy = adapt_project_structure_for_comp_cleaner(ps)
-        plan = CompCleaner.analyze_project(legacy)
+        plan = CompCleaner.analyze_project(
+            legacy, known_duplicates={"Background__dim_dup_01"})
 
         orphan_ids = {c.comp_id for c in plan.orphaned_candidates}
         assert 2 not in orphan_ids, (
@@ -142,7 +144,8 @@ class TestCriticalFalseOrphanRegression:
             references=[],
         )
         legacy = adapt_project_structure_for_comp_cleaner(ps)
-        plan = CompCleaner.analyze_project(legacy)
+        plan = CompCleaner.analyze_project(
+            legacy, known_duplicates={"Orphan__dim_dup_01"})
 
         orphan_ids = {c.comp_id for c in plan.orphaned_candidates}
         assert 2 in orphan_ids
@@ -163,7 +166,8 @@ class TestCriticalFalseOrphanRegression:
         legacy = adapt_project_structure_for_comp_cleaner(ps)
         assert legacy["items"][0]["is_render_queued"] is True
 
-        plan = CompCleaner.analyze_project(legacy)
+        plan = CompCleaner.analyze_project(
+            legacy, known_duplicates={"Queued__dim_dup_01"})
         orphan_ids = {c.comp_id for c in plan.orphaned_candidates}
         assert 1 not in orphan_ids
         protected = next(p for p in plan.protected_comps if p["comp_id"] == 1)
@@ -179,7 +183,8 @@ class TestCriticalFalseOrphanRegression:
             references=[],
         )
         legacy = adapt_project_structure_for_comp_cleaner(ps)
-        plan = CompCleaner.analyze_project(legacy, active_comp_id=1)
+        plan = CompCleaner.analyze_project(
+            legacy, active_comp_id=1, known_duplicates={"Active__dim_dup_01"})
 
         orphan_ids = {c.comp_id for c in plan.orphaned_candidates}
         assert 1 not in orphan_ids

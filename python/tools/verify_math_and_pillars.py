@@ -691,9 +691,11 @@ class DiagnosticHarness:
         self.record("CoreHardening", "4x4 Homogeneous 3D Transform Matrix Roundtrip (Pos XYZ)", d4["position"] == [100.0, 200.0, 300.0])
 
         # Check 63: Unreferenced Duplicate Comp Garbage Collection (TASK-UX-01 / Issue #297)
+        # Issue #10 — provenance, not names: the candidate set now comes from
+        # Babysitter's provenance record, not the deleted DIMENSION_DUP_PATTERN.
         from core.comp_cleaner import CompCleaner
-        fake_proj = {"items": [{"id": 1, "name": "Conform__dim_dup_1", "type": "composition", "layers": []}]}
-        clean_plan = CompCleaner.analyze_project(fake_proj)
+        fake_proj = {"items": [{"id": 1, "name": "Conform_D", "type": "composition", "layers": []}]}
+        clean_plan = CompCleaner.analyze_project(fake_proj, known_duplicates={"Conform_D"})
         self.record("CoreHardening", "Unreferenced Duplicate Comp Garbage Collection Planner", clean_plan.total_orphans_count == 1)
 
         # Check 64: Centralized Engine Constants System Invariant (TASK-MAINT-01 / Issue #295)
