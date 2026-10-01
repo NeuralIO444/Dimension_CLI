@@ -39,6 +39,37 @@ class ColorMatchError(RuntimeError):
     """Raised when a Color Match bridge job fails on the AE side."""
 
 
+class LutUnscriptableError(ColorMatchError):
+    """LUT injection into After Effects is impossible — honest-fail.
+
+    Named error code: ``LUT_UNSCRIPTABLE``.
+
+    AE exposes Apply Color LUT2's file-path property as
+    ``PropertyValueType.NO_VALUE``: no scripting mechanism can set it, so
+    there is no code path — bridge job, evalScript, or otherwise — that can
+    inject a LUT into AE. This is a permanent platform limitation
+    (Dimension #494), not a bug to fix, and no workaround is being chased:
+    pre-seeded effect-instance experiments are deliberately parked.
+
+    What works: LUT *synthesis* is fully local — ``.cube`` generation from
+    graded reference stills (33x33x33) plus ACEScg normalization helpers,
+    all headless via ``dimension lut derive``. Levels Smart Match is the
+    supported in-AE backend.
+    """
+
+    code = "LUT_UNSCRIPTABLE"
+
+    def __init__(self) -> None:
+        super().__init__(
+            "LUT injection into After Effects is not possible: AE exposes "
+            "the Apply Color LUT2 file-path property as NO_VALUE, so no "
+            "script can set it (Dimension #494 — a permanent platform "
+            "limitation, not a bug). LUT synthesis still works locally "
+            "(`dimension lut derive` builds a .cube from graded stills); "
+            "Levels Smart Match is the supported in-AE backend."
+        )
+
+
 class ColorMatchBridge:
     """Python ↔ After Effects Color Match IPC layer.
 
@@ -118,50 +149,22 @@ class ColorMatchBridge:
     ) -> dict:
         """Request AE to inject a 3D LUT adjustment layer above a precomp wrapper.
 
+        HONEST-FAIL (issue #9): this always raises ``LutUnscriptableError``
+        (code ``LUT_UNSCRIPTABLE``) without touching the bridge. AE exposes
+        Apply Color LUT2's file-path property as
+        ``PropertyValueType.NO_VALUE`` — no scripting mechanism can set it,
+        so injection is a permanent platform limitation (Dimension #494),
+        not something a bridge job can accomplish. The signature is kept so
+        existing call sites fail loudly at runtime instead of at import.
+
         `parent_comp_id` identifies the master containing composition.
         `precomp_comp_id` identifies the source precomp being graded.
         `lut_path` is the absolute path to the `.cube` or `.3dl` file.
         `target_layer_uid`, if given, is the UID token stamped into the
         precomp wrapper layer's comment field for precise target resolution.
 
-        Returns the JSX-side result payload (dict) on success. Raises
-        `ColorMatchError` on AE-side failure or on a bridge dispatch
-        exception.
+        Raises ``LutUnscriptableError`` always. (Previously: returned the
+        JSX-side result payload on success, raised ``ColorMatchError`` on
+        AE-side failure — that path can never succeed.)
         """
-        if not parent_comp_id:
-            raise ValueError("parent_comp_id is required")
-        if not precomp_comp_id:
-            raise ValueError("precomp_comp_id is required")
-        if not lut_path:
-            raise ValueError("lut_path is required")
-
-        job = {
-            "type": "color-match-inject",
-            "parent_comp_id": str(parent_comp_id),
-            "precomp_comp_id": str(precomp_comp_id),
-            "lut_path": str(Path(lut_path)),
-        }
-        if target_layer_uid:
-            job["target_layer_uid"] = str(target_layer_uid)
-        if project_path:
-            job["project_path"] = str(project_path)
-
-        try:
-            payload = self._bridge.execute_bridge_job(job, timeout_s)
-        except Exception as e:
-            log.error(
-                "Color Match inject dispatch failed",
-                extra={"parent_comp_id": parent_comp_id, "precomp_comp_id": precomp_comp_id, "error": str(e)},
-            )
-            raise ColorMatchError(f"LUT injection failed: {e}") from e
-
-        if (payload.get("status") or "").upper() != "OK":
-            err = payload.get("error") or f"color-match-inject failed ({payload!r})"
-            log.error("Color Match inject reported error", extra={"error": err})
-            raise ColorMatchError(err)
-
-        log.info(
-            "Color Match LUT injected",
-            extra={"parent_comp_id": parent_comp_id, "precomp_comp_id": precomp_comp_id, "lut_path": str(lut_path)},
-        )
-        return payload
+        raise LutUnscriptableError()

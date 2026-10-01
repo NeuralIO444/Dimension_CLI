@@ -41,7 +41,7 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from bridge.color_match_bridge import ColorMatchBridge, ColorMatchError
+from bridge.color_match_bridge import ColorMatchBridge, LutUnscriptableError
 from core.lut_parser import parse_cube
 from core.scale_engine import ScaleEngine
 from models.bridge_jobs import (
@@ -300,13 +300,16 @@ class TestStandaloneZeroConformWorkflow:
         os.makedirs(cm._bridge._inbox_dir(), exist_ok=True)
         Path(cm._bridge._heartbeat_path()).write_text("tick_count=0\n", encoding="utf-8")
 
-        # Verify missing argument validation raises ValueError
-        with pytest.raises(ValueError, match="parent_comp_id is required"):
+        # Issue #9 — inject honest-fails: LUT injection into AE is impossible
+        # (Dimension #494), so every inject path raises LUT_UNSCRIPTABLE
+        # before dispatch, regardless of arguments or bridge state.
+        with pytest.raises(LutUnscriptableError) as exc_info:
             cm.inject_lut("", "1042", tmp_path / "lut.cube")
+        assert exc_info.value.code == "LUT_UNSCRIPTABLE"
 
-        # Verify dead poller surfaces ColorMatchError
+        # Dead poller changes nothing: the honest-fail happens before dispatch.
         monkeypatch.setattr(cm._bridge, "_heartbeat_status", lambda: (False, "stale", None))
-        with pytest.raises(ColorMatchError):
+        with pytest.raises(LutUnscriptableError):
             cm.inject_lut("1", "1042", tmp_path / "lut.cube", timeout_s=0.5)
 
 
