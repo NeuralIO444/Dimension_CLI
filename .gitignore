@@ -18,3 +18,10 @@ venv/
 
 # engine runtime logs
 logs/
+
+# conform-pipeline test artifacts (the suite writes these to cwd; never commit)
+Chunks/
+chunk_manifest.json
+conformed_manifest.json
+conform_report*
+soe_corrections.json
