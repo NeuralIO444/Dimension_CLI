@@ -20,7 +20,8 @@ Two public entry points:
      geometry (issue #346 — returns an ndarray synthesized from
      `core/panel_slicer.py`'s gap_zones for OOH triptych/multi-panel
      targets), then channel-derived strategy (returns ndarray directly
-     via OcclusionMask's polymorphic constructor), then `MASK_MISSING`
+     via OcclusionMask's polymorphic constructor), then numeric insets /
+     pack fallback (issue #522 — returns ndarray), then `MASK_MISSING`
      once per (target.id) per run.
 
 Both share the `_missing_logged` dedup set. The two key spaces don't
@@ -206,14 +207,19 @@ def resolve_mask_path(slug: str) -> Optional[Path]:
 def resolve_mask_for_target(
     target: "Target",
 ) -> Optional[Union[Path, "np.ndarray"]]:
-    """Full-target lookup with the Slot 10 ordering (+ issue #370 fix):
+    """Full-target lookup with the Slot 10 ordering (+ issue #370 fix,
+    + D2 channel-first 2026-10-01):
        1. Per-target PNG override — `<target.id>.png` (returns Path)
        1b. Same, with the id's `<namespace>:` prefix stripped —
            `<target.id split on first ':'>.png` (returns Path)
        2. Per-subcategory PNG (legacy) — `<target.subcategory>.png` (returns Path)
+       2.5. Multi-panel gap-zone geometry (issue #346) — ndarray synthesized
+           from `core/panel_slicer.py`'s gap_zones (returns ndarray)
        3. Channel-derived rule — strategy ndarray returned directly
           (no disk round-trip; OcclusionMask's polymorphic constructor
           accepts the ndarray as of follow-up A)
+       2.4. Numeric insets / pack fallback (issue #522) — YAML is the spec
+           (returns ndarray)
        4. None → MASK_MISSING log once per (target.id) per run
     """
     # Leg 1 — per-target PNG override (target.id slugified for disk).
@@ -241,18 +247,6 @@ def resolve_mask_for_target(
         hit = _slug_lookup(target.subcategory)
         if hit is not None:
             return hit
-
-
-    # Leg 2.4 — numeric insets (issue #522). YAML is the spec.
-    # Placement: after subcategory PNG (Leg 2), before multi_panel gap (2.5).
-    from logic.safe_zone_insets import resolve_inset_mask
-    inset = resolve_inset_mask(target)
-    if inset is not None:
-        log.info(
-            "Safe-zone mask synthesized from insets",
-            extra={"target_id": target.id, "mask_shape": list(inset.shape)},
-        )
-        return inset
 
     # Leg 2.5 — multi_panel gap-zone geometry (issue #346). A multi-panel
     # OOH target (e.g. a 3-panel transit triptych) has no safe-zone PNG
@@ -335,6 +329,20 @@ def resolve_mask_for_target(
                     },
                 )
                 return mask_array
+
+    # Leg 2.4 — numeric insets / pack fallback (issue #522). YAML is the spec.
+    # Placement (D2 channel-first, Matt 2026-10-01): after the channel-derived
+    # rule (Leg 3), before MASK_MISSING (Leg 4). Channel-wide vector policy
+    # now wins over numeric insets; insets remain the last synthesized
+    # fallback before giving up.
+    from logic.safe_zone_insets import resolve_inset_mask
+    inset = resolve_inset_mask(target)
+    if inset is not None:
+        log.info(
+            "Safe-zone mask synthesized from insets",
+            extra={"target_id": target.id, "mask_shape": list(inset.shape)},
+        )
+        return inset
 
     # Leg 4 — MASK_MISSING log, deduped per target.id per run.
     if target.id not in _missing_logged:

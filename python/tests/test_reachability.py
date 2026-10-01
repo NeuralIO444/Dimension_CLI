@@ -186,6 +186,12 @@ TRANSITIONAL: Dict[str, str] = {
         "production path (host.jsx::injectGradeSwitcher + color_match_ui.js) "
         "doesn't call it. Real feature work; scoped as its own future PR."
     ),
+    "core.naming_context": (
+        "STAGED 2026-09-09 (Matt decision 2026-10-01: keep, wiring pending) — "
+        "130-LOC naming-context module; only consumer is its own test file. "
+        "Not wired into output_naming.resolve_output_name yet; that wiring is "
+        "unscoped feature work. Kept deliberately; revisit when naming work resumes."
+    ),
 }
 
 # Combined view — what the gate actually asserts against.

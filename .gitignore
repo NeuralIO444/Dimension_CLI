@@ -15,3 +15,6 @@ venv/
 # OS / editors
 .DS_Store
 .vscode/
+
+# engine runtime logs
+logs/
