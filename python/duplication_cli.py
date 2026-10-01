@@ -57,7 +57,7 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from logic.duplication_preflight import build_duplication_session
 from logic.comp_cleaner_adapter import adapt_project_structure_for_comp_cleaner
-from core.comp_cleaner import CompCleaner
+from core.comp_cleaner import CompCleaner, load_known_duplicate_names
 from models.project_structure import ProjectStructure
 
 
@@ -97,8 +97,16 @@ def main():
     cr.add_argument("--active-comp-id", type=int, default=None,
                      help="AE comp.id of the currently active comp, if known "
                           "(protects it from being listed as an orphan)")
-    cr.add_argument("--pattern", default=None,
-                     help="Override the default Dimension-duplicate naming pattern")
+    # Issue #10 — provenance, not names. Duplicate candidates come from
+    # the project database .dimension/dimension.db (issue #16; REPLACES
+    # duplication_log.json) unioned with a manifest's duplication_plan.
+    # The old --pattern regex override is gone with DIMENSION_DUP_PATTERN.
+    cr.add_argument("--db", default=None,
+                     help="Path to .dimension/dimension.db "
+                          "(default: <project-structure-dir>/.dimension/dimension.db)")
+    cr.add_argument("--chunk-manifest", default=None,
+                     help="Optional chunk/scrape manifest whose duplication_plan "
+                          "is unioned into the provenance set")
 
     args = parser.parse_args()
 
@@ -198,15 +206,30 @@ def main():
             sys.exit(0)
 
         legacy_shape = adapt_project_structure_for_comp_cleaner(ps)
+
+        # Provenance, not names (issue #10): candidates are comps Babysitter
+        # provably created, per .dimension/dimension.db (issue #16) ∪
+        # manifest plan. The DB is read-only here — never created.
+        db_path = args.db
+        if db_path is None:
+            db_path = os.path.join(
+                os.path.dirname(os.path.abspath(args.project_structure)),
+                ".dimension", "dimension.db",
+            )
+        known = load_known_duplicate_names(
+            db_path=db_path,
+            manifest_path=args.chunk_manifest,
+        )
         plan = CompCleaner.analyze_project(
             legacy_shape,
             active_comp_id=args.active_comp_id,
-            custom_pattern=args.pattern,
+            known_duplicates=known,
         )
 
         print(json.dumps({
             "available": True,
             "read_only": True,
+            "provenance_names_loaded": len(known),
             "total_comps_scanned": plan.total_comps_scanned,
             "total_orphans_count": plan.total_orphans_count,
             "estimated_memory_freed_mb": plan.estimated_memory_freed_mb,

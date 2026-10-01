@@ -7,22 +7,37 @@ python/core/comp_cleaner.py
 TASK-UX-01 (Issue #297) — Unreferenced Dimension Duplicate Comp Cleanup Utility.
 
 Detects and plans safe garbage collection of orphaned compositions generated
-during previous conform runs (e.g. `*__dim_dup_*`, `*__dim_*`).
+during previous conform runs.
 
-Invariants:
-  1. Never delete an active/open composition currently being viewed.
-  2. Never delete a composition referenced by any other composition as a layer.
-  3. Deletions in ExtendScript must be wrapped in an Undo Group ("Clean Dimension Orphan Comps").
+PROVENANCE, NOT NAMES (issue #10 / Dimension #551): the old
+DIMENSION_DUP_PATTERN regex matched none of the names
+`output_naming.resolve_output_name` actually produces, so the CLEAN COMPS
+report was inert on real projects. The regex is deleted. A comp is now a
+duplicate candidate if and only if its name appears in the provenance set:
+the project database `.dimension/dimension.db` (issue #16 — Babysitter
+records every comp it creates in the `creations` table; this DB REPLACES
+`duplication_log.json`) unioned with the manifest's `duplication_plan`.
+No provenance → no candidates (safe default).
+
+Invariants (unchanged):
+  1. Never flag an active/open composition currently being viewed.
+  2. Never flag a composition referenced by any other composition as a layer.
+  3. Never flag a render-queued composition.
+  4. Deletions in ExtendScript must be wrapped in an Undo Group
+     ("Clean Dimension Orphan Comps") — the delete path itself stays out
+     of this CLI entirely; only the read-only report ships
+     (`duplication cleanup-report`; the full `dimension clean` lands in #5).
 """
 
 from __future__ import annotations
 
-import re
+import json
+import os
+import sqlite3
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import Any, Collection, Dict, List, Optional, Set
 
-
-DIMENSION_DUP_PATTERN = re.compile(r"(__dim_dup_|_dim_dup|__dim_|\[CONFORM\]|\[DIM_DUP\])", re.IGNORECASE)
+from core.dimension_db import known_duplicate_names
 
 
 @dataclass(frozen=True)
@@ -46,6 +61,59 @@ class CompCleanupPlan:
     estimated_memory_freed_mb: float
 
 
+def load_known_duplicate_names(
+    db_path: Optional[str] = None,
+    manifest_path: Optional[str] = None,
+) -> Set[str]:
+    """Build the provenance set for `CompCleaner.analyze_project`.
+
+    Union of:
+      - `<db_path>` → `creations.name` from the project database
+        `.dimension/dimension.db` (issue #16; REPLACES
+        `duplication_log.json`), and
+      - `<manifest_path>` → `duplication_plan.duplicates[].duplicate_name`
+        (the chunk/scrape manifest's planned duplicates; manifests stay
+        JSON).
+
+    The database is opened read-only and never created here — this is
+    the read path of a read-only report. A missing or unreadable
+    database contributes nothing, just like a missing manifest:
+    provenance is opt-in evidence, and its absence must never invent
+    candidates.
+    """
+    names: Set[str] = set()
+
+    if db_path and os.path.exists(db_path):
+        try:
+            conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        except sqlite3.Error:
+            conn = None
+        if conn is not None:
+            try:
+                names |= known_duplicate_names(conn)
+            except sqlite3.Error:
+                pass
+            finally:
+                conn.close()
+
+    if manifest_path:
+        try:
+            with open(manifest_path, "r", encoding="utf-8") as f:
+                payload = json.load(f)
+        except (OSError, ValueError):
+            payload = None
+        if isinstance(payload, dict):
+            plan = payload.get("duplication_plan") or {}
+            if isinstance(plan, dict):
+                for entry in plan.get("duplicates") or []:
+                    if isinstance(entry, dict):
+                        name = str(entry.get("duplicate_name") or "").strip()
+                        if name:
+                            names.add(name)
+
+    return names
+
+
 class CompCleaner:
     """Analyzes project hierarchy and identifies unreferenced Dimension duplicate compositions."""
 
@@ -54,9 +122,19 @@ class CompCleaner:
         cls,
         project_structure: Dict[str, Any],
         active_comp_id: Optional[int] = None,
-        custom_pattern: Optional[str] = None,
+        known_duplicates: Optional[Collection[str]] = None,
     ) -> CompCleanupPlan:
-        pattern = re.compile(custom_pattern, re.IGNORECASE) if custom_pattern else DIMENSION_DUP_PATTERN
+        """Read-only duplicate-comp report.
+
+        A comp is a duplicate candidate iff its name is in
+        `known_duplicates` (the provenance set built by
+        `load_known_duplicate_names`). `None`/empty → no candidates:
+        without provenance we know nothing, so we report nothing.
+        The live invariants still hold: active, layer-referenced, and
+        render-queued comps are never candidates — they land in
+        `protected_comps` with a reason instead.
+        """
+        known: Set[str] = set(known_duplicates) if known_duplicates else set()
 
         items = project_structure.get("items", []) or project_structure.get("compositions", [])
         comps = [item for item in items if item.get("type") == "composition" or item.get("typeName") == "Composition" or "width" in item]
@@ -84,8 +162,8 @@ class CompCleaner:
             is_active = (cid == active_comp_id)
             is_queued = bool(c.get("is_render_queued", False))
 
-            # Match criteria: Has Dimension naming tag AND reference count is 0 AND not active
-            is_dim_dup = bool(pattern.search(name))
+            # Provenance predicate: Babysitter provably created this comp.
+            is_dim_dup = name in known
 
             if is_dim_dup:
                 if refs == 0 and not is_active and not is_queued:
