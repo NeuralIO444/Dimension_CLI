@@ -409,17 +409,24 @@ class TestNamespacePrefixFallback:
         target = self._target("unnamespaced_id")
         assert r.resolve_mask_for_target(target) is None
 
-    def test_unmatched_bare_slug_still_falls_through_to_none(self, tmp_path, monkeypatch):
+    def test_unmatched_bare_slug_now_resolves_via_insets(self, tmp_path, monkeypatch):
         """A namespaced id whose bare slug has no on-disk match either
         (e.g. instagram_reel_thumb, which doesn't match instagram_reels.png)
-        must still cleanly reach Leg 4 (MASK_MISSING), not error."""
+        now resolves via Leg 2.4 numeric insets (D2 channel-first,
+        2026-10-01) instead of falling through to Leg 4 (MASK_MISSING).
+        The widening is intended — it closes the social-presets-have-no-mask
+        gap for targets with no PNG asset and no channel rule."""
         repo = tmp_path / "repo"; repo.mkdir()
         (repo / "instagram_reels.png").write_bytes(b"mask")  # deliberately non-matching name
         monkeypatch.setattr(r, "_repo_default_dir", lambda: repo)
         monkeypatch.setattr(r, "_USER_OVERRIDE_DIR", tmp_path / "no_user")
 
         target = self._target("builtin:instagram_reel_thumb")
-        assert r.resolve_mask_for_target(target) is None
+        mask = r.resolve_mask_for_target(target)
+        assert isinstance(mask, np.ndarray), (
+            "expected the Leg 2.4 numeric-insets fallback (ndarray), got "
+            f"{type(mask)!r}"
+        )
 
     def test_real_catalog_instagram_story_and_youtube_shorts_now_resolve(self):
         """Integration check against the REAL builtin catalog and the
@@ -437,23 +444,20 @@ class TestNamespacePrefixFallback:
         assert r.resolve_mask_for_target(story) is not None
         assert r.resolve_mask_for_target(shorts) is not None
 
-    def test_real_catalog_instagram_post_and_reels_still_unmatched(self):
+    def test_real_catalog_instagram_post_and_reels_now_resolve_via_insets(self):
         """The two orphaned mask files this issue's own investigation
         found (instagram_post.png, instagram_reels.png match no real
-        target id or subcategory) remain unmatched after this fix --
-        confirms the fix's scope is exactly the 2 targets it claims to
-        close, not a broader change in behavior.
+        target id or subcategory) remain unmatched by any PNG leg -- but
+        the untagged instagram/youtube targets now resolve via the Leg 2.4
+        numeric-insets fallback (D2 channel-first, 2026-10-01), closing the
+        old social-presets-have-no-mask gap. This is the intended widening,
+        not a regression of #370's fix: no PNG leg claims these targets,
+        the insets leg is simply the last synthesized fallback before
+        MASK_MISSING.
 
-        Updated for #476's Phase 1 safe-zone work (2026-09-05):
-        `instagram_reel_thumb` now deliberately resolves too, via the
-        new channel="social" tag on the 9 vertical-video social targets
-        (docs/knowledge/2026-09-05-programmatic-safe-zones-research.md)
-        -- an intentional, approved scope expansion of THIS resolution
-        behavior, not a regression of #370's narrower original fix.
-        instagram_post/instagram_reels PNGs remain genuinely orphaned:
-        no real target's id or subcategory matches either name, and
-        none of the untagged instagram/youtube targets below picked up
-        a channel, so they're still correctly unresolved."""
+        (History: updated for #476's Phase 1 safe-zone work (2026-09-05),
+        when `instagram_reel_thumb` started resolving via the channel="social"
+        tag on the 9 vertical-video social targets.)"""
         from data.target_catalog import BUILTIN_TARGETS
 
         for t in BUILTIN_TARGETS:
@@ -463,12 +467,12 @@ class TestNamespacePrefixFallback:
                 continue  # already resolves via Leg 2 (tiktok.png), unaffected by this fix
             if t.channel:
                 continue  # deliberately channel-tagged by #476 Phase 1 -- expected to resolve
-            # Every other instagram/youtube target should still be unresolved.
+            # Every other instagram/youtube target now resolves via insets.
             if t.subcategory in ("instagram", "youtube"):
-                assert r.resolve_mask_for_target(t) is None, (
-                    f"{t.id} unexpectedly resolved -- this fix's scope was "
-                    f"meant to be exactly instagram_story + youtube_shorts "
-                    f"(+ instagram_reel_thumb, added by #476 Phase 1)"
+                mask = r.resolve_mask_for_target(t)
+                assert isinstance(mask, np.ndarray), (
+                    f"{t.id} should now resolve via the Leg 2.4 numeric-insets "
+                    f"fallback (ndarray), got {type(mask)!r}"
                 )
 
 

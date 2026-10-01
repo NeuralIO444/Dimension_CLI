@@ -139,10 +139,17 @@ class TestSocialChannelResolution:
                 f"have been removed"
             )
 
-    def test_untagged_static_social_target_still_gets_no_mask(self):
+    def test_untagged_static_social_target_now_resolves_via_insets(self):
         """Spot-check a representative untouched target (a static
-        profile picture) -- must remain unprotected, exactly as before
-        this change."""
+        profile picture) -- with D2 channel-first (2026-10-01) it now
+        resolves via the Leg 2.4 numeric-insets fallback instead of
+        reaching MASK_MISSING. Intended widening: the target has no PNG
+        asset and no channel rule, so insets are its last synthesized
+        fallback."""
         profile = self._by_id("builtin:instagram_profile")
         assert profile.channel is None
-        assert resolve_mask_for_target(profile) is None
+        mask = resolve_mask_for_target(profile)
+        assert isinstance(mask, np.ndarray), (
+            "expected the Leg 2.4 numeric-insets fallback (ndarray), got "
+            f"{type(mask)!r}"
+        )
