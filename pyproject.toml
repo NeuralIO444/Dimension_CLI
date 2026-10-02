@@ -44,7 +44,9 @@ test = [
 [project.scripts]
 # Unified `dimension` CLI tree (issue #5): argparse subcommands over
 # `dimension.ops` pure functions; every command supports --json.
-dimension = "dimension.cli:main"
+# entry.main wraps cli.main with OSC 9;4 tab progress (stdlib port of
+# steipete/osc-progress). No-op unless the TTY is known to support it.
+dimension = "dimension.entry:main"
 
 # The engine tree lives in `python/` with flat top-level imports
 # (`from logic.x import ...`, `import cli`, ...). Install it as-is:
