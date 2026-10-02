@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Any, Mapping, Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    import numpy as np
     from models.target import Target
 
 def _repo_yaml_path() -> Path:

@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import json
 
-import pytest
 
 from dimension import cli as dimension_cli
 from dimension.common import EXIT_ERROR
