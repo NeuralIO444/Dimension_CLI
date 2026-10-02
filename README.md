@@ -130,9 +130,14 @@ Error payloads are JSON too:
 `{"status": "ERROR", "code": "...", "error": "..."}`.
 
 The default (no `--json`) is the human face: readable summaries on
-stdout. A Textual TUI is planned as the interactive human face; it
-will call the same `dimension.ops` functions the CLI calls — no
-business logic lives in the argument handlers.
+stdout. On Ghostty, WezTerm, Canario, and Windows Terminal that face
+also emits [OSC 9;4](https://github.com/steipete/osc-progress) tab
+progress on stderr while a command runs. It is a no-op in pipes, CI,
+and under `--json`. `DIMENSION_NO_PROGRESS=1` disables it;
+`DIMENSION_FORCE_PROGRESS=1` enables it on any TTY. A Textual TUI is
+planned as the interactive human face; it will call the same
+`dimension.ops` functions the CLI calls — no business logic lives in
+the argument handlers.
 
 ---
 
