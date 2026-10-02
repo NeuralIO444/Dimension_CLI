@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from logic.preset_customs import custom_for_target, load_customs, safe_zone_from_custom
+from logic.preset_customs import custom_for_target, safe_zone_from_custom
 from logic.safe_zone_insets import resolve_inset_mask, spec_for_target
 
 

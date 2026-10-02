@@ -115,17 +115,6 @@ PERMANENT: Dict[str, str] = {
 }
 
 TRANSITIONAL: Dict[str, str] = {
-    "bridge.color_match_bridge": (
-        "CONFIRMED WIRE CANDIDATE (2026-09-05 #414 decision) — Color Match "
-        "(Track D / Horizon Toolkit, CM2). Dispatches reference-frame renders "
-        "and 3D LUT injection jobs via SovereignBridge.execute_bridge_job(). "
-        "Matching JSX handlers exist in socket_server.jsx, Dimension_Launcher.jsx "
-        "(_handleColorMatchRenderJob), and export_frame.jsx (exportFrameById). "
-        "Kept as the designated Python dispatch bridge for Horizon Color "
-        "Planner Phase 1 / Track C (#351) and A/B/C Grade Revision Switcher "
-        "(#243) workflows requiring out-of-process / headless render or "
-        "LUT injection."
-    ),
     "core.dag_duplication": (
         "UNDECIDED (staged) — PR 1 of Next-Gen Relayout Pipeline. "
         "Provides DAGDuplicationPlanner, meant to replace duplication_planner.py's "

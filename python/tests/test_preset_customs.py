@@ -4,7 +4,6 @@ from pathlib import Path
 
 from logic.preset_customs import (
     custom_for_target,
-    load_customs,
     save_customs,
     safe_zone_from_custom,
     targets_from_customs,
