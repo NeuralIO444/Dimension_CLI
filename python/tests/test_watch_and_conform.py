@@ -87,10 +87,11 @@ def test_resolve_targeted_tests():
     assert run_node is False
     assert run_baby is False
 
-    # 2. Babysitter_src change
+    # 2. Babysitter_src change — CEP abandoned: falls through to the
+    # default fallback target, no babysitter gen
     targets, run_node, run_baby = resolve_targeted_tests({"Scripts/Dimension_Assets/Babysitter_src/70_pump.jsx"})
-    assert "python/tests/test_cep_jsx_bundle_sync.py" in targets
-    assert run_baby is True
+    assert targets == ["python/tests/test_scale_engine*.py"]
+    assert run_baby is False
 
     # 3. CEP change
     targets, run_node, run_baby = resolve_targeted_tests({"cep/js/fast_tag_strip.js"})
