@@ -6,7 +6,7 @@
 
 import sys
 
-from dimension.cli import main
+from dimension.entry import main
 
 if __name__ == "__main__":
     sys.exit(main())
