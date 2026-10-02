@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install ruff
+        run: pip install ruff==0.16.4
+      - name: Ruff the CLI surface
+        run: ruff check python/dimension python/logic/config_paths.py
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: pip install -e ".[test]"
+      - name: Headless pytest
+        run: pytest -q -m "not ae_live and not ae_capture and not preset_sweep"
+
+  offline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build wheel
+        run: |
+          pip install build==1.2.2
+          python -m build --wheel --outdir /tmp/wheels
+      - name: Vendor install deps
+        run: |
+          pip download -d /tmp/wheels -r <(python - <<'PY'
+          import tomllib
+          from pathlib import Path
+          data = tomllib.loads(Path("pyproject.toml").read_text())
+          print("\n".join(data["project"]["dependencies"]))
+          PY
+          )
+      - name: Offline install and smoke
+        run: |
+          python -m venv /tmp/offline
+          /tmp/offline/bin/pip install --no-index --find-links /tmp/wheels /tmp/wheels/dimension_cli-*.whl
+          /tmp/offline/bin/dimension --help
+          /tmp/offline/bin/dimension --json catalog presets > /tmp/presets.json
+          /tmp/offline/bin/python - <<'PY'
+          import json
+          payload = json.load(open("/tmp/presets.json"))
+          assert payload["status"] == "OK", payload
+          assert payload["preset_count"] > 0, payload
+          print("offline catalog ok", payload["preset_count"])
+          PY
+          /tmp/offline/bin/dimension --json safe-zone plan --preset tiktok_video > /tmp/zone.json
+          /tmp/offline/bin/python - <<'PY'
+          import json
+          payload = json.load(open("/tmp/zone.json"))
+          assert payload["status"] == "OK", payload
+          print("offline safe-zone ok", payload.get("preset"))
+          PY

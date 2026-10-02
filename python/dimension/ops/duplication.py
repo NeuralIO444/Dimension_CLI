@@ -1,5 +1,5 @@
 # (c) 2026 NeuralIO 444
-# Licensed under NeuralIO Shared Source License (NSSL).
+# Licensed under PolyForm Noncommercial 1.0.0 + commercial.
 # See LICENSE for full terms.
 
 """Duplication + cleanup ops. Headless and read-only.
@@ -47,6 +47,19 @@ def preview_op(
         raise DimensionError(
             f"scrape manifest not found: {manifest}", code="SOURCE_NOT_FOUND"
         )
+    try:
+        with open(manifest, "r", encoding="utf-8") as f:
+            raw = json.load(f)
+    except (OSError, ValueError) as e:
+        raise DimensionError(
+            f"could not parse scrape manifest: {e}",
+            code="MANIFEST_INVALID",
+        ) from e
+    if not isinstance(raw, dict):
+        raise DimensionError(
+            "scrape manifest must be a JSON object",
+            code="MANIFEST_INVALID",
+        )
     project_root = os.path.dirname(os.path.abspath(manifest))
     session = build_duplication_session(
         project_root=project_root,
@@ -63,21 +76,17 @@ def preview_op(
             "reason": "no shared precomps in scope (flat comp or no project_structure.json)",
         }
     plan = session.default_plan
-    try:
-        with open(manifest, "r", encoding="utf-8") as f:
-            raw = json.load(f)
-        manifest_layers = {
-            layer.get("uid", ""): {
-                "comp": layer.get(
-                    "containing_comp_name",
-                    raw.get("project_info", {}).get("name", "?"),
-                ),
-                "name": layer.get("name", "?"),
-            }
-            for layer in raw.get("layers", [])
+    manifest_layers = {
+        layer.get("uid", ""): {
+            "comp": layer.get(
+                "containing_comp_name",
+                raw.get("project_info", {}).get("name", "?"),
+            ),
+            "name": layer.get("name", "?"),
         }
-    except Exception:
-        manifest_layers = {}
+        for layer in raw.get("layers", [])
+        if isinstance(layer, dict)
+    }
 
     return {
         "status": "OK",

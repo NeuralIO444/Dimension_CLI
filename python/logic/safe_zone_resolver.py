@@ -71,10 +71,8 @@ _ZONE_COLORS = {
 }
 
 def _repo_default_dir() -> Path:
-    import sys
-    if getattr(sys, 'frozen', False):
-        return Path(sys._MEIPASS) / "config" / "safe_zones"
-    return Path(__file__).resolve().parents[2] / "config" / "safe_zones"
+    from logic.config_paths import config_path
+    return config_path("safe_zones")
 
 
 def _generate_mask_from_vectors(definition: list, width: int, height: int) -> "np.ndarray":

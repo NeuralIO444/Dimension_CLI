@@ -88,11 +88,9 @@ _DEFAULT_FALLBACK_ID = "default"
 
 
 def _repo_baselines_dir() -> Path:
-    """`<repo>/config/profiles/` — the starter set bundled with the repo."""
-    import sys
-    if getattr(sys, 'frozen', False):
-        return Path(sys._MEIPASS) / "config" / "profiles"
-    return Path(__file__).resolve().parents[2] / "config" / "profiles"
+    """Starter profiles bundled with the package (or the repo checkout)."""
+    from logic.config_paths import config_path
+    return config_path("profiles")
 
 
 class StudioProfileRegistry:

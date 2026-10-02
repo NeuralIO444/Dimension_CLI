@@ -130,6 +130,7 @@ PY_ROOT = REPO_ROOT / "python"
 # exactly as `effect_conformer` was. Handle genuine operator tools where
 # they belong — in the allowlist's vocabulary — not by widening the walk.
 ENTRY_MODULES: Tuple[str, ...] = (
+    "dimension.__main__",  # `dimension` console script (pyproject [project.scripts])
     "cli",                  # PyInstaller entry (dimension_engine.spec)
     "dimension_server",     # Dashboard HTTP server (cli.py serve)
     "orchestrator",         # conform pipeline orchestration

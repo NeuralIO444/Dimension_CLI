@@ -124,15 +124,7 @@ def resolve_targeted_tests(changed_files: Set[str]) -> Tuple[List[str], bool, bo
     for path in changed_files:
         p = path.replace("\\", "/")
 
-        if "Babysitter_src" in p:
-            run_babysitter_gen = True
-            pytest_targets.add("python/tests/test_cep_jsx_bundle_sync.py")
-            pytest_targets.add("python/tests/test_babysitter*.py")
-
-        elif p.startswith("Scripts/Dimension_Assets/") and p.endswith(".jsx"):
-            pytest_targets.add("python/tests/test_cep_jsx_bundle_sync.py")
-
-        elif "telemetry" in p or "diagnostic_visualizer" in p:
+        if "telemetry" in p or "diagnostic_visualizer" in p:
             pytest_targets.add("python/tests/test_diagnostic_telemetry_and_visualizer.py")
 
         elif "scale_engine" in p or "gravity" in p:
@@ -158,12 +150,8 @@ def resolve_targeted_tests(changed_files: Set[str]) -> Tuple[List[str], bool, bo
         elif "ae_eval" in p or "ae_bridge_mcp" in p:
             pytest_targets.add("python/tests/test_ae_bridge_mcp.py")
 
-        elif "verify_math_and_pillars" in p:
-            pytest_targets.add("python/tests/test_verify_math_and_pillars_tool.py")
-
         elif p.startswith("cep/"):
             run_node_tests = True
-            pytest_targets.add("python/tests/test_studio_deck_contracts.py")
 
         elif p.startswith("python/tests/"):
             pytest_targets.add(p)

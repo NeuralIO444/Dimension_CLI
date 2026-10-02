@@ -25,3 +25,6 @@ chunk_manifest.json
 conformed_manifest.json
 conform_report*
 soe_corrections.json
+
+.dimension/
+*.db

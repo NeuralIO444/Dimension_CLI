@@ -9,7 +9,7 @@
 # clean. Verified by the offline-install CI job (.github/workflows/ci.yml).
 
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools==75.8.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -42,34 +42,11 @@ test = [
 ]
 
 [project.scripts]
-# Unified `dimension` CLI tree (issue #5): argparse subcommands over
-# `dimension.ops` pure functions; every command supports --json.
+# Unified `dimension` CLI. Legacy panel dispatchers stay in the repo
+# for local use; they are not installed as top-level modules.
 dimension = "dimension.cli:main"
 
-# The engine tree lives in `python/` with flat top-level imports
-# (`from logic.x import ...`, `import cli`, ...). Install it as-is:
-# packages are found under `python/` (including the `dimension`
-# package: the unified CLI tree from issue #5); legacy flat
-# top-level modules are listed explicitly.
 [tool.setuptools.packages.find]
 where = ["python"]
 namespaces = true
-exclude = ["web"]
-
-[tool.setuptools]
-py-modules = [
-    "cli",
-    "comment_garden_cli",
-    "data_dumper",
-    "dimension_server",
-    "duplication_cli",
-    "lut_cli",
-    "mask_cli",
-    "orchestrator",
-    "prefs_cli",
-    "profile_cli",
-    "survey",
-    "target_cli",
-    "unit_override_cli",
-    "units_cli",
-]
+exclude = ["web", "web.*", "tests", "tests.*", "tools", "tools.*"]

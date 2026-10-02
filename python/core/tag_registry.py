@@ -34,14 +34,12 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 # ── Constants ──────────────────────────────────────────────────────────
 
-import sys
+def _registry_yaml_path() -> Path:
+    from logic.config_paths import config_path
+    return config_path("tag_registry.yaml")
 
-if getattr(sys, 'frozen', False):
-    _REGISTRY_YAML_PATH = Path(sys._MEIPASS) / "config" / "tag_registry.yaml"
-else:
-    _REGISTRY_YAML_PATH = (
-        Path(__file__).resolve().parents[2] / "config" / "tag_registry.yaml"
-    )
+
+_REGISTRY_YAML_PATH = _registry_yaml_path()
 
 _VALID_GRAVITIES = frozenset({
     "top", "bottom", "center", "leftMid", "rightMid", "fill", "none",
