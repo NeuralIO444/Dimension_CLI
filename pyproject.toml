@@ -14,7 +14,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dimension-cli"
-version = "0.1.0"
+version = "1.0.0"
 description = "Dimension's format-conform math engine as a headless CLI"
 requires-python = ">=3.11"
 license = { text = "Dual-licensed: PolyForm Noncommercial 1.0.0 + commercial (see LICENSE)" }

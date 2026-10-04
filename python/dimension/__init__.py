@@ -19,4 +19,4 @@ formatting live in `dimension.cli`. Keep it that way — the TUI imports
 ops, never the CLI handlers.
 """
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
