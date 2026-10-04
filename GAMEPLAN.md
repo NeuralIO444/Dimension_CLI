@@ -1,6 +1,6 @@
 # Dimension Endgame — Game Plan
 
-**Date:** 2026-10-01 · **Owner:** Matt Ciaglia (NeuralIO 444)
+**Date:** 2026-10-01 · **Owner:** NeuralIO 444
 **Status:** in progress — builders active on Phase 1+2
 
 ## The vision
@@ -26,9 +26,9 @@ investment, ever. This is how Dimension stops being a forever-project.
 
 ## Phase 1 — Green engine (in flight)
 
-- D2 = channel-first safe-zone precedence (Matt decided 2026-10-01): move Leg 2.4
+- D2 = channel-first safe-zone precedence (maintainer decided 2026-10-01): move Leg 2.4
   below Leg 3 in `safe_zone_resolver.py`, update the 3–4 scope tests.
-- D3 = keep `naming_context` (Matt decided 2026-10-01): TRANSITIONAL allowlist
+- D3 = keep `naming_context` (maintainer decided 2026-10-01): TRANSITIONAL allowlist
   entry in `test_reachability.py`, "staged 2026-09-09, wiring pending". No delete,
   no wiring.
 - ruff + pytest green in `Dimension_CLI` (8 failures → 0).
@@ -38,7 +38,7 @@ investment, ever. This is how Dimension stops being a forever-project.
 ## Phase 2 — Extract & pare (in flight)
 
 - Engine minus CEP/JSX/panel → `Dimension_CLI`. (Scraper stays Dimension-only
-  per Matt's #549 decision — hard boundary.)
+  per the #549 decision — hard boundary.)
 - One unified `dimension` CLI: clean subcommand tree, `--json` on every command,
   logs to stderr, real exit codes, flag naming mirrors MographJailed's locked
   Sequoia-native conventions (MJ adapts to nothing — the CLI flexes).
@@ -50,25 +50,25 @@ investment, ever. This is how Dimension stops being a forever-project.
 - Offline-installable: PyPI-pinned deps only, no git-SHA dependencies
   (protects the offline-first build philosophy). Verified with no network.
 - License: keep Dimension's PolyForm Noncommercial + commercial dual-license
-  (Matt to confirm — recommended: yes, it's his established pattern).
+  (maintainer to confirm — recommended: yes, it's the established pattern).
 
 ## Phase 3 — Ship the CLI (public)
 
 - README: what it is, install, 5-minute quickstart, which commands need live AE
   vs. which run headless.
 - v1.0.0 tag → GitHub Release. CI green.
-- Announce wherever Matt wants (his call).
+- Announce wherever the maintainer wants.
 
 ## Phase 4 — Retire the CEP repo
 
-- Land the small queue or descope it, in order: #547 → #546 (needs Matt's live
+- Land the small queue or descope it, in order: #547 → #546 (needs a live
   AE QA) → #540 (needs #551 provenance fix + QA; **descope to report-only**
   if the full fix is too much for a farewell release).
-- D4 version number → 6.1.0 (Matt to confirm). CHANGELOG `[Unreleased]` →
+- D4 version number → 6.1.0 (maintainer to confirm). CHANGELOG `[Unreleased]` →
   versioned heading. First `v*` tag → `release.yml` builds the ZXP.
 - GitHub Release with the ZXP attached. Archive the repo. README banner →
   `Dimension_CLI`.
-- Remaining issues closed explicitly: #346/#541 parked unless Matt runs the
+- Remaining issues closed explicitly: #346/#541 parked unless the maintainer runs the
   5-point AE QA; #494's workaround dropped.
 
 ## Phase 5 — Later (NOT part of done)
@@ -77,7 +77,7 @@ investment, ever. This is how Dimension stops being a forever-project.
 - UXP shell when Adobe ships AE UXP panels (none exist for AE as of 2026-10-01 —
   verified; readiness only until then).
 
-## Decisions needed from Matt (one list)
+## Decisions needed from the maintainer (one list)
 
 1. License for the public CLI: keep dual PolyForm Noncommercial + commercial?
    (recommended: yes)
@@ -88,7 +88,7 @@ investment, ever. This is how Dimension stops being a forever-project.
 
 ## Standing rules carried in
 
-- Builders open PRs; Matt merges. Small PRs, green CI, verified by hand.
+- Builders open PRs; the maintainer merges. Small PRs, green CI, verified by hand.
 - No CEP/UX work — engine and CLI only.
-- Never touch another builder's branch; never close Matt's issues without his word.
+- Never touch another builder's branch; never close the maintainer's issues without his word.
 - MographJailed's interface is locked: Dimension_CLI conforms to it.

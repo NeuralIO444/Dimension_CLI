@@ -21,14 +21,21 @@ _SCAN_EXTS = {
     ".py", ".js", ".jsx",
     ".sh", ".applescript", ".html", ".css", ".yaml", ".yml", ".json",
 }
-_DISALLOWED = ("Matt" + " Ciaglia", "/" + "Users" + "/" + "mattciaglia")
+# Needles are concatenated so this file does not contain the banned
+# literals. Studio volume names, employer names, and personal paths
+# are banned in anything that ships with the CLI.
+_DISALLOWED = (
+    "Matt" + " Ciaglia",
+    "/" + "Users" + "/" + "mattciaglia",
+    "Cia" + "glia",
+    "UNIVERSAL" + "_PICTURES",
+    "NBC" + "Universal",
+    "NBC" + "U",
+)
 _ALLOWLIST = {
-    "BUGS.md",
-    "LICENSE",
-    "CLAUDE.md",
-    "CHANGELOG.md",
     "python/tests/test_repo_hygiene.py",
 }
+_ROOT_DOCS = ("LICENSE", "GAMEPLAN.md", "README.md", "docs/VISION.md")
 
 
 def _iter_source_files():
@@ -54,9 +61,13 @@ def _iter_source_files():
         path = _REPO_ROOT / rel
         if path.suffix not in _SCAN_EXTS or not path.is_file():
             continue
-        if path.name in _ALLOWLIST:
+        if rel in _ALLOWLIST or path.name in _ALLOWLIST:
             continue
         yield path
+    for rel in _ROOT_DOCS:
+        path = _REPO_ROOT / rel
+        if path.is_file():
+            yield path
 
 
 @pytest.mark.parametrize("needle", _DISALLOWED)
