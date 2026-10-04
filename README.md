@@ -82,6 +82,31 @@ you whether AE is reachable.
 
 ---
 
+## Help and man pages
+
+Bare `dimension` prints the card. It is not a usage error.
+
+```text
+dimension            this card
+dimension ops        every command, one line
+dimension man        local help
+dimension man errors exit codes and what to do
+dimension <command> --help
+```
+
+The pages match the MographJailed man tone: what it does, the command, the exit, the next step.
+
+| Topic | Page |
+|---|---|
+| overview | [docs/man/overview.md](docs/man/overview.md) |
+| commands | [docs/man/commands.md](docs/man/commands.md) |
+| errors | [docs/man/errors.md](docs/man/errors.md) |
+| mograph | [docs/man/mograph.md](docs/man/mograph.md) |
+
+`--json` is the machine face. The pages above are the human face.
+
+---
+
 ## Command tree
 
 `[headless]` commands run anywhere. `[live AE]` commands need After
@@ -104,6 +129,8 @@ Effects running with the Dimension poller
 | `target add` / `remove` | User custom targets ("Save as Preset") `[headless]` |
 | `ae probe` | AE/poller reachability check (never sends a job) `[live AE]` |
 | `ae mask show --preset …` / `hide` | Safe-zone overlay in the active AE comp `[live AE]` |
+| `ops` | Every command, one line `[headless]` |
+| `man [topic]` | Local help: overview, commands, errors, mograph `[headless]` |
 
 Every command supports `--json` (see below). `dimension <command> --help`
 documents each flag.
@@ -184,5 +211,9 @@ See [LICENSE](LICENSE). Commercial use requires a separate license.
 - Product vision & scope guards: [docs/VISION.md](docs/VISION.md)
 - Build program & definition of done: [GAMEPLAN.md](GAMEPLAN.md)
 - MographJailed prong: [docs/MOGRAPH_JAILED.md](docs/MOGRAPH_JAILED.md)
+- Help card: [docs/man/overview.md](docs/man/overview.md)
+- Commands: [docs/man/commands.md](docs/man/commands.md)
+- Errors: [docs/man/errors.md](docs/man/errors.md)
+- MographJailed man topic: [docs/man/mograph.md](docs/man/mograph.md)
 - Original CEP panel repo (farewell release, then archived):
   [NeuralIO444/Dimension](https://github.com/NeuralIO444/Dimension)
