@@ -70,11 +70,12 @@ def scratch(tmp_path: Path) -> Path:
 
 # ── intern: wrong shape, still a recoverable answer ─────────────────
 
-def test_intern_bare_command_is_usage(scratch: Path) -> None:
+def test_intern_bare_command_is_the_card(scratch: Path) -> None:
     proc = _run(scratch, [])
-    assert proc.returncode == 2
+    assert proc.returncode == 0
     _clean(proc)
-    assert "usage" in proc.stdout.lower() or "usage" in proc.stderr.lower()
+    assert "conform it everywhere" in proc.stdout.lower()
+    assert "dimension man" in proc.stdout
 
 
 def test_intern_typo_preset_is_not_a_crash(scratch: Path) -> None:

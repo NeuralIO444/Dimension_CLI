@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
+from pathlib import Path
 from typing import Any, Callable, Optional
 
 from dimension import __version__
@@ -254,9 +255,13 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="dimension",
         description=(
-            "Dimension format-conform engine — tag once, conform everywhere.\n"
-            f"{HEADLESS} commands run anywhere; `ae` commands {LIVE_AE} need "
-            "After Effects with the Dimension poller.\n" + EXIT_CODES_HELP
+            "Dimension — tag once, conform everywhere.\n"
+            "Headless commands run anywhere. ae commands need After Effects "
+            "and the Dimension poller.\n"
+            "dimension            this card\n"
+            "dimension ops        every command, one line\n"
+            "dimension man        local help\n"
+            "Exit: 0 ok · 1 engine · 2 usage · 65 LUT_UNSCRIPTABLE · 69 AE_UNAVAILABLE"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -266,7 +271,12 @@ def build_parser() -> argparse.ArgumentParser:
                    choices=["DEBUG", "INFO", "WARNING", "ERROR"],
                    help="engine log level (logs always go to stderr)")
     p.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
-    sub = p.add_subparsers(dest="command", required=True, metavar="<command>")
+    sub = p.add_subparsers(dest="command", required=False, metavar="<command>")
+
+    sub.add_parser("ops", help="every command, one line each")
+    man = sub.add_parser("man", help="local help (overview, commands, errors, mograph)")
+    man.add_argument("topic", nargs="?", default="overview",
+                     help="overview | commands | errors | mograph")
 
     # — conform —
     c = sub.add_parser("conform", help=f"run the conform pipeline {HEADLESS}")
@@ -555,9 +565,33 @@ def dispatch(args: argparse.Namespace) -> int:
     raise AssertionError(f"unhandled op: {op_name}")  # pragma: no cover
 
 
+_MAN = {
+    "overview": "docs/man/overview.md",
+    "commands": "docs/man/commands.md",
+    "errors": "docs/man/errors.md",
+    "mograph": "docs/man/mograph.md",
+}
+
+
+def _print_man(topic: str) -> int:
+    root = Path(__file__).resolve().parents[2]
+    path = root / _MAN.get(topic, "")
+    if not path.is_file():
+        emit_human("topics: overview, commands, errors, mograph")
+        return 2
+    emit_human(path.read_text(encoding="utf-8").rstrip())
+    return 0
+
+
 def main(argv: Optional[list[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if not getattr(args, "command", None):
+        return _print_man("overview")
+    if args.command == "man":
+        return _print_man(args.topic)
+    if args.command == "ops":
+        return _print_man("commands")
     log_to_stderr(args.log_level)
     try:
         return dispatch(args)
