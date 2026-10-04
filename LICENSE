@@ -2,10 +2,10 @@
 DIMENSION — LICENSE
 ============================================================
 Project:    Dimension_CLI
-Author:     Matt Ciaglia (NeuralIO 444)
+Author:     NeuralIO 444
 Contact:    neural_io_444@icloud.com
 Store:      https://neuralio444.gumroad.com/
-Copyright:  © 2026 Matt Ciaglia / NeuralIO 444
+Copyright:  © 2026 NeuralIO 444
 Effective:  2026-04-24
 ============================================================
 
@@ -64,7 +64,7 @@ them above, as well as copies of any plain-text lines beginning
 with "Required Notice:" that the licensor provided with the
 software. For example:
 
-  Required Notice: Copyright © 2026 Matt Ciaglia / NeuralIO 444
+  Required Notice: Copyright © 2026 NeuralIO 444
 
 Patent License
 The licensor grants you a patent license for the software that
@@ -149,7 +149,7 @@ ATTRIBUTION REQUIREMENT
 
 All copies, derivatives, and noncommercial uses must retain:
 
-  Required Notice: Copyright © 2026 Matt Ciaglia / NeuralIO 444
+  Required Notice: Copyright © 2026 NeuralIO 444
   Project: Dimension (https://github.com/NeuralIO444/Dimension)
 
 ============================================================
