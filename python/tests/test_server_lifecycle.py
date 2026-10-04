@@ -299,7 +299,11 @@ class TestQueryProcessNameAgainstRealProcesses:
     def test_resolves_this_interpreter_by_its_own_pid(self):
         name = _query_process_name(os.getpid())
         assert name, "could not read this process's own name"
-        assert "python" in _normalize_name(name)
+        normalized = _normalize_name(name)
+        # ps comm= is the entry point, not the interpreter. A raw
+        # `python` run reports python; the pytest console script reports
+        # pytest. Both are a successful resolution of this process.
+        assert "python" in normalized or normalized == "pytest", normalized
 
     def test_returns_none_for_a_reaped_child(self):
         proc = subprocess.Popen([sys.executable, "-c", "pass"])

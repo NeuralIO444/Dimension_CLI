@@ -299,9 +299,19 @@ class DiagnosticHarness:
         self.record("Subsystem 06", "Color Match 3D LUT Data Model Generation (2x2x2)",
                     lut.grid_size == 2 and len(lut.table) == 2)
 
-        # Subsystem 7: CEP Panel Structure File Integrity
+        # Subsystem 7: CEP panel is not part of the CLI extraction (issue #2).
+        # A sibling Dimension checkout may still have cep/ next to python/.
+        # Either shape is valid; the CLI gate is that the headless entry
+        # point exists and the panel is not required.
         cep_path = os.path.join(_REPO_ROOT, "..", "cep", "index.html")
-        self.record("Subsystem 07", "CEP Panel Interface Exists & Accessible", os.path.exists(cep_path))
+        cli_entry = os.path.join(_REPO_ROOT, "dimension", "cli.py")
+        cep_present = os.path.exists(cep_path)
+        self.record(
+            "Subsystem 07",
+            "CEP Panel Interface Exists & Accessible",
+            cep_present or os.path.exists(cli_entry),
+            "cep present" if cep_present else "CLI extraction: panel not shipped",
+        )
 
         # Subsystem 8: Web Dashboard HTML Integrity
         web_path = os.path.join(_REPO_ROOT, "web", "index.html")
