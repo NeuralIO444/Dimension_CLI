@@ -183,5 +183,6 @@ See [LICENSE](LICENSE). Commercial use requires a separate license.
 
 - Product vision & scope guards: [docs/VISION.md](docs/VISION.md)
 - Build program & definition of done: [GAMEPLAN.md](GAMEPLAN.md)
+- MographJailed prong: [docs/MOGRAPH_JAILED.md](docs/MOGRAPH_JAILED.md)
 - Original CEP panel repo (farewell release, then archived):
   [NeuralIO444/Dimension](https://github.com/NeuralIO444/Dimension)
