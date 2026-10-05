@@ -274,6 +274,9 @@ def build_parser() -> argparse.ArgumentParser:
     sub = p.add_subparsers(dest="command", required=False, metavar="<command>")
 
     sub.add_parser("ops", help="every command, one line each")
+    tui = sub.add_parser("tui", help="full-screen human face")
+    tui.add_argument("--source", default="", help="manifest for the layer table")
+    tui.add_argument("--preset", default="tiktok_video")
     man = sub.add_parser("man", help="local help (overview, commands, errors, mograph)")
     man.add_argument("topic", nargs="?", default="overview",
                      help="overview | commands | errors | mograph")
@@ -586,6 +589,10 @@ def _print_man(topic: str) -> int:
 def main(argv: Optional[list[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.command == "tui" or (not getattr(args, "command", None) and sys.stdout.isatty() and not args.json):
+        from dimension.tui import launch
+        launch(source=getattr(args, "source", ""), preset=getattr(args, "preset", "tiktok_video"))
+        return 0
     if not getattr(args, "command", None):
         return _print_man("overview")
     if args.command == "man":
