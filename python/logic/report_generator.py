@@ -518,6 +518,26 @@ def _truncate(name: str, limit: int = 40) -> tuple:
     return name[: limit - 1] + "…", name
 
 
+def _load_creations_as_log(aep_dir, expected_session_id):
+    """Read the SQLite store when the legacy JSON log is gone."""
+    try:
+        from core.dimension_db import list_creations, open_project_db
+        conn = open_project_db(str(aep_dir))
+        try:
+            rows = list_creations(conn, session=expected_session_id or None)
+        finally:
+            conn.close()
+    except Exception:
+        return None
+    if not rows:
+        return None
+    return {
+        "session_id": expected_session_id or rows[0].get("session") or "",
+        "creations": rows,
+        "source": "dimension.db",
+    }
+
+
 def _load_duplication_log(
     aep_dir: Path,
     *,
@@ -533,7 +553,7 @@ def _load_duplication_log(
     entirely)."""
     log_path = aep_dir / ".dimension" / "duplication_log.json"
     if not log_path.is_file():
-        return None
+        return _load_creations_as_log(aep_dir, expected_session_id)
     try:
         with open(log_path, "r", encoding="utf-8") as f:
             payload = json.load(f)

@@ -29,6 +29,8 @@ dependencies = [
     # Expression scaling pass: pure-Python ES parser for AST-based scaling
     # of numeric literals in AE expressions.
     "esprima==4.0.1",
+    "rich==15.0.0",
+    "textual==8.2.8",
 ]
 
 [project.optional-dependencies]

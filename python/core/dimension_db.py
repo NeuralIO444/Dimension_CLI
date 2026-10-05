@@ -182,6 +182,31 @@ def record_run(
     return int(cur.lastrowid)
 
 
+
+def list_creations(
+    conn: sqlite3.Connection,
+    *,
+    session: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    """Creations the report used to read from duplication_log.json."""
+    if session:
+        rows = conn.execute(
+            "SELECT name, source, session, timestamp, operation"
+            " FROM creations WHERE session = ? ORDER BY id",
+            (session,),
+        ).fetchall()
+    else:
+        rows = conn.execute(
+            "SELECT name, source, session, timestamp, operation"
+            " FROM creations ORDER BY id"
+        ).fetchall()
+    return [
+        {"name": r[0], "source": r[1], "session": r[2],
+         "timestamp": r[3], "operation": r[4]}
+        for r in rows
+    ]
+
+
 def list_runs(
     conn: sqlite3.Connection,
     *,
