@@ -60,6 +60,9 @@ dimension catalog presets
 
 # 2. Check a preset's safe zone before you conform
 dimension safe-zone plan --preset tiktok_video
+# success, no After Effects: a line naming the preset and its mask.
+# `dimension --json safe-zone plan --preset tiktok_video` prints one
+# document with "status": "OK".
 
 # 3. Classify layers on a scraped manifest (writes tags back in place)
 dimension survey scrape_manifest.json --dry-run   # preview first
