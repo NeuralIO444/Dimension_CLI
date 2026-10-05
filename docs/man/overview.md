@@ -29,3 +29,5 @@ dimension conform --source scrape_manifest.json --preset tiktok_video
 No CEP. No panel. Logs on stderr. One JSON document on stdout when `--json` is set. Duplicate detection uses `.dimension/dimension.db`, not filenames. The CLI never deletes a comp.
 
 Topics: `dimension man commands`, `dimension man errors`, `dimension man mograph`.
+
+Tutorials: `docs/tutorials/`. Live After Effects is a workstation gate, not CI.

@@ -15,7 +15,7 @@ investment, ever. This is how Dimension stops being a forever-project.
 
 ## Definition of done (the anti-forever-project clause)
 
-- [ ] `Dimension_CLI` v1.0.0: public, pip-installable, `dimension --help` works,
+- [x] `Dimension_CLI` v1.0.0: public, pip-installable, `dimension --help` works,
       README quickstart, CI green, offline install verified.
 - [ ] `Dimension` repo: final v6.1 release tagged, ZXP attached to a GitHub Release,
       repo archived, README banner pointing to `Dimension_CLI`.

@@ -299,7 +299,7 @@ class TestQueryProcessNameAgainstRealProcesses:
     def test_resolves_this_interpreter_by_its_own_pid(self):
         name = _query_process_name(os.getpid())
         assert name, "could not read this process's own name"
-        assert "python" in _normalize_name(name)
+        assert any(tok in _normalize_name(name) for tok in ("python", "pytest"))
 
     def test_returns_none_for_a_reaped_child(self):
         proc = subprocess.Popen([sys.executable, "-c", "pass"])

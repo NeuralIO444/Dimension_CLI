@@ -47,6 +47,7 @@ jobs:
           python -m build --wheel --outdir /tmp/wheels
       - name: Vendor install deps
         run: |
+          pip download -d /tmp/wheels setuptools wheel
           pip download -d /tmp/wheels -r <(python - <<'PY'
           import tomllib
           from pathlib import Path

@@ -209,6 +209,13 @@ See [LICENSE](LICENSE). Commercial use requires a separate license.
 
 ---
 
+
+## Tutorials
+
+- [No After Effects](docs/tutorials/01-no-after-effects.md)
+- [Contract with MographJailed](docs/tutorials/02-contract.md) — Dimension 1.0.0, three commands, `status` on stdout
+- [Live After Effects](docs/tutorials/03-live-ae.md) — workstation gate, not CI
+
 ## Links
 
 - Product vision & scope guards: [docs/VISION.md](docs/VISION.md)
